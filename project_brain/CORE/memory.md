@@ -55,7 +55,7 @@ Codex 接入项目后必须按以下顺序执行：
 7. 任务结束前更新 `STATE/state.json`。
 8. 任务结束前写入 `LOGS/change_log.md`。
 9. 任务变化时同步 `TASKS/next_actions.json`。
-10. 任务结束后执行自动交付通道，刷新 `_codex_delivery/latest.zip`。
+10. 任务结束后不强制生成本地交付包；需要外部检查时优先同步 GitHub 上的 `project_brain/`。
 
 如果 STATE 更新、LOG 记录、必要的 TASK 同步没有完成，Codex 不允许返回完成状态。
 
