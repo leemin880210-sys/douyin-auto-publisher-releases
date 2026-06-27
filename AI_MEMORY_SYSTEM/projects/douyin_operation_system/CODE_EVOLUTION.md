@@ -199,3 +199,50 @@ AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/v2_previous/dou
 
 ### v3（上上版本）
 AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/v3_previous_previous/NO_PREVIOUS_PREVIOUS_VERSION.md
+
+## 2026-06-28 account_ops 评论结构与包元数据小修
+
+### 变更原因
+
+5 条样本包已通过基础检查，但仍需把评论回复、DOM 异常解析和包级元数据进一步标准化，避免回复污染正式评论 items，避免无法确认结构的 DOM 节点进入正式评论，并让 GPT 检查包时直接读取统一包元数据。
+
+### 影响文件
+
+- douyin_auto_tool.ps1
+- AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/v1_latest/douyin_auto_tool.ps1
+- AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/v2_previous/douyin_auto_tool.ps1
+- AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/v3_previous_previous/douyin_auto_tool.ps1
+
+### 代码变化
+
+- API 评论采集拆分主评论 items 与回复 eplies。
+- web_comment_reply_api 写入 eplies，不再写入 comments.items。
+- 评论合并按 uthor_name + text 去重，遍历顺序保持 API 主评论优先、DOM 仅补漏。
+- dom_node 结果写入 aw_comments_debug，不进入正式 comments.items。
+- eply_items_count 优先来自 eplies.Count。
+- 新增 package_metadata.json，并在 account_summary.md 中同步包元数据字段。
+- 每次运行开始清空旧的包元数据状态，避免连续运行沿用旧值。
+
+### 行为变化
+
+- GPT 检查评论时可以区分正式主评论与回复。
+- API 和 DOM 重复评论不会重复计入正式评论。
+- DOM 节点解析异常不会污染正式评论列表。
+- 包元数据可从 package_metadata.json 直接读取，路径均为项目相对路径。
+
+### 验证结果
+
+- powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\\douyin_auto_tool.ps1 -SelfTest 通过。
+- 使用新测试链接采集 5 条样本，生成 $zipRel。
+- works.json 共 5 条，visual_order 1-5 连续。
+- content_mapping_status 全部 ok。
+- frame_status/video_crop_status 全部 ok。
+- failed_count=0。
+- comments.items 中 web_comment_reply_api=0、dom_node=0、重复项=0。
+- ZIP 包含 package_metadata.json。
+
+### 风险与边界
+
+- 本次未改变采集主流程、作品卡片点击逻辑、抽帧策略或 OCR 策略。
+- 本次未扩展账号诊断、运营方案、脚本生成、自动发布或商家建档。
+- 仍需后续用 30 条正式包复测评论分流和包元数据规则。
