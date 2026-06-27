@@ -56,3 +56,9 @@ This file is a passive log system and does not influence execution logic.
 - action: Created `AI_MEMORY_SYSTEM/projects/project_brain/PROJECT_INDEX.md` as the required project instance index file and updated `STATE.json`.
 - result: The required AI_MEMORY_SYSTEM directory structure is complete on GitHub with BOOT, STATE, TASKS, CORE, LOGS and PROJECT_INDEX under the project_brain instance.
 - notes: No business code was modified and no existing project content was deleted.
+
+- timestamp: 2026-06-27
+- actor: Codex
+- action: Strengthened `AI_MEMORY_SYSTEM/00_GLOBAL_MEMORY/system_rules.md` and `execution_principles.md`, updated registry summaries, and updated project `STATE.json`.
+- result: The global layer now explicitly states no cross-project data reads, no shared STATE, and the BOOT → STATE → TASKS execution order.
+- notes: No business code was modified and no project instance file was removed.
