@@ -179,3 +179,23 @@ AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/v2_previous/NO_
 
 ### v3（上上版本）
 AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/v3_previous_previous/NO_PREVIOUS_PREVIOUS_VERSION.md
+
+## 2026-06-28 account_ops 相对 ZIP 路径与评论统计字段
+
+- 修改内容：account_summary.md 的 output_zip_path 改为项目相对路径；新增 valid_comment_items_count、reply_items_count、comment_count_match_status；works.xlsx 同步新增列。
+- 修改原因：5 条样本包通过基础检查后，GPT 复核要求去除本机绝对路径，并补齐评论统计解释字段。
+- 修改文件路径：C:\Users\cc\Documents\抖音作品分析\douyin_auto_tool.ps1
+- 修改前状态：account_summary.md 写入 C:\Users\... 绝对路径；评论统计只体现 comments_count_collected/comments_status。
+- 修改后状态：account_summary.md 写入 output_zip 相对路径；评论统计可区分有效评论数、过滤回复数和公开评论数匹配状态。
+- 验证：SelfTest 通过；重新采集 5 条样本包并检查 works.json、comments.json、account_summary.md 和 ZIP 条目。
+
+## Code Snapshot History
+
+### v1（最新版本）
+AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/v1_latest/douyin_auto_tool.ps1
+
+### v2（上一版本）
+AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/v2_previous/douyin_auto_tool.ps1
+
+### v3（上上版本）
+AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/v3_previous_previous/NO_PREVIOUS_PREVIOUS_VERSION.md
