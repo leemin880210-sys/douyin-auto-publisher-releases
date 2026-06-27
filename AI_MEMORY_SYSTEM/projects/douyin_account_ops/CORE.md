@@ -6,6 +6,18 @@
 
 本项目是 Windows 本地运行的抖音账号采集包工具，用于生成可交给 GPT 分析的账号资料包，服务于抖音代运营接手前诊断、未授权账号内容诊断和签约后授权数据补齐。
 
+## 当前账号采集模块边界
+
+当前阶段只优化账号采集模块：
+
+- 输入抖音账号主页链接。
+- 输出标准 `douyin_analysis_package.zip`。
+- 不扩展账号诊断。
+- 不生成运营方案。
+- 不生成脚本。
+- 不做自动发布。
+- 不做商家建档。
+
 ## 合规边界
 
 - 不绕过验证码。
@@ -139,6 +151,16 @@
 
 OCR 只能对 `video_crop` 执行。
 
+## 抽帧稳定性规则
+
+- 打开作品后必须等待可见媒体加载，再开始抽帧。
+- 可见媒体优先识别 `video`，如果页面是图文或 video rect 不可用，可 fallback 到主图 `img`、`canvas` 或包含主画面的容器。
+- seek 只能操作当前可见最大视频，避免误操作隐藏 video。
+- 如果作品播放完或图文自动跳到下一条，必须重新打开原 `card_modal_id` 对应作品。
+- 核心帧缺失时必须重试；核心帧包括 `cover`、`0s`、`1s`、`2s`、`3s`、`ending`。
+- 重试前必须清理旧帧，重新打开原作品，重新等待媒体加载。
+- `frame_status=ok` 和 `video_crop_status=ok` 应表示核心帧与 contact sheet 均可用。
+
 ## OCR 规则
 
 - PaddleOCR 优先，Tesseract 可作为本地 fallback。
@@ -155,6 +177,7 @@ OCR 只能对 `video_crop` 执行。
 - 采集评论时要在评论面板内滚动，不误触点赞。
 - 不采集作者回复作为正式评论。
 - 纯数字、抢首评、无意义 UI 文本不得写入 `comments.items`。
+- 解析错位导致作者名或正文为纯数字、点赞数、回复数、UI 文本时，不得写入 `comments.items`。
 - fallback 无法确认结构时只能放入 `raw_comments_debug`。
 - 评论数不完整时标 `comment_status=partial`。
 - 如果公开评论数大于 comments.items 数量，差异来自作者回复或过滤评论，可标 `ok_with_reply_filtered`。
