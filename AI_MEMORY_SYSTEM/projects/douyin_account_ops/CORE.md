@@ -167,6 +167,8 @@ OCR 只能对 `video_crop` 执行。
 - PaddleOCR 优先，Tesseract 可作为本地 fallback。
 - `ocr_items.json` 记录 `frame_time`、`source_frame`、`cropped_video_frame_path`、`text`、`confidence`、`is_ui_text`、`clean_text`。
 - OCR 乱码不能进入 summary.md。
+- 低质量 OCR 不能进入 `summary.md`、`visual_rhythm_analysis` 或 `conversion_flags`。
+- OCR fallback 提示文本不能被当作 OCR 证据。
 - 价格判断必须有证据：`¥+数字`、`数字+元`、`人均+数字`、`套餐+价格` 等。
 - 单独出现 `¥` 不能判断 price=true。
 
@@ -182,6 +184,35 @@ OCR 只能对 `video_crop` 执行。
 - fallback 无法确认结构时只能放入 `raw_comments_debug`。
 - 评论数不完整时标 `comment_status=partial`。
 - 如果公开评论数大于 comments.items 数量，差异来自作者回复或过滤评论，可标 `ok_with_reply_filtered`。
+
+### 评论统计字段规则
+
+评论分层规则保持不变：
+
+- `comments.items` 只放正式主评论。
+- `comments.replies` 放回复 / 楼中楼。
+- `raw_comments_debug` 放不确定结构、UI、乱码、DOM 错位内容。
+- `web_comment_reply_api` 不进入 `comments.items`。
+- 纯数字、抢首评、UI 文本不得进入 `comments.items`。
+
+为避免 GPT 只看 `comments.items` 而误判回复未采集，所有作品和 `comments.json` 必须输出：
+
+- `main_comment_count = comments.items.length`
+- `reply_comment_count = comments.replies.length`
+- `total_extracted_comment_count = main_comment_count + reply_comment_count`
+- `comment_gap_count = public_comment_count - total_extracted_comment_count`
+
+`comment_count_match_status` 只允许以下取值：
+
+- `public_zero`
+- `matched`
+- `matched_with_replies`
+- `partial_with_replies_filtered`
+- `visible_count_but_items_empty`
+- `extracted_more_than_public`
+- `unknown`
+
+检查评论数量时，应同时查看 `main_comment_count`、`reply_comment_count`、`total_extracted_comment_count`、`comment_gap_count`，不得只看 `comments.items.length`。
 
 ## 语音转写规则
 
@@ -201,6 +232,13 @@ conversion_flags 必须证据制。
 
 - evidence
 - source
+
+补充规则：
+
+- OCR 证据必须先通过低质量文本过滤。
+- `OCR 状态`、`ChatGPT`、`关键帧可上传`、`OCR 引擎不可用` 等说明性 fallback 文案不得触发地址、价格、团购、活动等转化判断。
+- 评论来源可以触发转化判断，但必须是有效评论文本，不能是纯数字、UI 文本、作者回复或解析乱码。
+- 团购/套餐判断不能只因为 OCR 乱码中出现“团购”“套餐”等孤立词就标 true。
 
 重点判断：
 
@@ -377,73 +415,3 @@ summary.md 不要混入：
 如果没有可靠内容，写“需根据关键帧判断”。
 
 评论区反馈必须单独成节。
-
-## 输出命名与 ZIP 防冲突规则（v1.0）
-
-规则版本时间：`2026-01-24_1530`
-
-本规则用于规范抖音代运营采集包、ZIP 包和后续交付文件命名，避免多商家并行时文件冲突。该规则不表示当前采集工具已扩展到账号诊断、运营方案、脚本生成、自动发布或商家建档。
-
-### 统一命名规则
-
-所有输出必须统一命名：
-
-```text
-{店铺名称}-{作品数量}-{时间}
-```
-
-时间格式：
-
-```text
-YYYYMMDD_HHMM
-```
-
-示例：
-
-```text
-星火奶茶店-001-20260124_1530.mp4
-星火奶茶店-002-20260124_1530.txt
-```
-
-### ZIP 压缩包规则
-
-所有 zip 文件必须存放在：
-
-```text
-/output_zip/
-```
-
-zip 命名规则：
-
-```text
-{店铺名称}-{作品数量}-{时间}.zip
-```
-
-示例：
-
-```text
-/output_zip/星火奶茶店-003-20260124_1530.zip
-```
-
-### 防冲突规则
-
-- 不允许同名覆盖。
-- 每个作品必须递增编号。
-- 同商家必须连续编号。
-- 不同商家必须隔离命名。
-- 所有输出必须唯一。
-
-### 当前运行模式
-
-当前系统运行模式为：
-
-```text
-人工触发 + AI生成 + 结构化输出模式
-```
-
-当前不是自动执行系统。
-
-### 当前限制
-
-- 未实现自动文件夹隔离（每商家独立目录）。
-- 未实现自动上传/同步机制。
