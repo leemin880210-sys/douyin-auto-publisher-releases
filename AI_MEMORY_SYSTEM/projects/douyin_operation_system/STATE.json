@@ -1,9 +1,9 @@
 {
     "project_name":  "douyin_operation_system",
-    "current_stage":  "account_ops 5 条样本包小修完成：相对 ZIP 路径与评论统计字段已验证",
-    "current_task":  "等待执行 30 条正式包复测；继续降低样本包 partial 样本。",
-    "progress":  "已完成 output_zip_path 相对路径输出；已补齐 valid_comment_items_count、reply_items_count、comment_count_match_status；继续沿用固定短格式 {店铺名称}-{作品数量三位数}-{时间}.zip；SelfTest 通过；新 5 条样本包已生成并检查，works.json 为 5 条，visual_order=1-5，frame_status/video_crop_status 全部 ok，failed_count=0，summary.md 未检出 UI/OCR fallback 污染。",
-    "blockers":  "30 条正式包仍需复测；样本包仍有 partial 样本，包括 1 条 ocr_status=failed 和 1 条 visible_count_but_items_empty；未实现每商家独立文件夹隔离；未实现自动上传/同步机制。",
+    "current_stage":  "account_ops 评论结构与包元数据小修完成：replies 分流、items 去重、DOM debug 隔离已验证",
+    "current_task":  "下一步执行 30 条正式包复测，并继续观察 visible_count_but_items_empty 样本。",
+    "progress":  "已完成 comments.json replies 数组；web_comment_reply_api 不再进入 comments.items；comments.items 按 author_name+text 去重并优先保留 web_comment_api；dom_node 不进正式 items，进入 raw_comments_debug；包根新增 package_metadata.json；SelfTest 通过；新链接 5 条样本包 output_zip/寂燃CRAFTBEERBAR-005-20260628_0311.zip 已生成并检查，works=5，visual_order=1-5，frame/video_crop 全部 ok，failed_count=0，public_success=4，partial=1。",
+    "blockers":  "30 条正式包仍需复测；新样本包仍有 1 条 visible_count_but_items_empty；未实现每商家独立文件夹隔离；未实现自动上传/同步机制。",
     "last_update":  "2026-06-28",
     "container_version":  "v2.0",
     "required_memory_files":  [
