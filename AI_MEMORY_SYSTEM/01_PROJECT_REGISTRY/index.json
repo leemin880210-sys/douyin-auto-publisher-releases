@@ -1,4 +1,9 @@
 {
+  "project_brain": {
+    "path": "AI_MEMORY_SYSTEM/projects/project_brain",
+    "status": "active",
+    "type": "memory_system"
+  },
   "registry_name": "AI_MEMORY_SYSTEM_PROJECT_REGISTRY",
   "last_update": "2026-06-27",
   "projects": [
@@ -10,6 +15,7 @@
       "purpose": "AI Project Brain System (state machine memory for AI agents)",
       "description": "This entry registers the project_brain system as a reusable AI project memory and execution framework.",
       "status": "active",
+      "type": "memory_system",
       "template_status": "Final Template v1.0",
       "current_stage": "全局AI多项目系统强制落地完成",
       "current_task": "等待接入新项目或继续执行授权项目任务",
