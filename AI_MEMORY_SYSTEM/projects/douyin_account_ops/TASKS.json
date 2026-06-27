@@ -9,19 +9,19 @@
   "codex_tasks": [
     {
       "priority": 1,
-      "task": "继续在不同账号上复测账号采集模块稳定性，确认正式模式仍满足 public_success_count >= 80%、failed_count <= 1、visual_order 连续。"
+      "task": "用一个 5 条样本包复测 run_mode=sample_check、sample_size=5、formal_acceptance=false 是否写入 account_summary.md、works.json、meta.json 和 works.xlsx。"
     },
     {
       "priority": 2,
-      "task": "减少 OCR failed 导致的 partial；保持 summary.md 不使用 OCR 乱码生成摘要。"
+      "task": "用一个 30 条正式包复测 run_mode=formal_collection、formal_acceptance=true；如果账号作品数小于等于 30，确认采集全部作品。"
     },
     {
       "priority": 3,
-      "task": "继续监控图文或短作品自动跳转场景，确保采集过程中始终重新打开并校验原 card_modal_id。"
+      "task": "复核 public_comment_count > 0 但 comments.items 为空的作品是否标记 visible_count_but_items_empty 或 partial_no_valid_comments_extracted，且不再误标 ok_with_reply_filtered。"
     },
     {
       "priority": 4,
-      "task": "本阶段只维护账号采集模块；不扩展账号诊断、运营方案、脚本生成、自动发布或商家建档。"
+      "task": "复核 has_location_evidence 是否只来自主页地址入口、简介地名、作品标题地名或评论地址问答，不再使用账号名兜底。"
     },
     {
       "priority": 5,
@@ -29,23 +29,22 @@
     }
   ],
   "gpt_review_tasks": [
-    "检查正式包中 works.json 是否为数组且 visual_order 连续。",
-    "检查 public_success_count 是否达到 80% 以上，failed_count 是否小于等于 1。",
-    "检查 frame_status 和 video_crop_status 是否大面积为 ok。",
+    "检查 works.json 是否为数组且 visual_order 连续。",
+    "检查 sample 包与 formal 包的 run_mode、sample_size、formal_acceptance 是否符合包类型。",
+    "检查 public_success_count、partial_count、failed_count 是否与各作品状态一致。",
     "检查 comments.json 是否未写入纯数字、抢首评、无意义 UI 文本或解析乱码。",
     "检查 transcript.txt 是否只标记 speech_transcription_status=not_configured，未假装语音转写。",
-    "检查 summary.md 是否未混入网页 UI、OCR 乱码、账号名或直播提示。"
+    "检查 summary.md 是否未混入网页 UI、OCR 乱码、账号名、直播提示，且 detail_title 只在 Debug 区。"
   ],
   "acceptance_criteria": [
     "正式模式默认 test_mode=false、max_works=30。",
-    "账号作品数 <= 30 时采满全部作品。",
-    "card_records 先从主页卡片生成，包含 visual_order、card_modal_id、card_text、public_card_like_count、row、col、card_bbox、cover。",
-    "content_mapping_status 不因 title mismatch 直接失败。",
-    "public_metric_status=card_only 不导致作品 failed。",
-    "图文或短作品自动跳转不会污染当前作品内容。",
-    "主页滚动不会导致视觉顺序跳采。",
-    "每条作品输出独立文件夹、meta.json、cover、frames、transcript.txt、ocr_text.txt、ocr_items.json、comments.json、summary.md。",
-    "涉及采集代码修改时必须同步更新 CODE_EVOLUTION.md。",
-    "最终抖音分析输出仍必须压缩为标准 ZIP。"
+    "账号作品数 <= 30 时采满全部作品；账号作品数 > 30 时采最近 30 条。",
+    "手动指定小于 30 的采集数量或 --test-mode 时，输出 run_mode=sample_check。",
+    "正式 30 条包输出 run_mode=formal_collection、formal_acceptance=true。",
+    "public_comment_count > 0 且 comments.items=0 时不得标 ok_with_reply_filtered。",
+    "has_location_evidence 不得使用账号名兜底。",
+    "duration_seconds 不可用但 frames/video_crop 正常时输出 duration_status=unavailable_but_frames_ok。",
+    "图文或静态卡片输出 media_type=static_or_image_card。",
+    "summary.md 以 canonical_title 为主标题，detail_title 只放 Debug 区。"
   ]
 }
