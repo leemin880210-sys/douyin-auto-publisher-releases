@@ -236,3 +236,57 @@
 - 本次只优化采集输出字段和状态规则。
 - 未扩展账号诊断、运营方案、脚本生成、自动发布或商家建档。
 - 未绕过验证码、未破解登录、未抓取无权限内容。
+
+## 2026-06-28 output_zip 输出层与 OCR 摘要证据过滤复测
+
+### 变更原因
+
+douyin_operation_system 要求所有 ZIP 输出进入 /output_zip/，并按 {店铺名称}-{作品数量}-{时间}.zip 命名，同时禁止同名覆盖。此前采集脚本仍将 ZIP 固定生成在单次采集目录下，文件名为 douyin_analysis_package.zip。
+
+### 影响文件
+
+- douyin_auto_tool.ps1
+
+### 代码变化
+
+- 新增 $Script:OutputZipRoot、$Script:RunTimestamp、$Script:CurrentOutputZipPath。
+- 新增 SanitizeFileNamePart、GetUniqueFilePath、GetDeliveryZipPath。
+- RunCollect 中生成 ZIP 前先按店铺名、作品数量和分钟级时间戳计算交付 ZIP 路径。
+- ZIP 改为输出到 output_zip 目录，不再在采集展开目录内生成内部 douyin_analysis_package.zip。
+- account_summary.md 增加 output_zip_path 与 output_zip_rule。
+- SelfTest 增加 output_zip 命名规则断言。
+
+### 行为变化
+
+- 5 条样本包会输出类似 未满_MOONFLOW官方号-005-20260628_0152.zip 的交付 ZIP。
+- 如果同名 ZIP 已存在，会追加序号避免覆盖。
+- 展开目录继续保留 account_summary.md、works.json、works.xlsx、作品文件夹等原始文件，便于本地排查。
+
+### 验证结果
+
+- SelfTest 通过。
+- 5 条样本包生成：C:\Users\cc\Documents\抖音作品分析\output_zip\未满_MOONFLOW官方号-005-20260628_0152.zip。
+- works.json 为 5 条，visual_order=1-5。
+- frame_status 与 video_crop_status 全部为 ok。
+- summary.md 未检出 OCR fallback 提示或明显 OCR 乱码污染。
+- failed_count=0，仍有 partial=3 需要后续优化。
+
+### 风险与边界
+
+- 本次只改 ZIP 输出层和相关摘要字段。
+- 未修改评论采集、抽帧、账号链接采集、授权指标或账号诊断逻辑。
+- 未绕过验证码、未破解登录、未抓取无权限内容。
+
+## Code Snapshot History
+
+### v1（最新版本）
+
+AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/v1_latest/douyin_auto_tool.ps1
+
+### v2（上一版本）
+
+AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/v2_previous/NO_PREVIOUS_VERSION.md
+
+### v3（上上版本）
+
+AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/v3_previous_previous/NO_PREVIOUS_PREVIOUS_VERSION.md
