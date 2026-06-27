@@ -1,29 +1,33 @@
 {
-  "highest_priority_task": "让 GPT 通过 GitHub 链接检查 project_brain 是否完整、可恢复、可持续执行。",
-  "github_review_url": "https://github.com/leemin880210-sys/douyin-auto-publisher-releases/tree/main/project_brain",
+  "task_rules": [
+    "TASKS 只能写待做任务。",
+    "TASKS 不允许写当前状态。",
+    "TASKS 不允许写已完成描述。",
+    "TASKS 不允许写历史信息。",
+    "当前状态、进度和阻塞问题只能写入 STATE/state.json。"
+  ],
   "codex_tasks": [
-    "将 project_brain 的标准文件上传到 GitHub 仓库 project_brain/ 路径。",
-    "上传完成后提供 GitHub 目录链接，便于 GPT 直接检查。",
-    "后续每次任务开始前读取 project_brain/CORE/memory.md、STATE/state.json、TASKS/next_actions.json、LOGS/change_log.md。",
-    "后续每次任务结束后更新 STATE、TASKS、LOGS，并执行 _codex_delivery/package_delivery.ps1。"
+    "按 BOOT/boot_prompt.md 的固定执行流程读取项目状态。",
+    "执行任务前确认 STATE/state.json 是唯一当前状态来源。",
+    "执行任务时只处理用户明确授权的文件范围。",
+    "任务结束前更新 STATE/state.json。",
+    "任务结束前把已发生事实写入 LOGS/change_log.md。",
+    "任务结束后执行 _codex_delivery/package_delivery.ps1。"
   ],
   "gpt_review_tasks": [
-    "打开 github_review_url，检查 project_brain 五个核心文件是否齐全。",
-    "检查 Codex 是否读取 project_brain 后再执行任务。",
-    "检查 STATE 是否准确反映当前阶段、进度和阻塞问题。",
-    "检查 TASKS 是否写明最高优先级、Codex 执行项和验收标准。",
-    "检查 LOGS 是否记录修改原因、影响范围和测试结果。",
-    "检查自动交付通道是否刷新 latest.zip、status.json、manifest.json。"
+    "检查 BOOT/boot_prompt.md 是否声明唯一入口和固定执行流程。",
+    "检查 STATE/state.json 是否只包含 project_name、current_stage、current_task、progress、blockers、last_update。",
+    "检查 TASKS/next_actions.json 是否只包含待做任务和验收标准。",
+    "检查 LOGS/change_log.md 是否只记录已发生事实。",
+    "检查 Codex 是否在结束前更新 STATE 并写入 LOGS。"
   ],
   "acceptance_criteria": [
-    "project_brain/CORE/memory.md 存在并写入项目认知。",
-    "project_brain/STATE/state.json 存在并包含 project_name、current_stage、progress、current_task、blocking_issues。",
-    "project_brain/TASKS/next_actions.json 存在并包含最高优先级任务、Codex 任务、GPT 检查任务、验收标准。",
-    "project_brain/LOGS/change_log.md 存在并记录本次创建内容、修改原因、是否影响旧逻辑、是否通过测试。",
-    "project_brain/BOOT/boot_prompt.md 存在并写入 AI 接入规则。",
-    "不修改现有业务代码结构。",
-    "不删除历史日志。",
-    "不破坏 STATE 结构。",
-    "GitHub 仓库中存在 project_brain/CORE/memory.md、project_brain/STATE/state.json、project_brain/TASKS/next_actions.json、project_brain/LOGS/change_log.md、project_brain/BOOT/boot_prompt.md。"
+    "BOOT/boot_prompt.md 明确自己是唯一入口。",
+    "BOOT/boot_prompt.md 写入强制执行顺序和固定执行流程。",
+    "STATE/state.json 使用固定字段 project_name、current_stage、current_task、progress、blockers、last_update。",
+    "TASKS/next_actions.json 不记录当前状态、已完成描述或历史信息。",
+    "LOGS/change_log.md 不写计划或未来任务。",
+    "不新增 project_brain 目录结构。",
+    "不修改采集代码。"
   ]
 }
