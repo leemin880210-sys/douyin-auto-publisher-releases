@@ -387,3 +387,25 @@ AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/v3_previous_pre
 - 未改变作品打开、抽帧、OCR 和主页卡片采集主流程。
 - 未实现每商家独立文件夹隔离。
 - 仍需 30 条正式包复测。
+## 2026-06-28 样本包验证补充
+
+### 变更原因
+
+补充记录评论结构与包元数据小修后的实际样本包验证结果，便于后续 GPT/Codex 追溯。
+
+### 影响文件
+
+- douyin_auto_tool.ps1
+
+### 验证结果
+
+- 输出 ZIP：$zipRel。
+- works.json 共 5 条。
+- visual_order 为 1-5 连续。
+- content_mapping_status 全部 ok。
+- frame_status/video_crop_status 全部 ok。
+- failed_count=0。
+- comments.items 中 web_comment_reply_api=0。
+- comments.items 中 dom_node=0。
+- comments.items 重复项=0。
+- ZIP 包含 package_metadata.json。
