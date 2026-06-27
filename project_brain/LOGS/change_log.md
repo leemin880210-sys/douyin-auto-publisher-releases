@@ -33,7 +33,7 @@
 
 - 更新 `project_brain/STATE/state.json`，记录当前阶段为外部检查交付阶段。
 - 更新 `project_brain/TASKS/next_actions.json`，加入 GitHub 检查链接和 GPT 检查任务。
-- 准备将 `project_brain/` 上传到 `leemin880210-sys/douyin-auto-publisher-releases` 仓库。
+- 已将 `project_brain/` 上传到 `leemin880210-sys/douyin-auto-publisher-releases` 仓库。
 
 ### 为什么修改
 
@@ -45,4 +45,4 @@
 
 ### 是否通过测试
 
-以仓库目录可访问、五个核心文件可直接打开为验收标准；上传完成后由 Codex 在最终回复中确认链接。
+已通过 GitHub 反向读取验证：`project_brain/TASKS/next_actions.json` 可从仓库正常打开，五个核心文件已推送到 `project_brain/` 路径。
