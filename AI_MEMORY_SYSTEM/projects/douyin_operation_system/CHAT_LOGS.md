@@ -38,3 +38,11 @@ Codex：
 AI：已切换为 douyin_operation_system root 项目规则，读取 v2.0 入口、状态、任务、核心规则、日志，并进入 modules/account_ops。
 
 Codex：修改本地 douyin_auto_tool.ps1 的 ZIP 输出层，使采集包写入 output_zip 并按 {店铺名称}-{作品数量}-{时间}.zip 命名；执行 SelfTest；采集 5 条样本包；生成 C:\Users\cc\Documents\抖音作品分析\output_zip\未满_MOONFLOW官方号-005-20260628_0152.zip；检查 works.json、summary.md、comments.json、works.xlsx 与 ZIP 条目。
+
+## [2026-06-28] account_ops 样本包小修：相对 ZIP 路径与评论统计字段
+
+用户：确认 5 条样本包基础通过，要求小修 output_zip_path 不写本机绝对路径、补齐 valid_comment_items_count / reply_items_count / comment_count_match_status，并固定 ZIP 命名格式。
+
+AI：选择继续沿用已通过的短格式 店铺名-005-YYYYMMDD_HHMM.zip，避免频繁变更命名；只做输出字段小修，不大改采集结构。
+
+Codex：修改 douyin_auto_tool.ps1，account_summary.md 改为输出相对路径 output_zip/未满_MOONFLOW官方号-005-20260628_0237.zip；works.json、meta.json、comments.json、works.xlsx 增加评论统计字段；SelfTest 通过；重新采集 5 条样本包并生成 C:\Users\cc\Documents\抖音作品分析\output_zip\未满_MOONFLOW官方号-005-20260628_0237.zip。
