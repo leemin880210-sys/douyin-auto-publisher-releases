@@ -53,3 +53,9 @@ The following entries were migrated from `AI_MEMORY_SYSTEM/projects/project_brai
 - action: Applied AI_MEMORY_SYSTEM container upgrade rules v2.0.
 - result: Added CHAT_LOGS.md and CODE_SNAPSHOTS/v1_latest, v2_previous, v3_previous_previous; updated README, registry, active project BOOT, STATE, TASKS, CORE, LOGS and CODE_EVOLUTION to reflect v2.0 container storage rules.
 - notes: No GLOBAL_MEMORY files were modified. No business code was modified. Existing historical source directories were not deleted.
+
+- timestamp: 2026-06-28
+- actor: Codex
+- action: Executed account_ops 5-work sample collection under douyin_operation_system v2.0 rules and updated local ZIP output layer.
+- result: Local script SelfTest passed; generated output zip $zipPath; works.json contains 5 records with visual_order 1-5; frame_status and video_crop_status are ok for all 5; failed_count is 0; summary.md has no detected OCR fallback or obvious OCR-noise pollution; zip is stored in output_zip using {店铺名称}-{作品数量}-{时间}.zip naming.
+- notes: No GLOBAL_MEMORY files were modified. The old independent douyin_account_ops project was not used as the active project. 30-work formal collection remains pending.
