@@ -44,6 +44,9 @@ $Script:SampleSize = $null
 $Script:FormalAcceptance = $true
 $Script:RunTimestamp = ""
 $Script:CurrentOutputZipPath = ""
+$Script:PackageBaseName = ""
+$Script:SafeShopName = ""
+$Script:PackageOutputDir = ""
 
 function SetRunMode([int]$RequestedLimit, [int]$EffectiveLimit) {
     $isSample = $Script:IsTestMode -or ($RequestedLimit -gt 0 -and $RequestedLimit -lt 30)
@@ -1770,7 +1773,9 @@ function AddCommentStats($CommentResult, $PublicCommentCount, [int]$ValidComment
     if ($null -eq $CommentResult) { return }
     $replyItemsCount = 0
     $n = 0
-    if ($null -ne $CommentResult.filtered_author_reply_count -and [int]::TryParse([string]$CommentResult.filtered_author_reply_count, [ref]$n)) {
+    if ($null -ne $CommentResult.replies) {
+        $replyItemsCount = @($CommentResult.replies).Count
+    } elseif ($null -ne $CommentResult.filtered_author_reply_count -and [int]::TryParse([string]$CommentResult.filtered_author_reply_count, [ref]$n)) {
         $replyItemsCount = $n
     }
     $matchStatus = GetCommentCountMatchStatus $PublicCommentCount $ValidCommentItemsCount $replyItemsCount
@@ -2498,6 +2503,7 @@ function CollectVisibleComments {
     comments_status: out.length ? 'ok' : (scroller ? 'empty' : 'auth_or_login_required'),
     comments_reason: out.length ? '' : (scroller ? '未检测到真实可用评论，已过滤纯数字/抢首评/占位文本。' : '未找到可滚动评论区，可能需要登录、作品评论权限或手动展开评论面板。'),
     items: out,
+    replies: [],
     raw_comments_debug: rawCommentsDebug,
     filtered_author_reply_count: filteredAuthorReplyCount,
     filtered_bad_count: filteredBadCount,
@@ -2506,14 +2512,14 @@ function CollectVisibleComments {
 })()
 "@
     if ([string]::IsNullOrWhiteSpace($json)) {
-        return [ordered]@{ comments_status = "auth_or_login_required"; comments_reason = "评论脚本没有返回结果，可能需要登录或页面未展开评论。"; items = @() }
+        return [ordered]@{ comments_status = "auth_or_login_required"; comments_reason = "评论脚本没有返回结果，可能需要登录或页面未展开评论。"; items = @(); replies = @(); raw_comments_debug = @() }
     }
     return ($json | ConvertFrom-Json)
 }
 
 function CollectApiComments([string]$VideoId) {
     if ([string]::IsNullOrWhiteSpace($VideoId)) {
-        return [ordered]@{ comments_status = "api_unavailable"; comments_reason = "缺少作品 ID，无法尝试同源评论接口。"; items = @() }
+        return [ordered]@{ comments_status = "api_unavailable"; comments_reason = "缺少作品 ID，无法尝试同源评论接口。"; items = @(); replies = @() }
     }
     $videoIdB64 = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($VideoId))
     $authorB64 = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($(if ($Script:TargetProfileName) { $Script:TargetProfileName } else { "" })))
@@ -2522,10 +2528,10 @@ function CollectApiComments([string]$VideoId) {
   const fromB64 = s => new TextDecoder('utf-8').decode(Uint8Array.from(atob(s), c => c.charCodeAt(0)));
   const videoId = fromB64('$videoIdB64');
   let targetAuthor = fromB64('$authorB64');
+  const clean = t => (t || '').replace(/\s+/g, ' ').trim();
   if (!targetAuthor) {
     targetAuthor = clean((document.title || '').replace(/\s*-\s*抖音.*$/, '').replace(/的抖音$/, ''));
   }
-  const clean = t => (t || '').replace(/\s+/g, ' ').trim();
   const badText = t => {
     t = clean(t);
     if (!t || t.length < 2 || t.length > 260) return true;
@@ -2593,28 +2599,31 @@ function CollectApiComments([string]$VideoId) {
     });
     return '/aweme/v1/web/comment/list/reply/?' + p.toString();
   };
-  const pushComment = (c, sourceHint) => {
+  const pushComment = (c, sourceHint, targetList, seenSet, parentCommentId = '') => {
     const commentText = clean(c.text || c.text_extra_text || '');
     const author = clean((c.user && (c.user.nickname || c.user.unique_id || c.user.short_id)) || '');
     if (!author || badText(commentText)) { filtered_bad_count++; return false; }
     if (isAuthorReply(author, commentText)) { filtered_author_reply_count++; return false; }
     const key = author + '|' + commentText;
-    if (seen.has(key)) return false;
-    seen.add(key);
+    if (seenSet.has(key)) return false;
+    seenSet.add(key);
     const ts = Number(c.create_time || 0);
     const created = ts ? new Date(ts * 1000).toLocaleDateString('zh-CN') : '';
-    out.push({
+    targetList.push({
       text: commentText,
       like_count: c.digg_count == null ? '' : String(c.digg_count),
       created_at_raw: created,
       author_name: author,
       is_author_reply: false,
-      source_hint: sourceHint
+      source_hint: sourceHint,
+      parent_comment_id: parentCommentId || ''
     });
     return true;
   };
   const out = [];
+  const repliesOut = [];
   const seen = new Set();
+  const seenReplies = new Set();
   const replyTargets = [];
   let raw_comment_count = 0;
   let raw_reply_count = 0;
@@ -2643,7 +2652,7 @@ function CollectApiComments([string]$VideoId) {
       const comments = Array.isArray(data.comments) ? data.comments : [];
       raw_comment_count += comments.length;
       for (const c of comments) {
-        pushComment(c, 'web_comment_api');
+        pushComment(c, 'web_comment_api', out, seen, '');
         const cid = c.cid || c.comment_id || c.id_str || c.id;
         const replyTotal = Number(c.reply_comment_total || c.reply_comment_total_count || c.reply_count || 0);
         if (cid && replyTotal > 0) replyTargets.push({ cid: String(cid), replyTotal });
@@ -2659,9 +2668,9 @@ function CollectApiComments([string]$VideoId) {
     }
   }
   for (const target of replyTargets) {
-    if (out.length >= 20) break;
+    if (repliesOut.length >= 40) break;
     let replyCursor = 0;
-    for (let page = 0; page < 3 && out.length < 20; page++) {
+    for (let page = 0; page < 3 && repliesOut.length < 40; page++) {
       try {
         const resp = await fetch(makeReplyUrl(target.cid, replyCursor), {
           credentials: 'include',
@@ -2681,8 +2690,8 @@ function CollectApiComments([string]$VideoId) {
         const replies = Array.isArray(data.comments) ? data.comments : [];
         raw_reply_count += replies.length;
         for (const reply of replies) {
-          pushComment(reply, 'web_comment_reply_api');
-          if (out.length >= 20) break;
+          pushComment(reply, 'web_comment_reply_api', repliesOut, seenReplies, target.cid);
+          if (repliesOut.length >= 40) break;
         }
         if (!data.has_more && !data.cursor) break;
         const nextCursor = Number(data.cursor || 0);
@@ -2698,6 +2707,7 @@ function CollectApiComments([string]$VideoId) {
     comments_status: out.length ? 'ok' : 'api_unavailable',
     comments_reason: out.length ? '' : ('同源评论接口不可用或未返回可用评论；status=' + lastStatus + '；' + lastError),
     items: out,
+    replies: repliesOut,
     api_status: lastStatus,
     raw_comment_count,
     raw_reply_count,
@@ -2708,12 +2718,12 @@ function CollectApiComments([string]$VideoId) {
 })()
 "@
     if ([string]::IsNullOrWhiteSpace($json)) {
-        return [ordered]@{ comments_status = "api_unavailable"; comments_reason = "同源评论接口脚本没有返回结果。"; items = @() }
+        return [ordered]@{ comments_status = "api_unavailable"; comments_reason = "同源评论接口脚本没有返回结果。"; items = @(); replies = @() }
     }
     try {
         return ($json | ConvertFrom-Json)
     } catch {
-        return [ordered]@{ comments_status = "api_unavailable"; comments_reason = "同源评论接口结果解析失败：$($_.Exception.Message)"; items = @() }
+        return [ordered]@{ comments_status = "api_unavailable"; comments_reason = "同源评论接口结果解析失败：$($_.Exception.Message)"; items = @(); replies = @() }
     }
 }
 
@@ -2880,6 +2890,8 @@ function CollectWork([string]$Url, [int]$Index, [string]$PackageDir, $LogBox) {
                 comment_button_label = [string]$commentOpenState.label
                 public_comment_count = 0
                 items = @()
+                replies = @()
+                raw_comments_debug = @()
             }
         } else {
             if (-not (EnsureWorkStillOpen $Url $videoId $LogBox "采集评论前")) {
@@ -2890,9 +2902,12 @@ function CollectWork([string]$Url, [int]$Index, [string]$PackageDir, $LogBox) {
             $domCommentResult = CollectVisibleComments
             [void](EnsureWorkStillOpen $Url $videoId $LogBox "采集可见评论后")
             $apiCount = @($apiCommentResult.items).Count
-            $domCount = @($domCommentResult.items).Count
+            $domCount = @($domCommentResult.items | Where-Object { [string]$_.source_hint -ne "dom_node" }).Count
             $mergedComments = New-Object System.Collections.Generic.List[object]
+            $mergedReplies = New-Object System.Collections.Generic.List[object]
+            $rawCommentsDebug = New-Object System.Collections.Generic.List[object]
             $seenComments = New-Object System.Collections.Generic.List[object]
+            $seenReplies = New-Object System.Collections.Generic.List[object]
             function NormalizeCommentKeyText([string]$Text) {
                 $t = Compact $Text
                 $t = [Regex]::Replace($t, "\[[^\]]+\]", "")
@@ -2902,8 +2917,23 @@ function CollectWork([string]$Url, [int]$Index, [string]$PackageDir, $LogBox) {
                 }
                 return $t
             }
+            foreach ($debug in @($domCommentResult.raw_comments_debug)) {
+                if ($null -ne $debug) { $rawCommentsDebug.Add($debug) | Out-Null }
+            }
             foreach ($src in @(@($apiCommentResult.items), @($domCommentResult.items))) {
                 foreach ($c in @($src)) {
+                    $sourceHint = [string]$c.source_hint
+                    if ($sourceHint -eq "web_comment_reply_api") { continue }
+                    if ($sourceHint -eq "dom_node") {
+                        $rawCommentsDebug.Add([ordered]@{
+                            text = [string]$c.text
+                            author_name = [string]$c.author_name
+                            created_at_raw = [string]$c.created_at_raw
+                            source_hint = "dom_node"
+                            reason = "dom_node 未确认评论结构，未写入正式 comments.items"
+                        }) | Out-Null
+                        continue
+                    }
                     if (-not (IsUsefulCommentItem $c)) { continue }
                     $authorKey = Compact ([string]$c.author_name)
                     $textKey = NormalizeCommentKeyText ([string]$c.text)
@@ -2923,15 +2953,37 @@ function CollectWork([string]$Url, [int]$Index, [string]$PackageDir, $LogBox) {
                 }
                 if ($mergedComments.Count -ge 20) { break }
             }
+            foreach ($r in @($apiCommentResult.replies)) {
+                if (-not (IsUsefulCommentItem $r)) { continue }
+                $authorKey = Compact ([string]$r.author_name)
+                $textKey = NormalizeCommentKeyText ([string]$r.text)
+                if ([string]::IsNullOrWhiteSpace($authorKey) -or [string]::IsNullOrWhiteSpace($textKey)) { continue }
+                $isDuplicate = $false
+                foreach ($seen in $seenReplies.ToArray()) {
+                    if ($seen.author -ne $authorKey) { continue }
+                    if ($seen.text -eq $textKey -or $seen.text.Contains($textKey) -or $textKey.Contains($seen.text)) {
+                        $isDuplicate = $true
+                        break
+                    }
+                }
+                if ($isDuplicate) { continue }
+                $seenReplies.Add([pscustomobject]@{ author = $authorKey; text = $textKey }) | Out-Null
+                $mergedReplies.Add($r)
+                if ($mergedReplies.Count -ge 40) { break }
+            }
             if ($apiCount -gt 0) {
                 $commentResult = $apiCommentResult
                 $commentResult | Add-Member -NotePropertyName items -NotePropertyValue @($mergedComments.ToArray()) -Force
+                $commentResult | Add-Member -NotePropertyName replies -NotePropertyValue @($mergedReplies.ToArray()) -Force
+                $commentResult | Add-Member -NotePropertyName raw_comments_debug -NotePropertyValue @($rawCommentsDebug.ToArray()) -Force
                 $commentResult | Add-Member -NotePropertyName comments_reason -NotePropertyValue "通过当前页面同源评论接口采集，并用评论面板可见内容补漏；未绕过登录或验证码。" -Force
                 $commentResult | Add-Member -NotePropertyName api_comments_count -NotePropertyValue $apiCount -Force
                 $commentResult | Add-Member -NotePropertyName dom_comments_count -NotePropertyValue $domCount -Force
             } else {
                 $commentResult = $domCommentResult
                 $commentResult | Add-Member -NotePropertyName items -NotePropertyValue @($mergedComments.ToArray()) -Force
+                $commentResult | Add-Member -NotePropertyName replies -NotePropertyValue @($mergedReplies.ToArray()) -Force
+                $commentResult | Add-Member -NotePropertyName raw_comments_debug -NotePropertyValue @($rawCommentsDebug.ToArray()) -Force
                 if ($apiCount -gt 0) {
                     $commentResult | Add-Member -NotePropertyName api_comments_count -NotePropertyValue $apiCount -Force
                 } elseif ($apiCommentResult.comments_reason) {
@@ -3100,7 +3152,9 @@ function CollectWork([string]$Url, [int]$Index, [string]$PackageDir, $LogBox) {
         $validCommentItemsCount = $commentTexts.Count
         $replyItemsCount = 0
         $n = 0
-        if ($null -ne $commentResult.filtered_author_reply_count -and [int]::TryParse([string]$commentResult.filtered_author_reply_count, [ref]$n)) {
+        if ($null -ne $commentResult.replies) {
+            $replyItemsCount = @($commentResult.replies).Count
+        } elseif ($null -ne $commentResult.filtered_author_reply_count -and [int]::TryParse([string]$commentResult.filtered_author_reply_count, [ref]$n)) {
             $replyItemsCount = $n
         }
         $commentCountMatchStatus = GetCommentCountMatchStatus $publicCommentCount $validCommentItemsCount $replyItemsCount
@@ -3342,7 +3396,7 @@ function CollectWork([string]$Url, [int]$Index, [string]$PackageDir, $LogBox) {
             folder = (RelPath $folder $PackageDir)
         }
         Set-Content -LiteralPath (Join-Path $folder "meta.json") -Encoding UTF8 -Value ($item | ConvertTo-Json -Depth 30)
-        Set-Content -LiteralPath (Join-Path $folder "comments.json") -Encoding UTF8 -Value (@{ comments_status = "failed"; comments_reason = $failureReason; items = @(); valid_comment_items_count = 0; reply_items_count = 0; comment_count_match_status = "unknown_no_public_count" } | ConvertTo-Json -Depth 10)
+        Set-Content -LiteralPath (Join-Path $folder "comments.json") -Encoding UTF8 -Value (@{ comments_status = "failed"; comments_reason = $failureReason; items = @(); replies = @(); raw_comments_debug = @(); valid_comment_items_count = 0; reply_items_count = 0; comment_count_match_status = "unknown_no_public_count" } | ConvertTo-Json -Depth 10)
         Set-Content -LiteralPath (Join-Path $folder "transcript.txt") -Encoding UTF8 -Value "speech_transcription_status: not_configured`r`ntranscript: `"`""
         Set-Content -LiteralPath (Join-Path $folder "ocr_text.txt") -Encoding UTF8 -Value ""
         Set-Content -LiteralPath (Join-Path $folder "ocr_items.json") -Encoding UTF8 -Value "[]"
@@ -3455,7 +3509,7 @@ function NewFailedWork([string]$Url, [int]$Index, [string]$PackageDir, [string]$
         folder = (RelPath $folder $PackageDir)
     }
     Set-Content -LiteralPath (Join-Path $folder "meta.json") -Encoding UTF8 -Value ($item | ConvertTo-Json -Depth 30)
-    Set-Content -LiteralPath (Join-Path $folder "comments.json") -Encoding UTF8 -Value (@{ comments_status = "failed"; comments_reason = $Reason; items = @(); valid_comment_items_count = 0; reply_items_count = 0; comment_count_match_status = "unknown_no_public_count" } | ConvertTo-Json -Depth 10)
+    Set-Content -LiteralPath (Join-Path $folder "comments.json") -Encoding UTF8 -Value (@{ comments_status = "failed"; comments_reason = $Reason; items = @(); replies = @(); raw_comments_debug = @(); valid_comment_items_count = 0; reply_items_count = 0; comment_count_match_status = "unknown_no_public_count" } | ConvertTo-Json -Depth 10)
     Set-Content -LiteralPath (Join-Path $folder "transcript.txt") -Encoding UTF8 -Value "speech_transcription_status: not_configured`r`ntranscript: `"`""
     Set-Content -LiteralPath (Join-Path $folder "ocr_text.txt") -Encoding UTF8 -Value ""
     Set-Content -LiteralPath (Join-Path $folder "ocr_items.json") -Encoding UTF8 -Value "[]"
@@ -3639,8 +3693,15 @@ function RenderAccountSummary($Items) {
 - sample_size：$Script:SampleSize
 - formal_acceptance：$Script:FormalAcceptance
 - max_works：$Script:EffectiveWorkLimit
+- package_base_name：$Script:PackageBaseName
+- shop_name：$Script:TargetProfileName
+- safe_shop_name：$Script:SafeShopName
+- collected_works_count：$total
+- run_timestamp：$Script:RunTimestamp
+- package_output_dir：$Script:PackageOutputDir
 - output_zip_path：$(ProjectRelPath $Script:CurrentOutputZipPath)
-- output_zip_rule：{店铺名称}-{作品数量}-{时间}.zip
+- zip_output_path：$(ProjectRelPath $Script:CurrentOutputZipPath)
+- output_zip_rule：{店铺名称}-{作品数量三位数}-{时间}.zip
 - authorization_status：$authorizationStatus
 - data_level：$dataLevel
 - 作品总数：$total
@@ -3785,7 +3846,10 @@ function GetDeliveryZipPath([int]$WorkCount) {
     $countPart = "{0:D3}" -f [Math]::Max(0, $WorkCount)
     $timePart = if ([string]::IsNullOrWhiteSpace($Script:RunTimestamp)) { (Get-Date).ToString("yyyyMMdd_HHmm") } else { $Script:RunTimestamp }
     $fileName = "$shopName-$countPart-$timePart.zip"
-    return GetUniqueFilePath (Join-Path $Script:OutputZipRoot $fileName)
+    $zipPath = GetUniqueFilePath (Join-Path $Script:OutputZipRoot $fileName)
+    $Script:SafeShopName = $shopName
+    $Script:PackageBaseName = [IO.Path]::GetFileNameWithoutExtension($zipPath)
+    return $zipPath
 }
 
 function ProjectRelPath([string]$Path) {
@@ -3798,6 +3862,29 @@ function ProjectRelPath([string]$Path) {
         }
     } catch {}
     return $Path.Replace('\','/')
+}
+
+function NewPackageMetadata($Items, [string]$PackageDir) {
+    $shopName = Compact $Script:TargetProfileName
+    if ([string]::IsNullOrWhiteSpace($shopName)) { $shopName = "douyin_account" }
+    $safeShopName = if ([string]::IsNullOrWhiteSpace($Script:SafeShopName)) { SanitizeFileNamePart $shopName "douyin_account" } else { $Script:SafeShopName }
+    $packageDirRel = ProjectRelPath $PackageDir
+    $zipRel = ProjectRelPath $Script:CurrentOutputZipPath
+    $collectedCount = if ($null -eq $Items) { 0 } elseif ($Items -is [System.Collections.ICollection]) { $Items.Count } else { @($Items).Count }
+    $Script:PackageOutputDir = $packageDirRel
+    return [ordered]@{
+        package_base_name = $Script:PackageBaseName
+        shop_name = $shopName
+        safe_shop_name = $safeShopName
+        collected_works_count = $collectedCount
+        run_timestamp = $Script:RunTimestamp
+        package_output_dir = $packageDirRel
+        zip_output_path = $zipRel
+        output_zip_rule = "{店铺名称}-{作品数量三位数}-{时间}.zip"
+        run_mode = $Script:RunMode
+        sample_size = $Script:SampleSize
+        formal_acceptance = $Script:FormalAcceptance
+    }
 }
 
 function AssertSelfTest([bool]$Condition, [string]$Message) {
@@ -3918,6 +4005,9 @@ function RunCollect([string]$ProfileUrl, [int]$Limit, [string]$Mode, $LogBox, $O
         New-Item -ItemType Directory -Force -Path $pkg | Out-Null
         $Script:CurrentPackage = $pkg
         $Script:CurrentOutputZipPath = ""
+        $Script:PackageBaseName = ""
+        $Script:SafeShopName = ""
+        $Script:PackageOutputDir = ""
         SetStatus $StatusLabel "正在使用已保存的登录状态打开 Edge..."
         $hadProfile = StartEdge $Script:PreferredCdpUrl
         if ($hadProfile) {
@@ -3955,6 +4045,8 @@ function RunCollect([string]$ProfileUrl, [int]$Limit, [string]$Mode, $LogBox, $O
         }
         SetStatus $StatusLabel "正在写入 Markdown、JSON、XLSX 并打包 ZIP..."
         $Script:CurrentOutputZipPath = GetDeliveryZipPath $items.Count
+        $packageMetadata = NewPackageMetadata $items $pkg
+        Set-Content -LiteralPath (Join-Path $pkg "package_metadata.json") -Encoding UTF8 -Value ($packageMetadata | ConvertTo-Json -Depth 10)
         Set-Content -LiteralPath (Join-Path $pkg "account_summary.md") -Encoding UTF8 -Value (RenderAccountSummary $items)
         Set-Content -LiteralPath (Join-Path $pkg "works.json") -Encoding UTF8 -Value (ConvertToJsonArray ($items.ToArray()) 30)
         WriteXlsx (Join-Path $pkg "works.xlsx") $items
