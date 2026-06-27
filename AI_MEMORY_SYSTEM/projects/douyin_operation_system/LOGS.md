@@ -90,3 +90,27 @@ The following entries were migrated from `AI_MEMORY_SYSTEM/projects/project_brai
 - comments.items 中 dom_node 为 0。
 - comments.items 重复项为 0。
 - ZIP 包含 package_metadata.json。
+## 2026-06-28 account_ops 包目录与无评论计数小修
+
+### 已发生事实
+
+- 修改 douyin_auto_tool.ps1。
+- 包目录改为 output/packages/{package_base_name}/。
+- package_metadata.json 的 package_output_dir 改为带尾斜杠的相对路径。
+- comments_status=empty 且无公开评论计数时，写入 public_comment_count=0。
+- 无评论的 comment_count_match_status 改为 public_zero。
+- 保留 items / replies / raw_comments_debug 评论结构。
+- 运行 SelfTest 通过。
+- 使用测试链接采集 5 条样本，生成 $zipRel。
+
+### 验证结果
+
+- 包目录为 $pkgRel。
+- works.json 共 5 条。
+- visual_order 为 1-5 连续。
+- content_mapping_status 全部 ok。
+- frame_status/video_crop_status 全部 ok。
+- frames_contact_sheet 共 5 张。
+- failed_count 为 0。
+- 空评论作品写入 public_comment_count=0 与 comment_count_match_status=public_zero。
+- account_summary.md 未发现本机绝对路径。
