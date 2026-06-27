@@ -1,0 +1,37 @@
+{
+  "task_rules": [
+    "TASKS.json 只能写待做任务。",
+    "TASKS.json 只能写下一步行动。",
+    "TASKS.json 不允许写已完成内容。",
+    "TASKS.json 不允许写当前状态。",
+    "TASKS.json 不允许写历史记录。",
+    "当前状态、进度和阻塞问题只能写入 STATE.json。"
+  ],
+  "codex_tasks": [
+    "按 BOOT.md 的最高优先级执行顺序读取 BOOT、STATE、TASKS、CORE。",
+    "执行任务前确认 STATE.json 是唯一当前状态来源。",
+    "执行任务时只处理用户明确授权的文件范围。",
+    "任务结束前更新 STATE.json。",
+    "任务结束前把已发生事实写入 LOGS.md。",
+    "任务变化时同步 TASKS.json。"
+  ],
+  "gpt_review_tasks": [
+    "检查 BOOT.md 是否声明最高优先级执行顺序。",
+    "检查 BOOT.md 是否包含强制执行锁。",
+    "检查 STATE.json 是否只包含 project_name、current_stage、current_task、progress、blockers、last_update。",
+    "检查 TASKS.json 是否只包含待执行任务和下一步行动。",
+    "检查 LOGS.md 是否只记录已发生事实。"
+  ],
+  "acceptance_criteria": [
+    "BOOT.md 明确自己是当前项目实例的唯一入口。",
+    "BOOT.md 写入 BOOT、STATE、TASKS、CORE、执行任务、强制回写的顺序。",
+    "BOOT.md 写入 STATE、LOGS、TASKS 的强制回写顺序。",
+    "BOOT.md 写入未完成 STATE 更新、LOG 记录、TASK 同步时任务失败。",
+    "STATE.json 使用固定字段 project_name、current_stage、current_task、progress、blockers、last_update。",
+    "TASKS.json 不记录当前状态、已完成内容或历史记录。",
+    "LOGS.md 不写计划或未来任务。",
+    "project_brain 只作为 AI_MEMORY_SYSTEM/projects/project_brain 下的单项目实例存在。",
+    "不修改采集代码。",
+    "任务结束后不强制生成本地交付包。"
+  ]
+}
