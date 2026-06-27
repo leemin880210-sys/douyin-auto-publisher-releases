@@ -28,6 +28,7 @@ AI_MEMORY_SYSTEM/
         ├── TASKS.json
         ├── CORE.md
         ├── LOGS.md
+        ├── CODE_EVOLUTION.md
         └── PROJECT_INDEX.md
 ```
 
@@ -66,6 +67,7 @@ Project Factory v2，用于根据一句话生成项目实例。
 - `TASKS.json`
 - `CORE.md`
 - `LOGS.md`
+- `CODE_EVOLUTION.md`（推荐，用于记录代码演进）
 - `PROJECT_INDEX.md`（推荐）
 
 ## 当前项目
@@ -80,6 +82,8 @@ type: memory_system
 
 `project_brain` 是从原单项目记忆系统迁移后的项目实例，现在只作为 `projects/` 下的独立项目存在。
 
+该项目已包含 `CODE_EVOLUTION.md`，用于记录关键代码修改历史，避免多轮迭代中丢失上下文或重复修改。
+
 ## AI 接入流程
 
 AI 进入系统时应按以下顺序：
@@ -90,7 +94,8 @@ AI 进入系统时应按以下顺序：
 4. 读取 `01_PROJECT_REGISTRY/index.json`。
 5. 只进入用户明确授权的项目目录。
 6. 在项目内按 `BOOT.md` → `STATE.json` → `TASKS.json` → `CORE.md` 的顺序执行。
-7. 任务结束时回写项目自己的 `STATE.json` 和 `LOGS.md`，任务变化时同步 `TASKS.json`。
+7. 如果任务涉及代码修改，先读取项目自己的 `CODE_EVOLUTION.md`。
+8. 任务结束时回写项目自己的 `STATE.json` 和 `LOGS.md`，任务变化时同步 `TASKS.json`；如果修改了代码，还必须追加 `CODE_EVOLUTION.md`。
 
 ## 新建项目流程
 
@@ -131,6 +136,8 @@ AI_MEMORY_SYSTEM/01_PROJECT_REGISTRY/index.json
 - 不允许把 global memory 写入项目业务内容。
 - 不允许修改未授权项目。
 - 不允许删除项目历史日志。
+- 修改代码前必须读取项目自己的 `CODE_EVOLUTION.md`。
+- 修改代码后必须追加项目自己的 `CODE_EVOLUTION.md`。
 
 ## 当前状态
 
@@ -139,4 +146,5 @@ AI_MEMORY_SYSTEM 当前可作为多项目 AI OS 使用。
 - 全局规则层：已存在。
 - 项目注册中心：已存在。
 - project_brain 项目实例：已存在且 active。
+- project_brain 代码演进日志：已存在。
 - Project Factory v2：已存在，可按模板生成新项目。
