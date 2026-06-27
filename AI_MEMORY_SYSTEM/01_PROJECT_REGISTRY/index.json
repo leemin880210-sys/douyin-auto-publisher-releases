@@ -4,6 +4,11 @@
     "status": "active",
     "type": "memory_system"
   },
+  "douyin_account_ops": {
+    "path": "AI_MEMORY_SYSTEM/projects/douyin_account_ops",
+    "status": "active",
+    "type": "data_analysis"
+  },
   "registry_name": "AI_MEMORY_SYSTEM_PROJECT_REGISTRY",
   "last_update": "2026-06-27",
   "projects": [
@@ -19,6 +24,21 @@
       "template_status": "Final Template v1.0",
       "current_stage": "全局AI多项目系统强制落地完成",
       "current_task": "等待接入新项目或继续执行授权项目任务",
+      "created_at": "2026-06-27",
+      "last_update": "2026-06-27"
+    },
+    {
+      "id": "douyin_account_ops",
+      "name": "抖音代运营采集工具",
+      "path": "AI_MEMORY_SYSTEM/projects/douyin_account_ops",
+      "link": "https://github.com/leemin880210-sys/douyin-auto-publisher-releases/tree/main/AI_MEMORY_SYSTEM/projects/douyin_account_ops",
+      "purpose": "抖音账号采集包、未授权账号内容诊断、代运营接手前分析、Codex 中转工具",
+      "description": "独立保存抖音代运营采集工具的项目状态、采集规则、待修任务和变更日志，不写入全局记忆，也不污染其他项目实例。",
+      "status": "active",
+      "type": "data_analysis",
+      "template_status": "Project Instance v1.0",
+      "current_stage": "项目实例接入完成",
+      "current_task": "等待修复正式采集包剩余问题并进行正式采集验证",
       "created_at": "2026-06-27",
       "last_update": "2026-06-27"
     }
