@@ -1,0 +1,312 @@
+# 抖音代运营采集工具 CORE
+
+本文件保存本项目长期稳定规则。除非采集边界、输出结构或业务目标变化，否则不要随意改动。
+
+## 项目定位
+
+本项目是 Windows 本地运行的抖音账号采集包工具，用于生成可交给 GPT 分析的账号资料包，服务于抖音代运营接手前诊断、未授权账号内容诊断和签约后授权数据补齐。
+
+## 合规边界
+
+- 不绕过验证码。
+- 不破解登录。
+- 不抓取无权限内容。
+- 只读取用户手动登录后当前可见页面或公开可见内容。
+- 登录状态可保存在本机浏览器 profile/cookie 中，但不得上传或外传 cookie。
+- 未授权数据不得伪造成授权数据。
+- 未授权拿不到的数据必须保留 null，并标记为授权后待补齐。
+
+## 采集模式
+
+### public 未授权模式
+
+用于接手前初步诊断。重点采集内容层和公开可见信息。
+
+必填内容：
+
+- 账号主页信息
+- 主页第一屏截图
+- 作品视觉顺序
+- 作品标题/文案
+- 发布时间原始值
+- 是否置顶
+- 封面图
+- 关键帧和 contact sheet
+- OCR 画面文字
+- 口播/字幕转写状态
+- 评论区可见评论
+- 内容摘要
+- 转化引导判断
+
+### authorized 授权模式
+
+用于签约后完整运营诊断。授权后才补齐：
+
+- play_count
+- authorized_like_count
+- authorized_comment_count
+- favorite_count
+- share_count
+- 粉丝画像
+- 流量来源
+- 完播率
+- 5 秒播放率
+- 互动率
+- 涨粉数
+- 主页访问数
+
+## 默认采集数量
+
+- 正式模式默认 `test_mode=false`。
+- 正式模式默认 `max_works=30`。
+- 账号作品数 <= 30 时采集全部作品。
+- 账号作品数 > 30 时采集最近 30 条。
+- 测试模式必须手动传入 `--test-mode`，且在 summary/account_summary 中明确标记。
+
+## 主页卡片规则
+
+必须先从主页作品卡片生成 `card_records`，每条包含：
+
+- visual_order
+- card_modal_id
+- card_text
+- public_card_like_count
+- row
+- col
+- card_bbox
+- cover
+
+规则：
+
+- `card_text` 只能来自当前作品卡片 DOM，不能从整页 visible_text 截断。
+- `public_card_like_count` 必须从作品卡片心形图标旁数字读取。
+- `visual_order` 必须连续；失败作品也要生成 failed/partial 记录，不允许跳号。
+- row/col 应结合 card_bbox 计算，避免重复或乱序。
+
+## 作品绑定规则
+
+- 打开作品后必须记录 `opened_modal_id`。
+- `card_modal_id == opened_modal_id` 时，`content_mapping_status=ok`。
+- 标题不一致只影响 `title_consistency_status`，不直接导致 `content_mapping_status=mismatch`。
+- `canonical_title = card_text`。
+- `detail_title = title`。
+- `summary.md` 统一使用 `canonical_title`。
+
+## 公开指标规则
+
+- 未授权模式下，主页卡片心形数保存为 `public_card_like_count`。
+- 来源字段为 `public_card_like_source=homepage_card`。
+- 详情页没有复核到公开指标时，`public_metric_status=card_only`。
+- 只有详情页明确读到不同数字时，才标记 `public_metric_status=mismatch`。
+- 不要把公开页面数字误填到 share_count。
+- 未授权拿不到真实分享数时，share_count 保持 null。
+
+## 关键帧规则
+
+每条视频先获取 `duration_seconds`。
+
+抽帧策略：
+
+- cover
+- 0s
+- 1s
+- 2s
+- 3s
+- 5s
+- 5 秒后每 3 秒一帧：8s、11s、14s、17s、20s，直到结束
+- 额外保存 ending.jpg
+
+如果视频小于 6 秒，至少输出：
+
+- cover
+- 0s
+- 1s
+- 2s
+- 3s
+- ending
+
+图片规则：
+
+- 所有帧使用 jpg。
+- 宽度压缩到 720px 或 960px。
+- 质量 70-80。
+- 每条作品生成 `frames_contact_sheet.jpg`。
+
+关键帧必须分两套：
+
+- `full_frame`：完整网页截图，保留抖音 UI。
+- `video_crop`：只裁剪视频主体画面，用于 OCR、摘要和画面节奏判断。
+
+OCR 只能对 `video_crop` 执行。
+
+## OCR 规则
+
+- PaddleOCR 优先，Tesseract 可作为本地 fallback。
+- `ocr_items.json` 记录 `frame_time`、`source_frame`、`cropped_video_frame_path`、`text`、`confidence`、`is_ui_text`、`clean_text`。
+- OCR 乱码不能进入 summary.md。
+- 价格判断必须有证据：`¥+数字`、`数字+元`、`人均+数字`、`套餐+价格` 等。
+- 单独出现 `¥` 不能判断 price=true。
+
+## 评论规则
+
+- 评论入口优先使用键盘 `X` 打开，避免误触点赞。
+- 显示“抢首评”代表没有评论。
+- 评论图标旁有数字代表有评论，需要打开评论区采集。
+- 采集评论时要在评论面板内滚动，不误触点赞。
+- 不采集作者回复作为正式评论。
+- 纯数字、抢首评、无意义 UI 文本不得写入 `comments.items`。
+- fallback 无法确认结构时只能放入 `raw_comments_debug`。
+- 评论数不完整时标 `comment_status=partial`。
+- 如果公开评论数大于 comments.items 数量，差异来自作者回复或过滤评论，可标 `ok_with_reply_filtered`。
+
+## 语音转写规则
+
+- 未配置 ASR 时不要标 ok。
+- `speech_status=not_available`。
+- `speech_transcription_status=not_configured`。
+- `no_speech=unknown`。
+- `transcript.txt` 中 transcript 为空字符串。
+
+## 转化判断规则
+
+conversion_flags 必须证据制。
+
+没有 title/OCR/transcript/comment 的明确证据时，不能标 true。
+
+每个 true 必须包含：
+
+- evidence
+- source
+
+重点判断：
+
+- 地址
+- 价格
+- 团购
+- 私信
+- 关注
+- 预约
+- 营业时间
+- 活动
+- 套餐
+
+## 输出结构
+
+最终输出必须是标准 ZIP。
+
+根目录至少包含：
+
+- `account_summary.md`
+- `account_profile.json`
+- `works.xlsx`
+- `works.json`
+
+每条作品独立文件夹，格式：
+
+```text
+序号_video_id/
+├── meta.json
+├── cover.jpg
+├── frames/
+├── frames_contact_sheet.jpg
+├── transcript.txt
+├── ocr_text.txt
+├── ocr_items.json
+├── comments.json
+└── summary.md
+```
+
+`works.json` 必须是数组。
+
+`works.xlsx` 必须用 openpyxl 或 exceljs 生成。
+
+路径全部使用相对路径，不输出本机绝对路径。
+
+## 状态字段
+
+每条作品必须拆分状态：
+
+- content_mapping_status
+- title_consistency_status
+- frame_status
+- video_crop_status
+- ocr_status
+- comment_status
+- speech_status
+- public_metric_status
+- authorized_metric_status
+
+总体状态：
+
+- `public_success`：未授权模式下内容层采集完整。
+- `partial`：内容层部分缺失但有可分析材料。
+- `failed`：标题、封面、关键帧、字幕/OCR 等核心内容层也没采到。
+
+authorized_metric_pending 不应导致 public_success 失败。
+
+## account_profile 规则
+
+必须结构化字段：
+
+- nickname
+- douyin_id
+- following_count
+- follower_count
+- total_likes
+- works_count
+- ip_location
+- age_or_tag
+- bio
+- has_group_buy_entry
+- has_group_buy_entry_evidence
+- has_promo_content
+- has_promo_content_evidence
+- has_booking_content
+- has_booking_content_evidence
+- has_event_content
+- has_event_content_evidence
+- has_location
+- has_location_evidence
+- has_shop
+- has_shop_evidence
+- homepage_screenshot_path
+
+location evidence 不得抓网页备案文本。
+
+## account_summary 规则
+
+必须统计：
+
+- collection_mode
+- authorization_status
+- data_level
+- 作品总数
+- 成功采集数
+- 失败数
+- public_success_count
+- content_collection_pending_count
+- authorized_metric_pending_count
+- missing_due_to_authorization
+- missing_due_to_error
+- 异常作品列表
+
+## summary.md 规则
+
+summary.md 不要混入：
+
+- 网页 UI
+- 搜索框
+- 账号名
+- 直播提示
+- 评论文本
+- OCR 乱码
+
+视频画面简述只来自：
+
+- 关键帧
+- 可靠 OCR
+- 口播转写
+
+如果没有可靠内容，写“需根据关键帧判断”。
+
+评论区反馈必须单独成节。
