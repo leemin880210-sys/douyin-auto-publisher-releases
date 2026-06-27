@@ -508,3 +508,14 @@ zip 命名规则：
 - 评论结构继续保持 items / replies / raw_comments_debug，不得回退。
 
 为什么这样定：包目录和 ZIP 需要一一对应，方便 GPT 和人工按包名定位文件；无评论和评论可见但未提取是两种不同状态，必须拆开，避免误判评论采集失败。
+## 评论统计字段规则（2026-06-28）
+
+- `comments.items` 只放正式主评论。
+- `comments.replies` 放回复 / 楼中楼。
+- `raw_comments_debug` 放不确定结构、UI、乱码、DOM 错位内容。
+- `web_comment_reply_api` 不进入 `comments.items`。
+- 所有作品和 `comments.json` 必须输出 `main_comment_count`、`reply_comment_count`、`total_extracted_comment_count`、`comment_gap_count`。
+- `comment_count_match_status` 只允许：`public_zero`、`matched`、`matched_with_replies`、`partial_with_replies_filtered`、`visible_count_but_items_empty`、`extracted_more_than_public`、`unknown`。
+- GPT 检查评论数量时必须同时看主评论、回复、总提取数和缺口数，不得只看 `comments.items.length`。
+
+为什么这样定：回复和主评论分层保存，单看 `comments.items` 会低估实际采集评论数量。
