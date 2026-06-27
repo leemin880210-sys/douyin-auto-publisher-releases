@@ -46,3 +46,26 @@
 ### 是否通过测试
 
 已通过 GitHub 反向读取验证：`project_brain/TASKS/next_actions.json` 可从仓库正常打开，五个核心文件已推送到 `project_brain/` 路径。
+
+## 2026-06-27 执行稳定性优化
+
+### 已发生事实
+
+- 修改 `project_brain/BOOT/boot_prompt.md`，声明 BOOT 为唯一入口。
+- 修改 `project_brain/BOOT/boot_prompt.md`，写入强制执行顺序、固定执行流程和禁止行为。
+- 修改 `project_brain/STATE/state.json`，将字段固定为 `project_name`、`current_stage`、`current_task`、`progress`、`blockers`、`last_update`。
+- 修改 `project_brain/STATE/state.json`，用 `blockers` 替代旧字段 `blocking_issues`。
+- 修改 `project_brain/TASKS/next_actions.json`，删除当前状态、已完成描述和历史交付信息。
+- 修改 `project_brain/TASKS/next_actions.json`，保留待做任务、GPT 检查任务和验收标准。
+- 修改 `project_brain/LOGS/change_log.md`，记录本次已发生的规则优化事实。
+
+### 影响范围
+
+- 只影响 `project_brain` 内部规则文件。
+- 未新增目录结构。
+- 未修改抖音采集工具代码。
+
+### 验证结果
+
+- `STATE/state.json` 保持 JSON 格式。
+- `TASKS/next_actions.json` 保持 JSON 格式。
