@@ -4,16 +4,16 @@
   "type": "data_analysis",
   "status": "active",
   "purpose": "账号采集模块：输入抖音主页链接，输出标准 douyin_analysis_package.zip；当前阶段不扩展账号诊断、运营方案、脚本生成、自动发布或商家建档。",
-  "current_stage": "账号采集模块已支持正式模式指定采集数量",
-  "current_task": "继续保持账号采集模块边界，并在后续账号上复测稳定性；后续采集代码变化必须同步记录到 CODE_EVOLUTION.md。",
-  "progress": "已完成采集稳定性优化并正式验证：test_mode=false、max_works=30 的 30 条包 public_success_count=29、partial_count=1、failed_count=0；已修复正式模式下 -MaxWorks 5 被自动改成 30 条的问题；2026-06-27 23:32 批量采集 4 个账号，每个账号均采集 5 条，4 个包 works.json 均为 5 条，visual_order 均为 1-5 连续，frame_status 与 video_crop_status 均为 ok=5。",
+  "current_stage": "采集稳定性小优化已完成并通过脚本自检",
+  "current_task": "等待下一轮 5 条样本包或 30 条正式包复测新字段与新状态；后续采集代码变化必须同步记录到 CODE_EVOLUTION.md。",
+  "progress": "已完成 run_mode/sample_size/formal_acceptance 输出；已优化公开评论数大于 0 但 comments.items 为空时的 comment_status；已移除 has_location_evidence 使用账号名兜底；已新增 duration_status 和 media_type；已将 detail_title 移入 summary.md Debug 区并保留 canonical_title 作为主标题；SelfTest 已通过。",
   "default_collection_mode": "public",
   "default_test_mode": false,
   "default_max_works": 30,
   "blockers": [
-    "正式 30 条包中仍有 1 条 partial，原因是 OCR 状态 failed；frame/video_crop 已全部 ok。",
-    "当前稳定性只在一个 30 条账号和一次 4 账号各 5 条批量采集中验证，后续仍需要在更多账号复测。",
+    "PaddleOCR 或 Tesseract 的 OCR 质量仍依赖本机环境，低质量 OCR 不应进入摘要。",
+    "新字段和新 comment_status 仍需通过实际 5 条样本包与 30 条正式包复测。",
     "当前阶段不得扩展到账号诊断、运营方案、脚本生成、自动发布或商家建档。"
   ],
-  "last_update": "2026-06-27"
+  "last_update": "2026-06-28"
 }
