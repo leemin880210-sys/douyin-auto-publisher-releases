@@ -1,201 +1,121 @@
 # AI_MEMORY_SYSTEM
 
-AI_MEMORY_SYSTEM 是一个面向多项目协作的 AI 记忆系统，用于让 AI 在不同项目之间保持可恢复、可交接、可隔离的工作方式。
+AI_MEMORY_SYSTEM v2.0 是外部记忆容器，只负责保存项目记忆、聊天记录、源码历史版本和恢复信息。
 
-它不是单项目记忆文件夹，而是一个多项目 AI OS：全局规则、项目注册中心、项目实例和项目工厂各自分层，避免状态混用和跨项目污染。
+它不参与具体业务逻辑执行；业务逻辑只存在于各项目自己的记忆文件、模块文件和实际源码中。
 
-## 目录结构
+## 容器职责
 
-```text
-AI_MEMORY_SYSTEM/
-├── 00_GLOBAL_MEMORY/
-│   ├── identity.md
-│   ├── system_rules.md
-│   └── execution_principles.md
-├── 01_PROJECT_REGISTRY/
-│   ├── index.json
-│   └── active_projects.md
-├── 02_PROJECT_FACTORY/
-│   ├── create_project.md
-│   ├── router.md
-│   ├── schema.json
-│   ├── registry_hooks.md
-│   └── project_templates/
-└── projects/
-    └── project_brain/
-        ├── BOOT.md
-        ├── STATE.json
-        ├── TASKS.json
-        ├── CORE.md
-        ├── LOGS.md
-        ├── CODE_EVOLUTION.md
-        └── PROJECT_INDEX.md
-```
+1. 存储所有项目。
+2. 保存项目聊天记录。
+3. 保存源码历史版本。
+4. 保证项目可恢复。
 
-## 核心分层
-
-### 00_GLOBAL_MEMORY
-
-保存全局 AI 行为规则和执行原则。
-
-- `identity.md`：定义 AI_MEMORY_SYSTEM 是多项目系统。
-- `system_rules.md`：定义禁止跨项目读取、禁止共享 STATE、项目隔离等规则。
-- `execution_principles.md`：定义项目接入顺序：BOOT → STATE → TASKS → CORE。
-
-### 01_PROJECT_REGISTRY
-
-保存项目索引，不保存项目记忆。
-
-- `index.json`：登记所有项目路径、状态和类型。
-- `active_projects.md`：列出当前活跃项目。
-
-### 02_PROJECT_FACTORY
-
-Project Factory v2，用于根据一句话生成项目实例。
-
-- `router.md`：根据关键词判断项目类型。
-- `schema.json`：定义输入、模板和输出结构。
-- `create_project.md`：定义创建项目的执行流程。
-- `project_templates/`：保存 `default`、`data_analysis`、`automation`、`ai_agent` 四类模板。
-
-### projects
-
-保存每个独立项目实例。每个项目必须拥有自己的：
-
-- `BOOT.md`
-- `STATE.json`
-- `TASKS.json`
-- `CORE.md`
-- `LOGS.md`
-- `CODE_EVOLUTION.md`（推荐，用于记录代码演进和最近 3 次完整代码快照）
-- `PROJECT_INDEX.md`（推荐）
-
-## 当前项目
-
-当前已注册项目：
+## 当前活跃项目
 
 ```text
-project_brain -> AI_MEMORY_SYSTEM/projects/project_brain
+douyin_operation_system -> AI_MEMORY_SYSTEM/projects/douyin_operation_system
 status: active
-type: memory_system
+type: douyin_operation_system
 ```
 
-`project_brain` 是从原单项目记忆系统迁移后的项目实例，现在只作为 `projects/` 下的独立项目存在。
+`project_brain` 与 `douyin_account_ops` 已合并为 `douyin_operation_system`。历史源目录仍保留在 `projects/` 下作为历史材料，但 registry 只注册 `douyin_operation_system`。
 
-该项目已包含 `CODE_EVOLUTION.md`，用于记录关键代码修改历史，避免多轮迭代中丢失上下文或重复修改。每条代码修改记录必须维护最近 3 次完整代码版本快照：`v1` 为最新版本，`v2` 为上一版本，`v3` 为上上版本。
-
-## project_brain 当前业务规则
-
-`project_brain` 当前已启用抖音代运营输出标准化规则。
-
-输出统一命名：
+## 每个项目必须具备结构
 
 ```text
-{店铺名称}-{作品数量}-{时间}
+AI_MEMORY_SYSTEM/projects/{project}/
+├── CHAT_LOGS.md
+├── CODE_EVOLUTION.md
+├── CODE_SNAPSHOTS/
+│   ├── v1_latest/
+│   ├── v2_previous/
+│   └── v3_previous_previous/
+├── BOOT.md
+├── STATE.json
+├── TASKS.json
+├── CORE.md
+└── LOGS.md
 ```
 
-时间格式：
+## CHAT_LOGS 规则
+
+`CHAT_LOGS.md` 用于记录用户、AI、Codex 的对话事实。
+
+要求：
+
+- 按时间追加。
+- 不允许丢失或覆盖。
+- 不允许折叠隐藏历史。
+
+格式：
 
 ```text
-YYYYMMDD_HHMM
+## [时间]
+
+用户：
+...
+
+AI：
+...
+
+Codex：
+...
 ```
 
-示例：
+## CODE_SNAPSHOTS 规则
+
+`CODE_SNAPSHOTS/` 保存最近 3 次完整源码快照，不保存 diff。
 
 ```text
-星火奶茶店-001-20260124_1530.mp4
-星火奶茶店-002-20260124_1530.txt
+CODE_SNAPSHOTS/
+├── v1_latest/              # 最新代码
+├── v2_previous/            # 上一版代码
+└── v3_previous_previous/   # 上上版代码
 ```
 
-ZIP 输出规则：
+规则：
 
-```text
-/output_zip/{店铺名称}-{作品数量}-{时间}.zip
-```
+- 每次修改必须滚动更新。
+- `v1_latest` = 最新代码。
+- `v2_previous` = 上一版本。
+- `v3_previous_previous` = 上上版本。
+- 必须保存完整代码文件，不只保存差异。
 
-防冲突规则：
+## Codex 执行规则
 
-- 不允许同名覆盖。
-- 每个作品必须递增编号。
-- 同商家必须连续编号。
-- 不同商家必须隔离命名。
-- 所有输出必须唯一。
+每次进入项目必须：
 
-当前运行模式：
-
-```text
-人工触发 + AI生成 + 结构化输出模式
-```
-
-当前限制：
-
-- 未实现自动文件夹隔离（每商家独立目录）。
-- 未实现自动上传/同步机制。
-
-## AI 接入流程
-
-AI 进入系统时应按以下顺序：
-
-1. 读取 `00_GLOBAL_MEMORY/identity.md`。
-2. 读取 `00_GLOBAL_MEMORY/system_rules.md`。
-3. 读取 `00_GLOBAL_MEMORY/execution_principles.md`。
-4. 读取 `01_PROJECT_REGISTRY/index.json`。
-5. 只进入用户明确授权的项目目录。
-6. 在项目内按 `BOOT.md` → `STATE.json` → `TASKS.json` → `CORE.md` 的顺序执行。
-7. 如果任务涉及代码修改，先读取项目自己的 `CODE_EVOLUTION.md`。
-8. 任务结束时回写项目自己的 `STATE.json` 和 `LOGS.md`，任务变化时同步 `TASKS.json`；如果修改了代码，还必须追加 `CODE_EVOLUTION.md`，并维护 `v1/v2/v3` 最近 3 次完整代码快照。
-
-## 新建项目流程
-
-使用 Project Factory v2 时，一句话会被转换为：
-
-```json
-{
-  "project_name": "example_project",
-  "project_type": "default",
-  "description": "用户的一句话需求"
-}
-```
-
-支持类型：
-
-- `default`
-- `data_analysis`
-- `automation`
-- `ai_agent`
-
-新项目会生成到：
-
-```text
-AI_MEMORY_SYSTEM/projects/{project_name}/
-```
-
-并注册到：
-
-```text
-AI_MEMORY_SYSTEM/01_PROJECT_REGISTRY/index.json
-```
+1. 读取 `CHAT_LOGS.md`。
+2. 读取 `STATE.json`。
+3. 读取 `CODE_SNAPSHOTS/v1_latest`。
+4. 执行用户授权任务。
+5. 更新：
+   - `CHAT_LOGS.md`
+   - `LOGS.md`
+   - `STATE.json`
+   - `CODE_EVOLUTION.md`
+   - `CODE_SNAPSHOTS/`
 
 ## 强制约束
 
-- 不允许跨项目读取数据。
-- 不允许共享 STATE。
+- 不允许删除历史聊天。
+- 不允许删除代码版本。
+- 不允许跨项目访问数据。
+- 不允许覆盖旧版本。
+- 所有历史必须保留。
 - 不允许把 registry 当作 memory 使用。
 - 不允许把 global memory 写入项目业务内容。
-- 不允许修改未授权项目。
-- 不允许删除项目历史日志。
-- 修改代码前必须读取项目自己的 `CODE_EVOLUTION.md`。
-- 修改代码后必须追加项目自己的 `CODE_EVOLUTION.md`。
-- 每次代码修改记录必须维护最近 3 次完整代码版本快照：`v1` 最新版本、`v2` 上一版本、`v3` 上上版本。
-- 生成抖音项目输出时必须遵守统一命名、连续编号、ZIP 目录和防冲突规则。
 
-## 当前状态
+## 系统目标
 
-AI_MEMORY_SYSTEM 当前可作为多项目 AI OS 使用。
+AI_MEMORY_SYSTEM v2.0 必须保证：
 
-- 全局规则层：已存在。
-- 项目注册中心：已存在。
-- project_brain 项目实例：已存在且 active。
-- project_brain 当前阶段：抖音代运营输出标准化规则已启用。
-- project_brain 代码演进日志：已存在，并要求维护最近 3 次完整代码快照。
-- Project Factory v2：已存在，可按模板生成新项目。
+- 聊天永久可追溯。
+- 代码具备最近 3 版本回滚能力。
+- 项目完全可恢复。
+- 多项目完全隔离。
+
+## 兼容说明
+
+`00_GLOBAL_MEMORY`、`01_PROJECT_REGISTRY`、`02_PROJECT_FACTORY` 等既有系统层文件保留为历史结构和容器辅助文件；v2.0 的当前核心定位是外部记忆容器，不直接承载业务逻辑。

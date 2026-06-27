@@ -2,7 +2,8 @@
   "douyin_operation_system": {
     "path": "AI_MEMORY_SYSTEM/projects/douyin_operation_system",
     "status": "active",
-    "type": "douyin_operation_system"
+    "type": "douyin_operation_system",
+    "container_version": "v2.0"
   },
   "registry_name": "AI_MEMORY_SYSTEM_PROJECT_REGISTRY",
   "last_update": "2026-06-28",
@@ -12,11 +13,12 @@
       "name": "douyin_operation_system",
       "path": "AI_MEMORY_SYSTEM/projects/douyin_operation_system",
       "link": "https://github.com/leemin880210-sys/douyin-auto-publisher-releases/tree/main/AI_MEMORY_SYSTEM/projects/douyin_operation_system",
-      "purpose": "统一抖音代运营业务项目：core system 管理业务规则，modules/account_ops 承载抖音账号采集模块。",
+      "purpose": "统一抖音代运营业务项目；AI_MEMORY_SYSTEM v2.0 仅作为外部记忆容器保存聊天、状态、日志和最近3次源码快照。",
       "description": "由 project_brain 与 douyin_account_ops 合并而来；project_brain 作为 root core system，douyin_account_ops 迁移为 modules/account_ops。",
       "status": "active",
       "type": "douyin_operation_system",
-      "template_status": "Unified Business Project v1.0",
+      "container_version": "v2.0",
+      "template_status": "Unified Business Project v1.0 + Container Memory v2.0",
       "modules": {
         "account_ops": "AI_MEMORY_SYSTEM/projects/douyin_operation_system/modules/account_ops",
         "data_analysis": "AI_MEMORY_SYSTEM/projects/douyin_operation_system/modules/data_analysis",
@@ -26,8 +28,8 @@
         "project_brain",
         "douyin_account_ops"
       ],
-      "current_stage": "project_brain 与 douyin_account_ops 已合并为统一抖音代运营业务项目",
-      "current_task": "以 core system 统一管理抖音代运营业务规则，并通过 modules/account_ops 承载账号采集模块；等待下一轮采集复测或内容流程任务。",
+      "current_stage": "AI_MEMORY_SYSTEM 容器 v2.0 已启用",
+      "current_task": "按 CHAT_LOGS 与 CODE_SNAPSHOTS 三版本快照规则维护项目可追溯和可恢复能力。",
       "created_at": "2026-06-28",
       "last_update": "2026-06-28"
     }

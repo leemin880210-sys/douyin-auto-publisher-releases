@@ -47,9 +47,3 @@ The following entries were migrated from `AI_MEMORY_SYSTEM/projects/project_brai
 - action: Merged `project_brain` and `douyin_account_ops` into the unified project `douyin_operation_system`.
 - result: Created `AI_MEMORY_SYSTEM/projects/douyin_operation_system/`; migrated `project_brain` as root core system; copied `douyin_account_ops` into `modules/account_ops/`; created reserved module directories `modules/data_analysis/` and `modules/content_pipeline/`; updated registry to register only `douyin_operation_system`.
 - notes: No GLOBAL_MEMORY files were modified. No business code was modified. Existing source project directories were left untouched as historical source material, but removed from independent registry.
-
-- timestamp: 2026-06-28
-- actor: Codex
-- action: Applied AI_MEMORY_SYSTEM container upgrade rules v2.0.
-- result: Added CHAT_LOGS.md and CODE_SNAPSHOTS/v1_latest, v2_previous, v3_previous_previous; updated README, registry, active project BOOT, STATE, TASKS, CORE, LOGS and CODE_EVOLUTION to reflect v2.0 container storage rules.
-- notes: No GLOBAL_MEMORY files were modified. No business code was modified. Existing historical source directories were not deleted.

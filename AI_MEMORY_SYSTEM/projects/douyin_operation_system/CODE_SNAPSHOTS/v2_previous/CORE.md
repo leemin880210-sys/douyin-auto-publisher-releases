@@ -1,14 +1,10 @@
 # douyin_operation_system CORE
 
-本文件是统一抖音代运营业务项目的长期核心认知。
-
-## AI_MEMORY_SYSTEM v2.0 容器定位
-
-AI_MEMORY_SYSTEM 是外部记忆容器，负责保存项目聊天、状态、任务、日志、核心规则和最近 3 次完整源码快照。
-
-AI_MEMORY_SYSTEM 不直接参与业务逻辑执行；业务执行只由用户明确授权的项目、模块或实际源码完成。
+本文件是统一抖音代运营业务项目的长期核心认知。除非项目方向发生明确重构，否则不要频繁修改。
 
 ## 在 AI_MEMORY_SYSTEM 中的位置
+
+本项目位于：
 
 ```text
 AI_MEMORY_SYSTEM/projects/douyin_operation_system
@@ -16,45 +12,28 @@ AI_MEMORY_SYSTEM/projects/douyin_operation_system
 
 本项目由两个原独立项目合并而来：
 
-- `project_brain` → root core system。
-- `douyin_account_ops` → `modules/account_ops/`。
+- `project_brain` → 迁移为 root core system。
+- `douyin_account_ops` → 迁移为 `modules/account_ops/`。
 
 合并后，registry 只注册 `douyin_operation_system` 一个统一业务项目。
 
-## v2.0 必备恢复文件
+## 本项目做什么
 
-本项目必须包含：
+本项目是面向微小商家的抖音代运营、账号采集、内容生成与 AI 工作流系统。当前重点包括：
 
-- `CHAT_LOGS.md`
-- `CODE_EVOLUTION.md`
-- `CODE_SNAPSHOTS/v1_latest/`
-- `CODE_SNAPSHOTS/v2_previous/`
-- `CODE_SNAPSHOTS/v3_previous_previous/`
-- `BOOT.md`
-- `STATE.json`
-- `TASKS.json`
-- `CORE.md`
-- `LOGS.md`
-
-## CHAT_LOGS 规则
-
-- 记录用户、AI、Codex 对话。
-- 必须按时间追加。
-- 不允许丢失、覆盖、折叠或隐藏历史。
-
-## CODE_SNAPSHOTS 规则
-
-- `v1_latest/` 保存最新完整代码。
-- `v2_previous/` 保存上一版完整代码。
-- `v3_previous_previous/` 保存上上版完整代码。
-- 每次修改必须滚动更新。
-- 保存完整代码文件，不只保存 diff。
+- 抖音账号公开内容采集与分析包生成
+- 商家建档
+- 素材整理
+- 短视频脚本生成
+- 视频、图片、zip 输出
+- 数据复盘
+- GPT 与 Codex 协同执行
 
 ## 模块职责
 
 ### core system（项目根部）
 
-负责统一项目入口、状态、任务、核心规则、日志、聊天记录、源码快照和模块路由。
+负责统一项目入口、状态、任务、核心规则、日志和模块路由。
 
 ### modules/account_ops
 
@@ -74,21 +53,24 @@ AI_MEMORY_SYSTEM/projects/douyin_operation_system
 
 预留模块，用于后续脚本、素材、图片、视频和交付文件流水线。
 
-## 本项目业务范围
+## 服务对象
 
-本项目是面向微小商家的抖音代运营、账号采集、内容生成与 AI 工作流系统。当前重点包括：
+服务对象是本地生活、餐饮、花艺、门店服务等类型的微小商家。项目面向的是预算有限、需要内容运营支持、但不一定具备完整运营团队的小商家。
 
-- 抖音账号公开内容采集与分析包生成
-- 商家建档
-- 素材整理
-- 短视频脚本生成
-- 视频、图片、zip 输出
-- 数据复盘
-- GPT 与 Codex 协同执行
+## 核心目标
+
+建立一个可恢复、可交接、可持续执行的 AI 代运营工作流：
+
+1. 用本地工具整理账号公开内容资料包。
+2. 用 GPT 分析商家账号、内容、评论和转化线索。
+3. 用 Codex 持续维护工具、流程和交付结构。
+4. 用本项目记忆文件让任何授权 AI 接入后能快速恢复项目状态。
 
 ## 输出命名规则（v1.0）
 
 规则版本时间：`2026-01-24_1530`
+
+所有输出必须统一命名：
 
 ```text
 {店铺名称}-{作品数量}-{时间}
@@ -121,6 +103,12 @@ zip 命名规则：
 {店铺名称}-{作品数量}-{时间}.zip
 ```
 
+示例：
+
+```text
+/output_zip/星火奶茶店-003-20260124_1530.zip
+```
+
 ## 防冲突规则
 
 - 不允许同名覆盖。
@@ -131,11 +119,23 @@ zip 命名规则：
 
 ## 当前运行模式
 
+当前系统运行模式为：
+
 ```text
 人工触发 + AI生成 + 结构化输出模式
 ```
 
 当前不是自动执行系统。
+
+## 当前已具备能力
+
+- 多商家并行处理
+- 自动编号系统
+- ZIP 独立目录输出
+- 防重名机制
+- 标准化文件体系
+- 可追溯记录结构
+- 账号采集模块记忆隔离
 
 ## 当前限制
 
@@ -152,10 +152,26 @@ zip 命名规则：
 - 不把未授权数据伪造成已授权数据。
 - 不承诺投流、广告投放、涨粉或成交结果。
 - 不修改与当前任务无关的业务代码。
-- 不删除历史聊天。
 - 不删除历史日志。
-- 不删除代码版本。
 - 不覆盖已有输出文件。
 - 不混用不同商家的作品编号。
 - 不修改 `AI_MEMORY_SYSTEM/00_GLOBAL_MEMORY`。
 - 不把旧 `project_brain` 或 `douyin_account_ops` 作为独立注册项目继续运行。
+
+## Codex 工作规则
+
+Codex 接入项目后必须按以下顺序执行：
+
+1. 读取 root `BOOT.md`。
+2. 读取 root `STATE.json`。
+3. 读取 root `TASKS.json`。
+4. 读取 root `CORE.md`。
+5. 判断任务目标模块。
+6. 如涉及账号采集，读取 `modules/account_ops/` 下的完整记忆文件。
+7. 明确当前任务是否允许修改业务代码。
+8. 执行任务时只修改允许范围内的文件。
+9. 任务结束前更新 root `STATE.json`。
+10. 任务结束前写入 root `LOGS.md`。
+11. 如修改模块规则或代码，同步对应模块日志与代码演进记录。
+
+如果 STATE 更新、LOG 记录、必要的 TASK 同步没有完成，Codex 不允许返回完成状态。
