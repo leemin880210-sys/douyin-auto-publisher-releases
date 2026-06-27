@@ -9,47 +9,28 @@
   "codex_tasks": [
     {
       "priority": 1,
-      "task": "修复标题字段优先级：canonical_title 必须等于 card_text，detail_title 保留详情页标题，title_consistency_status 单独判断 ok/mismatch。"
+      "task": "继续在不同账号上复测账号采集模块稳定性，确认正式模式仍满足 public_success_count >= 80%、failed_count <= 1、visual_order 连续。"
     },
     {
       "priority": 2,
-      "task": "修复 content_mapping 判断：只要 card_modal_id == opened_modal_id，content_mapping_status 应为 ok；标题不一致只影响 title_consistency_status。"
+      "task": "减少 OCR failed 导致的 partial；保持 summary.md 不使用 OCR 乱码生成摘要。"
     },
     {
       "priority": 3,
-      "task": "修复 public_metric_status：主页卡片已采到 public_card_like_count 但详情页未复核时标 card_only；只有详情页明确读到不同数字才标 mismatch。"
+      "task": "继续监控图文或短作品自动跳转场景，确保采集过程中始终重新打开并校验原 card_modal_id。"
     },
     {
       "priority": 4,
-      "task": "修复 frame/crop 失败：打开弹窗后等待视频加载、检查 video 元素、失败刷新当前作品重试 1 次，仍失败才标 frame_failed。"
-    },
-    {
-      "priority": 5,
-      "task": "修复图文或短作品自动跳转：采集过程中持续校验 opened_modal_id，若自动跳到下一条，停止当前采集并重新打开原 card_modal_id。"
-    },
-    {
-      "priority": 6,
-      "task": "优化主页下滑顺序：控制滚动幅度，按 card_bbox/top/left 和 visual_order 连续采集，避免从第 24 条后跳到非顺序作品。"
-    },
-    {
-      "priority": 7,
-      "task": "修复账号促销识别：has_promo_content、has_booking_content、has_event_content 需要证据字段；has_group_buy_entry 仅在主页有真实团购入口时为 true。"
-    },
-    {
-      "priority": 8,
-      "task": "清理 summary.md：统一使用 canonical_title，视频画面简述只来自关键帧、可靠 OCR 和口播；不要混入账号名、直播提示、评论或 OCR 乱码。"
-    },
-    {
-      "priority": 9,
-      "task": "重新正式采集验证：默认 test_mode=false、max_works=30；账号作品数小于等于 30 时采集全部作品。"
+      "task": "本阶段只维护账号采集模块；不扩展账号诊断、运营方案、脚本生成、自动发布或商家建档。"
     }
   ],
   "gpt_review_tasks": [
     "检查正式包中 works.json 是否为数组且 visual_order 连续。",
-    "检查第 9 条等公开心形数是否来自主页卡片心形旁数字。",
-    "检查 content_mapping_status、title_consistency_status、public_metric_status 是否拆分正确。",
-    "检查 frame_status、video_crop_status、ocr_status、comment_status、speech_status、authorized_metric_status 是否按实际情况标注。",
-    "检查 summary.md 是否未混入网页 UI、评论、账号名、直播提示或 OCR 乱码。"
+    "检查 public_success_count 是否达到 80% 以上，failed_count 是否小于等于 1。",
+    "检查 frame_status 和 video_crop_status 是否大面积为 ok。",
+    "检查 comments.json 是否未写入纯数字、抢首评、无意义 UI 文本或解析乱码。",
+    "检查 transcript.txt 是否只标记 speech_transcription_status=not_configured，未假装语音转写。",
+    "检查 summary.md 是否未混入网页 UI、OCR 乱码、账号名或直播提示。"
   ],
   "acceptance_criteria": [
     "正式模式默认 test_mode=false、max_works=30。",
