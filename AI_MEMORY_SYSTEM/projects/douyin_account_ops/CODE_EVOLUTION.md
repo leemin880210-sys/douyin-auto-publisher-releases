@@ -135,3 +135,55 @@
 - 本次只修复指定采集数量在正式模式下不生效的问题。
 - 未修改评论、OCR、抽帧、摘要、授权指标采集逻辑。
 - 未扩展账号诊断、运营方案、脚本生成、自动发布或商家建档。
+
+## 2026-06-28 采集输出字段与状态小优化
+
+### 变更原因
+
+4 个 5 条样本包已经通过基础检查，但样本包和正式包缺少明确的包类型字段；部分评论状态在公开评论数大于 0 但正式评论 items 为空时容易误标为 `ok_with_reply_filtered`；位置证据仍可能被账号名兜底；图文或静态卡片的时长不可用场景需要更明确表达；`detail_title` 不应参与 summary 主标题判断。
+
+### 影响文件
+
+- `douyin_auto_tool.ps1`
+- `AI_MEMORY_SYSTEM/projects/douyin_account_ops/STATE.json`
+- `AI_MEMORY_SYSTEM/projects/douyin_account_ops/TASKS.json`
+- `AI_MEMORY_SYSTEM/projects/douyin_account_ops/CORE.md`
+- `AI_MEMORY_SYSTEM/projects/douyin_account_ops/LOGS.md`
+- `AI_MEMORY_SYSTEM/projects/douyin_account_ops/CODE_EVOLUTION.md`
+
+### 代码变化
+
+- 新增脚本级运行模式状态：`RunMode`、`SampleSize`、`FormalAcceptance`。
+- 新增 `SetRunMode`，根据原始请求数量和测试模式判断样本包或正式包。
+- 每条作品输出新增 `run_mode`、`sample_size`、`formal_acceptance`。
+- `account_summary.md` 和 `works.xlsx` 新增同名字段。
+- 评论状态逻辑新增 `visible_count_but_items_empty`、`partial_no_valid_comments_extracted`。
+- 当 `public_comment_count > 0` 且 `comments.items=0` 时，作品状态不再按成功处理。
+- 新增 `DetectCurrentMediaType`，用于识别 `video` 或 `static_or_image_card`。
+- 抽帧结果新增 `duration_status` 和 `media_type`。
+- `duration_seconds` 不可用但帧和裁剪正常时输出 `duration_status=unavailable_but_frames_ok`。
+- 主页资料解析移除 `has_location_evidence` 使用账号名兜底的逻辑。
+- `summary.md` 去掉正文区的详情页标题，改为在 Debug 区记录 `detail_title`。
+- `SelfTest` 新增样本/正式 `run_mode` 判定断言，以及失败记录 `duration_status`、`media_type`、`formal_acceptance` 字段断言。
+
+### 行为变化
+
+- 手动指定 5 条采集或 `--test-mode` 生成样本检查包字段。
+- 默认 30 条正式采集生成正式包字段；账号实际作品数小于等于 30 时仍按正式包验收。
+- 有公开评论数但没有有效评论 items 时，GPT 可以明确识别为评论采集不完整。
+- 位置证据更严格，不再用账号名假装地址证据。
+- 图文或静态卡片不会因为没有视频时长而直接被误判为内容失败。
+- summary 主标题只使用 `canonical_title`，降低详情页错位污染风险。
+
+### 验证结果
+
+- `powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\douyin_auto_tool.ps1 -SelfTest` 通过。
+- `STATE.json` 通过 `ConvertFrom-Json` 校验。
+- `TASKS.json` 通过 `ConvertFrom-Json` 校验。
+
+### 风险与边界
+
+- 本次未重新实际采集 5 条样本包或 30 条正式包，只完成脚本自检。
+- 本次只优化采集输出字段和状态规则。
+- 未扩展账号诊断、运营方案、脚本生成、自动发布或商家建档。
+- 未绕过验证码、未破解登录、未抓取无权限内容。
