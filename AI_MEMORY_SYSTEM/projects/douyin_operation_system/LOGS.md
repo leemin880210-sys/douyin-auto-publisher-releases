@@ -114,3 +114,19 @@ The following entries were migrated from `AI_MEMORY_SYSTEM/projects/project_brai
 - failed_count 为 0。
 - 空评论作品写入 public_comment_count=0 与 comment_count_match_status=public_zero。
 - account_summary.md 未发现本机绝对路径。
+
+## 2026-06-28 account_ops 4 个链接每个最多 10 条批量采集
+
+### 已发生事实
+
+- 读取本地文件 C:\Users\cc\Desktop\新建文本文档 (3).txt。
+- 从文件中解析到 4 个抖音主页链接。
+- 按顺序执行 4 次采集，每次参数为 -MaxWorks 10。
+- 未修改采集代码。
+
+### 验证结果
+
+- LeGuè 浅滩·猫咖·鸡尾酒官方号：10 条，ZIP `output_zip/LeGuè浅滩·猫咖·鸡尾酒官方号-010-20260628_0355.zip`，visual_order 1-10 连续，mapping/frame/crop 全部 ok，contact_sheet 10，状态 public_success=6、partial=4。
+- 拾久休闲吧官方号：10 条，ZIP `output_zip/拾久休闲吧官方号-010-20260628_0359.zip`，visual_order 1-10 连续，mapping/frame/crop 全部 ok，contact_sheet 10，状态 public_success=10。
+- 闽侯甘蔗记得来四果汤营业中：主页实际检测到 6 条作品，ZIP `output_zip/闽侯甘蔗记得来四果汤营业中-006-20260628_0404.zip`，visual_order 1-6 连续，mapping/frame/crop 全部 ok，contact_sheet 6，状态 public_success=5、partial=1。
+- 寂燃CRAFT BEER BAR：主页实际检测到 9 条作品，ZIP `output_zip/寂燃CRAFTBEERBAR-009-20260628_0409.zip`，visual_order 1-9 连续，mapping/frame/crop 全部 ok，contact_sheet 9，状态 public_success=8、partial=1。
