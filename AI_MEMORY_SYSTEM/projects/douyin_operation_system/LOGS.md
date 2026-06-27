@@ -77,7 +77,7 @@ The following entries were migrated from `AI_MEMORY_SYSTEM/projects/project_brai
 - dom_node 解析结果不再进入正式 items，改写入 aw_comments_debug。
 - 包根新增 package_metadata.json，包含 package_base_name、shop_name、safe_shop_name、collected_works_count、run_timestamp、package_output_dir、zip_output_path。
 - 运行 SelfTest 通过。
-- 使用新链接实际采集 5 条样本，生成 $zipRel。
+- 使用新链接实际采集 5 条样本，生成 output_zip/寂燃CRAFTBEERBAR-005-20260628_0311.zip。
 
 ### 验证结果
 
