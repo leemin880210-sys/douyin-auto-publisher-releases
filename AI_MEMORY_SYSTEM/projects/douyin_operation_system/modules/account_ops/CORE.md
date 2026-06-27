@@ -496,3 +496,15 @@ zip 命名规则：
 路径字段必须使用项目相对路径，不允许写入 C:\Users\... 本机绝对路径。
 
 为什么这样定：GPT 检查多个样本包或正式包时，需要直接读取包名、店铺名、作品数、时间戳和 ZIP 位置；使用相对路径可避免泄露本机目录，也方便跨机器检查。
+## 包目录与无评论计数规则（2026-06-28）
+
+- 采集包实际目录必须为 output/packages/{package_base_name}/。
+- package_metadata.json.package_output_dir 必须为 output/packages/{package_base_name}/，并保留尾斜杠。
+- zip_output_path 必须继续为 output_zip/{package_base_name}.zip。
+- package_output_dir 与 zip_output_path 均必须是相对路径，不能写入本机绝对路径。
+- 页面无评论时，public_comment_count=0。
+- 页面无评论时，comment_count_match_status=public_zero。
+- isible_count_but_items_empty 只用于公开评论数大于 0，但没有提取到有效 comments.items 的情况。
+- 评论结构继续保持 items / replies / raw_comments_debug，不得回退。
+
+为什么这样定：包目录和 ZIP 需要一一对应，方便 GPT 和人工按包名定位文件；无评论和评论可见但未提取是两种不同状态，必须拆开，避免误判评论采集失败。
