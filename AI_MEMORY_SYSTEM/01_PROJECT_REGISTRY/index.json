@@ -1,0 +1,15 @@
+{
+  "registry_name": "AI_MEMORY_SYSTEM_PROJECT_REGISTRY",
+  "last_update": "2026-06-27",
+  "projects": [
+    {
+      "id": "project_brain",
+      "name": "project_brain",
+      "path": "AI_MEMORY_SYSTEM/projects/project_brain",
+      "status": "active",
+      "current_stage": "已迁移为全局AI记忆系统下的单项目实例",
+      "current_task": "等待接入新项目或继续执行授权项目任务",
+      "last_update": "2026-06-27"
+    }
+  ]
+}
