@@ -16,22 +16,18 @@
                         },
                         {
                             "priority":  2,
-                            "task":  "复核 comments.json 新结构：items 只保存正式主评论，replies 保存 web_comment_reply_api 回复，raw_comments_debug 保存 dom_node 或 line_fallback 等不可确认结构内容。"
+                            "task":  "复核 package_metadata.json：package_output_dir 必须为 output/packages/{package_base_name}/，zip_output_path 必须为 output_zip/{package_base_name}.zip，二者均为相对路径。"
                         },
                         {
                             "priority":  3,
-                            "task":  "继续观察 public_comment_count \u003e 0 但 comments.items 为空的作品，确认是否保持 visible_count_but_items_empty 或 partial_no_valid_comments_extracted，且不误标 ok_with_reply_filtered。"
+                            "task":  "复核 comments.json：items/replies/raw_comments_debug 三段结构保持；无评论作品 public_comment_count=0 且 comment_count_match_status=public_zero。"
                         },
                         {
                             "priority":  4,
-                            "task":  "复测多商家输出时确认 package_metadata.json 的 package_base_name、shop_name、safe_shop_name、collected_works_count、run_timestamp、package_output_dir、zip_output_path 全部存在且路径为相对路径。"
+                            "task":  "继续观察 public_comment_count \u003e 0 但 comments.items 为空的作品，确认保持 visible_count_but_items_empty 或 partial_no_valid_comments_extracted。"
                         },
                         {
                             "priority":  5,
-                            "task":  "复测多商家输出时确认作品编号按商家隔离且连续递增，不同商家不得混用编号。"
-                        },
-                        {
-                            "priority":  6,
                             "task":  "后续凡涉及采集代码修改，必须同步记录到 CODE_EVOLUTION.md，说明变更原因、影响文件、代码变化、行为变化和验证结果。"
                         }
                     ],
@@ -82,6 +78,8 @@
                              "dom_node 不允许出现在 comments.items。",
                              "comments.items 必须按 author_name + text 去重，API 与 DOM 重复时优先保留 web_comment_api。",
                              "package_metadata.json 必须包含 package_base_name、shop_name、safe_shop_name、collected_works_count、run_timestamp、package_output_dir、zip_output_path。",
-                             "package_output_dir 与 zip_output_path 必须是项目相对路径，不允许输出 C:\\Users\\ 绝对路径。"
+                             "package_output_dir 必须为 output/packages/{package_base_name}/，带尾斜杠。",
+                             "package_output_dir 与 zip_output_path 必须是项目相对路径，不允许输出 C:\\Users\\ 绝对路径。",
+                             "页面无评论时 public_comment_count 必须为 0，comment_count_match_status 必须为 public_zero。"
                          ]
 }
