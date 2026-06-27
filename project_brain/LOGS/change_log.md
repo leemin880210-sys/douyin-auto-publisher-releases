@@ -69,3 +69,27 @@
 
 - `STATE/state.json` 保持 JSON 格式。
 - `TASKS/next_actions.json` 保持 JSON 格式。
+
+## 2026-06-27 执行强制化升级
+
+### 已发生事实
+
+- 修改 `project_brain/BOOT/boot_prompt.md`，将执行顺序强化为 BOOT、STATE、TASKS、CORE、执行任务、强制回写。
+- 修改 `project_brain/BOOT/boot_prompt.md`，新增 STATE、LOGS、TASKS 的强制回写顺序。
+- 修改 `project_brain/BOOT/boot_prompt.md`，新增强制执行锁规则。
+- 修改 `project_brain/BOOT/boot_prompt.md`，定义 Codex 为严格按状态机执行的操作单元。
+- 修改 `project_brain/STATE/state.json`，记录本次执行强制化升级后的当前阶段、当前任务、进度和更新时间。
+- 修改 `project_brain/TASKS/next_actions.json`，强化 TASKS 只能包含待执行任务和下一步行动。
+- 修改 `project_brain/CORE/memory.md`，同步 Codex 执行顺序和状态机操作单元定义。
+- 修改 `project_brain/LOGS/change_log.md`，记录本次已发生的规则升级事实。
+
+### 影响范围
+
+- 只影响 `project_brain` 内部规则文件。
+- 未新增目录结构。
+- 未修改抖音采集工具代码。
+
+### 验证结果
+
+- `STATE/state.json` 保持 JSON 格式。
+- `TASKS/next_actions.json` 保持 JSON 格式。
