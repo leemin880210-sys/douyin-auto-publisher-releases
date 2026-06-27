@@ -469,3 +469,30 @@ zip 命名规则：
 - valid_comment_items_count：写入 comments.items 的有效评论数。
 - reply_items_count：已识别并过滤的作者回复数量。
 - comment_count_match_status：公开评论数与有效评论/过滤回复的匹配状态，可取 match、ok_with_reply_filtered、partial、visible_count_but_items_empty、unknown_no_public_count。
+
+## 评论结构规则（2026-06-28）
+
+- comments.json 必须包含 items、eplies、aw_comments_debug。
+- items 只保存可用于分析的正式主评论。
+- web_comment_reply_api 不允许进入 items，必须进入 eplies。
+- API 与 DOM 重复时，按 uthor_name + text 去重，并优先保留 web_comment_api。
+- dom_node、line_fallback 等无法确认结构的解析结果不得进入正式 items，只能进入 aw_comments_debug。
+- eply_items_count 优先使用 eplies.Count。
+
+为什么这样定：评论区经常同时存在 API 数据、DOM 可见文本、回复和 UI 文本。如果不分流，回复会被误当主评论，DOM 异常节点会污染正式评论，导致 GPT 对用户反馈判断失真。
+
+## 包元数据规则（2026-06-28）
+
+每个采集包根目录必须输出 package_metadata.json，字段包括：
+
+- package_base_name
+- shop_name
+- safe_shop_name
+- collected_works_count
+- un_timestamp
+- package_output_dir
+- zip_output_path
+
+路径字段必须使用项目相对路径，不允许写入 C:\Users\... 本机绝对路径。
+
+为什么这样定：GPT 检查多个样本包或正式包时，需要直接读取包名、店铺名、作品数、时间戳和 ZIP 位置；使用相对路径可避免泄露本机目录，也方便跨机器检查。
