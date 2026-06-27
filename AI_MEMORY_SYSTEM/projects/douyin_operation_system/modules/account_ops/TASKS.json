@@ -46,7 +46,9 @@
                              "检查 transcript.txt 是否只标记 speech_transcription_status=not_configured，未假装语音转写。",
                              "检查 summary.md 是否未混入网页 UI、OCR 乱码、账号名、直播提示，且 detail_title 只在 Debug 区。",
                              "检查输出文件是否符合统一命名、连续编号、ZIP 目录和防冲突规则。",
-                             "检查 summary.md 是否未混入 OCR fallback 提示、低质量 OCR 乱码或网页 UI。"
+                             "检查 summary.md 是否未混入 OCR fallback 提示、低质量 OCR 乱码或网页 UI。",
+                             "检查 output_zip_path 是否为项目相对路径，不得包含 C:\\Users 或其他本机绝对路径。",
+                             "检查 works.json、meta.json、comments.json、works.xlsx 是否包含 valid_comment_items_count、reply_items_count、comment_count_match_status。"
                          ],
     "acceptance_criteria":  [
                                 "正式模式默认 test_mode=false、max_works=30。",
@@ -61,6 +63,9 @@
                                 "所有输出必须符合 {店铺名称}-{作品数量}-{时间} 命名规则。",
                                 "zip 文件必须存放在 /output_zip/ 并符合 {店铺名称}-{作品数量}-{时间}.zip 命名规则。",
                                 "同商家必须连续编号，不同商家必须隔离命名，所有输出必须唯一。",
-                                "低质量 OCR 和 OCR fallback 提示不得进入 summary.md 或 conversion_flags。"
+                                "低质量 OCR 和 OCR fallback 提示不得进入 summary.md 或 conversion_flags。",
+                                "account_summary.md 的 output_zip_path 必须使用 output_zip/... 相对路径。",
+                                "评论统计必须包含 valid_comment_items_count、reply_items_count、comment_count_match_status。",
+                                "ZIP 命名固定为 {店铺名称}-{作品数量三位数}-{YYYYMMDD_HHMM}.zip。"
                             ]
 }
