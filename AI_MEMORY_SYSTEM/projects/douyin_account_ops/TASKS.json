@@ -22,6 +22,10 @@
     {
       "priority": 4,
       "task": "本阶段只维护账号采集模块；不扩展账号诊断、运营方案、脚本生成、自动发布或商家建档。"
+    },
+    {
+      "priority": 5,
+      "task": "后续凡涉及采集代码修改，必须同步记录到 CODE_EVOLUTION.md，说明变更原因、影响文件、代码变化、行为变化和验证结果。"
     }
   ],
   "gpt_review_tasks": [
@@ -41,6 +45,7 @@
     "图文或短作品自动跳转不会污染当前作品内容。",
     "主页滚动不会导致视觉顺序跳采。",
     "每条作品输出独立文件夹、meta.json、cover、frames、transcript.txt、ocr_text.txt、ocr_items.json、comments.json、summary.md。",
+    "涉及采集代码修改时必须同步更新 CODE_EVOLUTION.md。",
     "最终抖音分析输出仍必须压缩为标准 ZIP。"
   ]
 }
