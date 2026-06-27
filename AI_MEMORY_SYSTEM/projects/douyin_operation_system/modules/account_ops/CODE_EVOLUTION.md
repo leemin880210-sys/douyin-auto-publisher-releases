@@ -453,3 +453,33 @@ AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/v3_previous_pre
 - 未改变 items / replies / raw_comments_debug 评论结构。
 - 未改变作品打开、抽帧、OCR、主页卡片采集主流程。
 - 仍需 30 条正式包复测。
+## 2026-06-28 评论统计字段增强
+
+### 变更原因
+
+避免 GPT 只查看 `comments.items` 而忽略 `comments.replies`，导致误判回复没有被采集。
+
+### 影响文件
+
+- `douyin_auto_tool.ps1`
+
+### 代码变化
+
+- 新增 `GetCommentCountStats`。
+- `AddCommentStats` 写入 `main_comment_count`、`reply_comment_count`、`total_extracted_comment_count`、`comment_gap_count`。
+- `works.json`、`meta.json`、`comments.json`、`works.xlsx` 均输出新增评论统计字段。
+- `comment_count_match_status` 改为 `public_zero`、`matched`、`matched_with_replies`、`partial_with_replies_filtered`、`visible_count_but_items_empty`、`extracted_more_than_public`、`unknown`。
+
+### 行为变化
+
+- 评论采集逻辑不变。
+- `comments.items / comments.replies / raw_comments_debug` 分层不变。
+- `web_comment_reply_api` 仍不进入 `comments.items`。
+
+### 验证结果
+
+- SelfTest 通过。
+
+### 风险与边界
+
+- 本次只增强评论统计字段，未修改评论 API、DOM 解析、过滤规则、抽帧、OCR、摘要或 ZIP 主流程。
