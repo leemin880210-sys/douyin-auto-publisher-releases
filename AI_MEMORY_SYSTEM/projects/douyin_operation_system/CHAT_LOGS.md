@@ -46,3 +46,22 @@ Codex：修改本地 douyin_auto_tool.ps1 的 ZIP 输出层，使采集包写入
 AI：选择继续沿用已通过的短格式 店铺名-005-YYYYMMDD_HHMM.zip，避免频繁变更命名；只做输出字段小修，不大改采集结构。
 
 Codex：修改 douyin_auto_tool.ps1，account_summary.md 改为输出相对路径 output_zip/未满_MOONFLOW官方号-005-20260628_0237.zip；works.json、meta.json、comments.json、works.xlsx 增加评论统计字段；SelfTest 通过；重新采集 5 条样本包并生成 C:\Users\cc\Documents\抖音作品分析\output_zip\未满_MOONFLOW官方号-005-20260628_0237.zip。
+
+## 2026-06-28 03:17:14 account_ops 评论结构与包元数据小修
+
+### 用户要求
+
+- 更换测试链接为 https://www.douyin.com/user/MS4wLjABAAAAZ7h_wxv0gOamIrt-mmcgN8AA-SVRsL7wQ-372C8hgQ55U5Uiu_22UoMCWuYM284X?from_tab_name=main。
+- comments.json 增加 eplies 数组。
+- web_comment_reply_api 不进入 comments.items，只进入 eplies。
+- comments.items 按 uthor_name + text 去重，API 与 DOM 重复时优先保留 web_comment_api。
+- dom_node 解析异常不进入正式 items，放入 aw_comments_debug。
+- 补齐包元数据：package_base_name、shop_name、safe_shop_name、collected_works_count、un_timestamp、package_output_dir、zip_output_path。
+
+### Codex 执行结果
+
+- 修改 douyin_auto_tool.ps1 的评论 API 回复分流、评论合并去重、DOM debug 隔离和包元数据输出。
+- 新增包根 package_metadata.json 输出。
+- 运行 SelfTest 通过。
+- 使用新链接实际采集 5 条样本，生成 $zipRel。
+- 检查结果：works.json 5 条，visual_order 1-5 连续，content_mapping_status 全部 ok，frame_status/video_crop_status 全部 ok，failed_count=0；comments.items 中 web_comment_reply_api=0、dom_node=0、重复项=0；ZIP 包含 package_metadata.json。
