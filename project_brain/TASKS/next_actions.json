@@ -13,8 +13,7 @@
     "执行任务时只处理用户明确授权的文件范围。",
     "任务结束前更新 STATE/state.json。",
     "任务结束前把已发生事实写入 LOGS/change_log.md。",
-    "任务变化时同步 TASKS/next_actions.json。",
-    "任务结束后执行 _codex_delivery/package_delivery.ps1。"
+    "任务变化时同步 TASKS/next_actions.json。"
   ],
   "gpt_review_tasks": [
     "检查 BOOT/boot_prompt.md 是否声明最高优先级执行顺序。",
@@ -32,6 +31,7 @@
     "TASKS/next_actions.json 不记录当前状态、已完成内容或历史记录。",
     "LOGS/change_log.md 不写计划或未来任务。",
     "不新增 project_brain 目录结构。",
-    "不修改采集代码。"
+    "不修改采集代码。",
+    "任务结束后不强制生成本地交付包。"
   ]
 }
