@@ -342,3 +342,48 @@ AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/v2_previous/dou
 ### v3（上上版本）
 
 AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/v3_previous_previous/NO_PREVIOUS_PREVIOUS_VERSION.md
+
+## 2026-06-28 评论结构与包元数据小修
+
+### 变更原因
+
+样本包基础结构已通过，但评论回复、DOM 异常节点和包级元数据仍需标准化。目标是在不大改采集结构的前提下，保证 comments.items 只保存可分析主评论，回复与 debug 分流，并让包根直接提供 GPT 可检查的元数据。
+
+### 影响文件
+
+- douyin_auto_tool.ps1
+
+### 代码变化
+
+- API 评论采集增加 eplies 容器。
+- web_comment_reply_api 改写入 eplies。
+- 评论合并时按 uthor_name + text 去重，保留 API 主评论优先级。
+- dom_node 解析结果不进入正式 items，写入 aw_comments_debug。
+- eply_items_count 使用 eplies.Count。
+- 新增 NewPackageMetadata，写出 package_metadata.json。
+- account_summary.md 输出包元数据字段和相对 ZIP 路径。
+
+### 行为变化
+
+- 主评论、回复、调试文本三者在 comments.json 中分离。
+- API 与 DOM 重复内容不再重复计数。
+- DOM 解析异常不会污染正式评论。
+- GPT 可直接从 package_metadata.json 读取包名、店铺名、作品数、时间戳、输出目录和 ZIP 相对路径。
+
+### 验证结果
+
+- SelfTest 通过。
+- 新测试链接采集 5 条样本成功。
+- 输出 ZIP：$zipRel。
+- works.json 共 5 条，visual_order 1-5 连续。
+- content_mapping_status 全部 ok。
+- frame_status/video_crop_status 全部 ok。
+- failed_count=0。
+- comments.items 中 web_comment_reply_api=0、dom_node=0、重复项=0。
+- ZIP 包含 package_metadata.json。
+
+### 风险与边界
+
+- 未改变作品打开、抽帧、OCR 和主页卡片采集主流程。
+- 未实现每商家独立文件夹隔离。
+- 仍需 30 条正式包复测。
