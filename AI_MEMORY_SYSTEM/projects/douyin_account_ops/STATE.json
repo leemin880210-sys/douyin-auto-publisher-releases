@@ -3,19 +3,17 @@
   "name": "抖音代运营采集工具",
   "type": "data_analysis",
   "status": "active",
-  "purpose": "抖音账号采集包、未授权账号内容诊断、代运营接手前分析、Codex 中转工具",
-  "current_stage": "正式 30 条公开采集包已生成，等待 GPT 检查",
-  "current_task": "检查正式 30 条采集包，并根据检查结果决定是否修复 frame/crop 失败、图文自动跳转和滚动顺序问题。",
-  "progress": "已使用正式模式运行 public 采集：test_mode=false、max_works=30；输出目录为 C:\\Users\\cc\\Documents\\抖音作品分析\\output\\douyin_package_20260627_214556；ZIP 为 douyin_analysis_package.zip；works.json 共 30 条，visual_order 为 1-30 连续，content_mapping_status 全部为 ok，authorized_metric_pending_count=30。",
+  "purpose": "账号采集模块：输入抖音主页链接，输出标准 douyin_analysis_package.zip；当前阶段不扩展账号诊断、运营方案、脚本生成、自动发布或商家建档。",
+  "current_stage": "账号采集模块稳定性优化已通过正式 30 条验证",
+  "current_task": "继续保持账号采集模块边界，并在后续账号上复测稳定性；优先减少 OCR failed 导致的 partial。",
+  "progress": "已完成采集稳定性优化并正式验证：test_mode=false、max_works=30；输出目录为 C:\\Users\\cc\\Documents\\抖音作品分析\\output\\douyin_package_20260627_223538；ZIP 为 douyin_analysis_package.zip；works.json 共 30 条，visual_order 为 1-30 连续，content_mapping_status 全部为 ok，frame_status 全部 ok，video_crop_status 全部 ok，public_success_count=29，partial_count=1，failed_count=0，authorized_metric_pending_count=30。",
   "default_collection_mode": "public",
   "default_test_mode": false,
   "default_max_works": 30,
   "blockers": [
-    "正式 30 条包中第 2 条和第 16 条 frame_status/video_crop_status 为 failed，需要后续修复或重采。",
-    "正式 30 条包中存在 6 条 partial，主要与 frame/crop/OCR 等内容层采集不完整有关。",
-    "图文作品或短作品可能播放完自动跳到下一个作品，需要锁定 card_modal_id/opened_modal_id。",
-    "主页下滑幅度过大可能导致视觉顺序跳号或采集非顺序作品。",
-    "部分作品 frame/crop 失败时需要增加视频加载等待与重试。"
+    "正式 30 条包中仍有 1 条 partial，原因是 OCR 状态 failed；frame/video_crop 已全部 ok。",
+    "当前稳定性只在一个 30 条账号上正式验证，后续需要在更多账号复测。",
+    "当前阶段不得扩展到账号诊断、运营方案、脚本生成、自动发布或商家建档。"
   ],
   "last_update": "2026-06-27"
 }
