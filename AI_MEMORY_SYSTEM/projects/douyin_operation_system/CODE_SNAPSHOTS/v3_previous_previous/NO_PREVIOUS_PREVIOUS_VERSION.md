@@ -1,3 +1,3 @@
 # No previous previous code snapshot
 
-首次启用 account_ops 本地业务代码快照时，云端没有可下移的 v2 历史版本。
+当前仅有两次 douyin_auto_tool.ps1 完整代码快照；尚无可下移的 v3 业务代码版本。
