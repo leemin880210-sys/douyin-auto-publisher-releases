@@ -1,7 +1,7 @@
 {
   "project_name": "抖音作品分析与微小商家代运营 AI 工作流",
   "current_stage": "外部检查交付阶段",
-  "progress": "已建立 douyin-ops-memory 记忆库、GPT 控制中枢、自动交付通道和单项目外部大脑系统 project_brain；当前已准备上传到 GitHub 供 GPT 检查。",
-  "current_task": "将 project_brain 上传到 GitHub 仓库 leemin880210-sys/douyin-auto-publisher-releases，并提供可检查链接。",
+  "progress": "已建立 douyin-ops-memory 记忆库、GPT 控制中枢、自动交付通道和单项目外部大脑系统 project_brain；当前已上传到 GitHub 供 GPT 检查。",
+  "current_task": "等待 GPT 通过 GitHub 链接检查 project_brain 是否完整、可恢复、可持续执行。",
   "blocking_issues": ""
 }
