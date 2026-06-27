@@ -88,3 +88,28 @@
 - 正式模式 30 条 `video_crop_status` 全部为 `ok`。
 - 正式模式 30 条 `comments.json` 未检测到纯数字、抢首评或 UI 文本进入正式 `items`。
 - 正式模式 30 条 `transcript.txt` 均保持 `speech_transcription_status: not_configured`，未伪装语音转写。
+
+## 2026-06-27 新增代码演进记录文件
+
+### 已发生事实
+
+- 新增 `AI_MEMORY_SYSTEM/projects/douyin_account_ops/CODE_EVOLUTION.md`。
+- 在 `CODE_EVOLUTION.md` 中记录采集代码演进的用途、记录边界、标准格式。
+- 在 `CODE_EVOLUTION.md` 中补记 2026-06-27 账号采集模块稳定性优化的代码变化、行为变化、验证结果和边界。
+- 更新 `PROJECT_INDEX.md`，登记 `CODE_EVOLUTION.md` 的文件作用。
+- 更新 `STATE.json`，记录当前外部大脑已新增代码演进记录文件。
+- 更新 `TASKS.json`，加入后续采集代码修改必须同步记录到 `CODE_EVOLUTION.md` 的待执行规则。
+
+### 影响范围
+
+- 只修改 `douyin_account_ops` 项目实例的外部大脑文件。
+- 未修改抖音采集工具代码。
+- 未修改全局记忆规则。
+- 未修改 `project_brain`。
+- 未生成 `_codex_delivery` 本地交付包。
+
+### 验证结果
+
+- `STATE.json` 保持 JSON 格式。
+- `TASKS.json` 保持 JSON 格式。
+- `CODE_EVOLUTION.md` 已创建并包含 2026-06-27 采集稳定性优化记录。
