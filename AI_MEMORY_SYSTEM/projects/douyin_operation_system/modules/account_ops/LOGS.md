@@ -252,3 +252,30 @@
 - SelfTest 通过。
 - 5 条样本包基础检查通过。
 - 仍需执行 30 条正式包复测。
+
+## 2026-06-28 样本包小修：相对路径、评论统计、固定 ZIP 命名
+
+### 已发生事实
+
+- 修改 douyin_auto_tool.ps1，使 account_summary.md 的 output_zip_path 输出项目相对路径。
+- 补齐 valid_comment_items_count、reply_items_count、comment_count_match_status。
+- 上述评论统计字段已写入 works.json、meta.json、comments.json 和 works.xlsx。
+- ZIP 命名继续固定为 {店铺名称}-{作品数量三位数}-{YYYYMMDD_HHMM}.zip。
+- 运行 SelfTest，结果通过。
+- 重新采集 5 条样本包，生成 ZIP：C:\Users\cc\Documents\抖音作品分析\output_zip\未满_MOONFLOW官方号-005-20260628_0237.zip。
+- 新包检查结果：works.json 5 条，visual_order 1-5，frame_status/video_crop_status 全部 ok，frames_contact_sheet 5 个，failed_count=0。
+- account_summary.md 中 output_zip_path 为相对路径：output_zip/未满_MOONFLOW官方号-005-20260628_0237.zip。
+- comments.json 和 works.json 均包含新增评论统计字段。
+
+### 影响范围
+
+- 只修改输出字段和 ZIP 路径展示。
+- 未大改采集结构。
+- 未扩展账号诊断、运营方案、脚本生成、自动发布或商家建档。
+- 未修改 AI_MEMORY_SYSTEM/00_GLOBAL_MEMORY。
+
+### 验证结果
+
+- SelfTest 通过。
+- 5 条样本包复测通过小修检查。
+- 30 条正式包仍待复测。
