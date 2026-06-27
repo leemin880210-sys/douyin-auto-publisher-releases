@@ -54,3 +54,37 @@
 - 正式采集包已生成并压缩为标准 ZIP。
 - 第 2 条和第 16 条 `frame_status`、`video_crop_status` 为 `failed`。
 - 当前包可供 GPT 检查，但仍存在内容层采集失败样本。
+
+## 2026-06-27 账号采集模块稳定性优化
+
+### 已发生事实
+
+- 修改 `douyin_auto_tool.ps1` 的主画面识别逻辑：裁剪优先使用可见最大 `video`，必要时 fallback 到主图 `img`、`canvas` 或包含主画面的容器。
+- 修改 `douyin_auto_tool.ps1` 的 seek 逻辑：只操作当前可见最大视频，避免误操作隐藏 video。
+- 修改 `douyin_auto_tool.ps1` 的作品锁定逻辑：作品自动跳转时重新打开原作品链接，并等待目标 `card_modal_id/opened_modal_id` 恢复。
+- 修改 `douyin_auto_tool.ps1` 的抽帧重试逻辑：核心帧缺失时也触发重试；重试前清理旧帧、重新打开原作品并重新等待媒体加载。
+- 修改 `douyin_auto_tool.ps1` 的输出记录：每条作品 `meta.json` 写入 `frame_errors` 和 `video_crop_errors`。
+- 修改 `douyin_auto_tool.ps1` 的失败 transcript 输出：未配置 ASR 时写入 `speech_transcription_status: not_configured` 和空 transcript。
+- 修改 `douyin_auto_tool.ps1` 的评论最终入库过滤：纯数字、抢首评、UI 文本、解析错位的纯数字作者名不写入 `comments.items`。
+
+### 影响范围
+
+- 只修改账号采集模块。
+- 未扩展账号诊断、运营方案、脚本生成、自动发布或商家建档。
+- 未修改全局记忆规则。
+- 未修改 `project_brain`。
+- 未生成 `_codex_delivery` 本地交付包。
+
+### 验证结果
+
+- `powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\douyin_auto_tool.ps1 -SelfTest` 通过。
+- 测试模式 2 条采集生成 `C:\Users\cc\Documents\抖音作品分析\output\douyin_package_20260627_223215\douyin_analysis_package.zip`。
+- 测试模式 2 条结果为 `public_success=2`、`partial=0`、`failed=0`。
+- 正式模式 30 条采集生成 `C:\Users\cc\Documents\抖音作品分析\output\douyin_package_20260627_223538\douyin_analysis_package.zip`。
+- 正式模式 30 条结果为 `public_success=29`、`partial=1`、`failed=0`。
+- 正式模式 30 条 `visual_order` 为 1-30 连续。
+- 正式模式 30 条 `content_mapping_status` 全部为 `ok`。
+- 正式模式 30 条 `frame_status` 全部为 `ok`。
+- 正式模式 30 条 `video_crop_status` 全部为 `ok`。
+- 正式模式 30 条 `comments.json` 未检测到纯数字、抢首评或 UI 文本进入正式 `items`。
+- 正式模式 30 条 `transcript.txt` 均保持 `speech_transcription_status: not_configured`，未伪装语音转写。
