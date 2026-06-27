@@ -30,3 +30,11 @@ Codex：
 ```text
 已读取当前仓库结构、registry 和项目文件；准备创建 CHAT_LOGS.md、CODE_SNAPSHOTS/v1_latest、CODE_SNAPSHOTS/v2_previous、CODE_SNAPSHOTS/v3_previous_previous，并同步 README、registry、BOOT、STATE、TASKS、CORE、LOGS、CODE_EVOLUTION。
 ```
+
+## [2026-06-28] account_ops 5 条样本包复测与 output_zip 输出层修复
+
+用户：重新测试前先看大脑；随后要求检查 douyin_operation_system 并按照该系统执行。
+
+AI：已切换为 douyin_operation_system root 项目规则，读取 v2.0 入口、状态、任务、核心规则、日志，并进入 modules/account_ops。
+
+Codex：修改本地 douyin_auto_tool.ps1 的 ZIP 输出层，使采集包写入 output_zip 并按 {店铺名称}-{作品数量}-{时间}.zip 命名；执行 SelfTest；采集 5 条样本包；生成 C:\Users\cc\Documents\抖音作品分析\output_zip\未满_MOONFLOW官方号-005-20260628_0152.zip；检查 works.json、summary.md、comments.json、works.xlsx 与 ZIP 条目。
