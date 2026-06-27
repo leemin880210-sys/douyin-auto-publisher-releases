@@ -147,3 +147,34 @@
 - 4 个输出包的 `frame_status` 均为 `ok=5`。
 - 4 个输出包的 `video_crop_status` 均为 `ok=5`。
 - 4 个输出包均生成标准 `douyin_analysis_package.zip`。
+
+## 2026-06-28 采集输出字段与状态小优化
+
+### 已发生事实
+
+- 修改 `douyin_auto_tool.ps1`，新增 `run_mode`、`sample_size`、`formal_acceptance` 输出字段。
+- 5 条样本包规则对应 `run_mode=sample_check`、`sample_size=5`、`formal_acceptance=false`。
+- 30 条正式包规则对应 `run_mode=formal_collection`、`formal_acceptance=true`。
+- 修改评论状态判断：当 `public_comment_count > 0` 且 `comments.items=0` 时，不再标记 `ok_with_reply_filtered`。
+- 新增评论状态 `visible_count_but_items_empty` 和 `partial_no_valid_comments_extracted`。
+- 修改主页资料解析：`has_location_evidence` 不再使用账号名兜底。
+- 新增 `duration_status` 和 `media_type` 字段。
+- 修改 `summary.md` 渲染：`canonical_title` 作为主标题，`detail_title` 只放入 Debug 信息区。
+- 新增 SelfTest 断言，覆盖样本/正式 `run_mode` 判定以及失败记录的 `duration_status`、`media_type`、`formal_acceptance` 字段。
+- 更新 `STATE.json` 和 `TASKS.json`，并修复两者为有效 UTF-8 JSON。
+- 更新 `CORE.md`，补充运行模式、评论状态、位置证据、时长媒体类型和标题输出长期规则。
+- 更新 `CODE_EVOLUTION.md`，记录本次采集代码行为变化。
+
+### 影响范围
+
+- 只修改账号采集模块与 `douyin_account_ops` 项目实例记忆文件。
+- 未扩展账号诊断、运营方案、脚本生成、自动发布或商家建档。
+- 未修改全局记忆规则。
+- 未修改 `project_brain`。
+- 未生成 `_codex_delivery` 本地交付包。
+
+### 验证结果
+
+- `powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\douyin_auto_tool.ps1 -SelfTest` 通过。
+- `STATE.json` 可被 `ConvertFrom-Json` 正常解析。
+- `TASKS.json` 可被 `ConvertFrom-Json` 正常解析。
