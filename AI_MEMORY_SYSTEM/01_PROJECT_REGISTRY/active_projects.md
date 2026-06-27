@@ -4,4 +4,4 @@
 
 | project_id | path | status | template_status | purpose | current_stage | current_task | last_update |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| project_brain | `AI_MEMORY_SYSTEM/projects/project_brain` | active | Final Template v1.0 | AI Project Brain System (state machine memory for AI agents) | 全局AI多项目系统强制落地完成 | 等待接入新项目或继续执行授权项目任务 | 2026-06-27 |
+| project_brain | `AI_MEMORY_SYSTEM/projects/project_brain` | active | Final Template v1.0 | AI Project Brain System (state machine memory for AI agents) | 抖音代运营输出标准化规则已启用 | 按统一命名、编号、防冲突和ZIP规则执行结构化输出 | 2026-06-28 |
