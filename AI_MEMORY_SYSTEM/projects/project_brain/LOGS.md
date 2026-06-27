@@ -44,3 +44,9 @@ This file is a passive log system and does not influence execution logic.
 - action: Migrated root `project_brain` memory files into `AI_MEMORY_SYSTEM/projects/project_brain` and created global memory plus project registry layers.
 - result: Project BOOT, STATE, TASKS, CORE and LOGS content was preserved as a project instance with paths updated for the new architecture.
 - notes: No business code was modified.
+
+- timestamp: 2026-06-27
+- actor: Codex
+- action: Migrated root `project_brain/PROJECT_INDEX.md` metadata into `AI_MEMORY_SYSTEM/01_PROJECT_REGISTRY/index.json` and `active_projects.md`.
+- result: Project name, purpose, status, creation date and description were preserved in the registry layer.
+- notes: The old root project index file was removed after its metadata was preserved.
