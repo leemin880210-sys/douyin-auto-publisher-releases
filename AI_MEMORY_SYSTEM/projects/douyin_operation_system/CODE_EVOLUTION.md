@@ -246,3 +246,50 @@ AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/v3_previous_pre
 - 本次未改变采集主流程、作品卡片点击逻辑、抽帧策略或 OCR 策略。
 - 本次未扩展账号诊断、运营方案、脚本生成、自动发布或商家建档。
 - 仍需后续用 30 条正式包复测评论分流和包元数据规则。
+## 2026-06-28 account_ops 包目录与无评论计数小修
+
+### 变更原因
+
+样本包基础结构通过后，需要进一步统一包目录位置，并让无评论作品的公开评论计数字段不留空，便于 GPT 对无评论和评论不可见两种状态进行区分。
+
+### 影响文件
+
+- douyin_auto_tool.ps1
+- AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/v1_latest/douyin_auto_tool.ps1
+- AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/v2_previous/douyin_auto_tool.ps1
+- AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/v3_previous_previous/douyin_auto_tool.ps1
+
+### 代码变化
+
+- 新增 OutputPackageRoot，默认指向 output/packages。
+- GetDeliveryZipPath 同时检查 ZIP 文件名与 package 目录名，确保 package_base_name 唯一。
+- 新增 GetPackageDirectoryPath 与 MovePackageToFinalDirectory。
+- 采集结束后，将临时目录移动到 output/packages/{package_base_name}/。
+- NewPackageMetadata 的 package_output_dir 输出带尾斜杠的相对目录。
+- GetCommentCountMatchStatus 将公开评论数为 0 的状态改为 public_zero。
+- comments_status=empty 且无公开计数时，补写 public_comment_count=0、comments_expected_count=0。
+
+### 行为变化
+
+- 包目录与 ZIP 名使用同一个 package_base_name。
+- GPT 可通过 package_metadata.json.package_output_dir 定位包目录。
+- 无评论作品不再出现空的 public_comment_count。
+- 无评论状态与评论可见但未提取状态分离：无评论为 public_zero，可见数字但无有效 items 仍为 isible_count_but_items_empty。
+
+### 验证结果
+
+- SelfTest 通过。
+- 新 5 条样本包生成：$zipRel。
+- 包目录：$pkgRel。
+- works.json 共 5 条，visual_order 1-5 连续。
+- content_mapping_status 全部 ok。
+- frame_status/video_crop_status 全部 ok。
+- frames_contact_sheet 共 5 张。
+- failed_count=0。
+- 第 1、2 条空评论作品写入 public_comment_count=0 和 comment_count_match_status=public_zero。
+
+### 风险与边界
+
+- 本次未改变评论结构，继续保留 items / replies / raw_comments_debug。
+- 本次未改变作品打开、抽帧、OCR、主页卡片采集主流程。
+- 仍需 30 条正式包复测。
