@@ -4,15 +4,15 @@
   "type": "data_analysis",
   "status": "active",
   "purpose": "账号采集模块：输入抖音主页链接，输出标准 douyin_analysis_package.zip；当前阶段不扩展账号诊断、运营方案、脚本生成、自动发布或商家建档。",
-  "current_stage": "账号采集模块稳定性优化已通过正式 30 条验证",
+  "current_stage": "账号采集模块已支持正式模式指定采集数量",
   "current_task": "继续保持账号采集模块边界，并在后续账号上复测稳定性；后续采集代码变化必须同步记录到 CODE_EVOLUTION.md。",
-  "progress": "已完成采集稳定性优化并正式验证：test_mode=false、max_works=30；输出目录为 C:\\Users\\cc\\Documents\\抖音作品分析\\output\\douyin_package_20260627_223538；ZIP 为 douyin_analysis_package.zip；works.json 共 30 条，visual_order 为 1-30 连续，content_mapping_status 全部为 ok，frame_status 全部 ok，video_crop_status 全部 ok，public_success_count=29，partial_count=1，failed_count=0，authorized_metric_pending_count=30；已新增 CODE_EVOLUTION.md 记录采集代码演进。",
+  "progress": "已完成采集稳定性优化并正式验证：test_mode=false、max_works=30 的 30 条包 public_success_count=29、partial_count=1、failed_count=0；已修复正式模式下 -MaxWorks 5 被自动改成 30 条的问题；2026-06-27 23:32 批量采集 4 个账号，每个账号均采集 5 条，4 个包 works.json 均为 5 条，visual_order 均为 1-5 连续，frame_status 与 video_crop_status 均为 ok=5。",
   "default_collection_mode": "public",
   "default_test_mode": false,
   "default_max_works": 30,
   "blockers": [
     "正式 30 条包中仍有 1 条 partial，原因是 OCR 状态 failed；frame/video_crop 已全部 ok。",
-    "当前稳定性只在一个 30 条账号上正式验证，后续需要在更多账号复测。",
+    "当前稳定性只在一个 30 条账号和一次 4 账号各 5 条批量采集中验证，后续仍需要在更多账号复测。",
     "当前阶段不得扩展到账号诊断、运营方案、脚本生成、自动发布或商家建档。"
   ],
   "last_update": "2026-06-27"
