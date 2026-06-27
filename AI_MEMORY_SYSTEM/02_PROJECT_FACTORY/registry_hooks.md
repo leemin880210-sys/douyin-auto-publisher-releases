@@ -1,35 +1,48 @@
-# Registry Hooks
+# Registry Hooks v2
 
-本文件定义 AI项目工厂系统 v1 写入 PROJECT_REGISTRY 的规则。
+本文件定义 Project Factory v2 写入 PROJECT_REGISTRY 的规则。
 
-## 强制注册规则
+## 目标文件
 
-- 新项目必须写入 `AI_MEMORY_SYSTEM/01_PROJECT_REGISTRY/index.json`。
-- 注册记录必须包含 `path` 和 `status`。
-- 新项目必须标记为 `active`。
-- 不允许把项目 STATE、TASKS、CORE 或 LOGS 写入注册中心。
-- 注册中心只保存项目索引、路径、状态和类型摘要。
+新项目必须写入：
 
-## index.json 写入格式
+```text
+AI_MEMORY_SYSTEM/01_PROJECT_REGISTRY/index.json
+```
 
-新项目必须写入以下结构：
+## 必须追加的记录
+
+每个新项目必须自动追加：
 
 ```json
 {
-  "{project_name}": {
-    "path": "AI_MEMORY_SYSTEM/projects/{project_name}",
-    "status": "active",
-    "type": "{project_type}"
-  }
+  "id": "{project_name}",
+  "path": "projects/{project_name}",
+  "status": "active"
 }
 ```
 
-## active_projects.md 写入格式
+## 强制规则
 
-`active_projects.md` 必须列出当前活跃项目，至少包含：
+- 新项目必须写入 PROJECT_REGISTRY/index.json。
+- 必须记录 `path` + `status`。
+- 必须标记 `active`。
+- `path` 使用相对项目路径：`projects/{project_name}`。
+- 不允许把项目 STATE、TASKS、CORE 或 LOGS 写入注册中心。
+- 注册中心只保存项目索引、路径、状态和类型摘要。
+
+## active_projects.md 同步
+
+新项目创建后，必须同步追加到：
 
 ```text
-- {project_name}: AI_MEMORY_SYSTEM/projects/{project_name} (active)
+AI_MEMORY_SYSTEM/01_PROJECT_REGISTRY/active_projects.md
+```
+
+推荐格式：
+
+```text
+- {project_name}: projects/{project_name} (active)
 ```
 
 ## 隔离约束
