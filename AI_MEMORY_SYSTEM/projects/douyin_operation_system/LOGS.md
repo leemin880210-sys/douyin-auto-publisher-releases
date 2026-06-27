@@ -65,3 +65,28 @@ The following entries were migrated from `AI_MEMORY_SYSTEM/projects/project_brai
 - action: Applied account_ops sample-package polish for relative ZIP path and comment statistics fields.
 - result: account_summary.md now writes relative output_zip_path $relZip; works/meta/comments/xlsx include valid_comment_items_count, reply_items_count and comment_count_match_status; ZIP naming remains fixed as {店铺名称}-{作品数量三位数}-{YYYYMMDD_HHMM}.zip; regenerated 5-work sample package $zipPath passed structure checks.
 - notes: No GLOBAL_MEMORY files were modified. No collection architecture changes were made. 30-work formal collection remains pending.
+
+## 2026-06-28 account_ops 评论结构与包元数据小修
+
+### 已发生事实
+
+- 修改 douyin_auto_tool.ps1。
+- comments.json 输出新增 eplies 数组。
+- web_comment_reply_api 回复不再写入 comments.items。
+- comments.items 按 uthor_name + text 去重，API 主评论优先于 DOM 补漏。
+- dom_node 解析结果不再进入正式 items，改写入 aw_comments_debug。
+- 包根新增 package_metadata.json，包含 package_base_name、shop_name、safe_shop_name、collected_works_count、run_timestamp、package_output_dir、zip_output_path。
+- 运行 SelfTest 通过。
+- 使用新链接实际采集 5 条样本，生成 $zipRel。
+
+### 验证结果
+
+- works.json 共 5 条。
+- visual_order 为 1-5 连续。
+- content_mapping_status 全部为 ok。
+- frame_status 与 video_crop_status 全部为 ok。
+- failed_count 为 0。
+- comments.items 中 web_comment_reply_api 为 0。
+- comments.items 中 dom_node 为 0。
+- comments.items 重复项为 0。
+- ZIP 包含 package_metadata.json。
