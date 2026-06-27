@@ -374,7 +374,7 @@ AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/v3_previous_pre
 
 - SelfTest 通过。
 - 新测试链接采集 5 条样本成功。
-- 输出 ZIP：$zipRel。
+- 输出 ZIP：output_zip/寂燃CRAFTBEERBAR-005-20260628_0311.zip。
 - works.json 共 5 条，visual_order 1-5 连续。
 - content_mapping_status 全部 ok。
 - frame_status/video_crop_status 全部 ok。
@@ -399,7 +399,7 @@ AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/v3_previous_pre
 
 ### 验证结果
 
-- 输出 ZIP：$zipRel。
+- 输出 ZIP：output_zip/寂燃CRAFTBEERBAR-005-20260628_0311.zip。
 - works.json 共 5 条。
 - visual_order 为 1-5 连续。
 - content_mapping_status 全部 ok。
