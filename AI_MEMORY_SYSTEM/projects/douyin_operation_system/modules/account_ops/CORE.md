@@ -455,3 +455,17 @@ zip 命名规则：
 
 - 未实现自动文件夹隔离（每商家独立目录）。
 - 未实现自动上传/同步机制。
+
+## 输出路径补充规则
+
+- account_summary.md 中的 output_zip_path 必须使用项目相对路径，例如 output_zip/店铺名-005-YYYYMMDD_HHMM.zip。
+- 不得在采集包内容中写入 C:\\Users 或其他本机绝对路径。
+- ZIP 命名固定为 {店铺名称}-{作品数量三位数}-{YYYYMMDD_HHMM}.zip，后续所有包保持一致。
+
+## 评论统计字段规则
+
+每条作品必须补齐：
+
+- valid_comment_items_count：写入 comments.items 的有效评论数。
+- reply_items_count：已识别并过滤的作者回复数量。
+- comment_count_match_status：公开评论数与有效评论/过滤回复的匹配状态，可取 match、ok_with_reply_filtered、partial、visible_count_but_items_empty、unknown_no_public_count。
