@@ -42,22 +42,28 @@
 
 ## Codex 工作规则
 
-Codex 接入项目后必须：
+Codex 在本项目中不是普通开发者，而是严格按状态机执行的操作单元。
 
-1. 先读取 `project_brain/CORE/memory.md`。
-2. 再读取 `project_brain/STATE/state.json`。
-3. 再读取 `project_brain/TASKS/next_actions.json`。
-4. 再读取 `project_brain/LOGS/change_log.md`。
+Codex 接入项目后必须按以下顺序执行：
+
+1. 读取 `project_brain/BOOT/boot_prompt.md`。
+2. 读取 `project_brain/STATE/state.json`。
+3. 读取 `project_brain/TASKS/next_actions.json`。
+4. 读取 `project_brain/CORE/memory.md`。
 5. 明确当前任务是否允许修改业务代码。
 6. 执行任务时只修改允许范围内的文件。
-7. 任务结束后更新 STATE、TASKS、LOGS。
-8. 任务结束后执行自动交付通道，刷新 `_codex_delivery/latest.zip`。
+7. 任务结束前更新 `STATE/state.json`。
+8. 任务结束前写入 `LOGS/change_log.md`。
+9. 任务变化时同步 `TASKS/next_actions.json`。
+10. 任务结束后执行自动交付通道，刷新 `_codex_delivery/latest.zip`。
+
+如果 STATE 更新、LOG 记录、必要的 TASK 同步没有完成，Codex 不允许返回完成状态。
 
 ## GPT 检查规则
 
 GPT 接入项目后必须：
 
-1. 先读取 project brain 的四个核心文件。
+1. 先读取 `project_brain/BOOT/boot_prompt.md`。
 2. 判断当前项目在做什么。
 3. 判断当前状态是否与用户任务一致。
 4. 检查 Codex 输出是否符合验收标准。
