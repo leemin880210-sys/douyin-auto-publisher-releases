@@ -5,22 +5,35 @@
     "TASKS.json 不允许写已完成内容。",
     "TASKS.json 不允许写当前状态。",
     "TASKS.json 不允许写历史记录。",
-    "当前状态、进度和阻塞问题只能写入 STATE.json。"
+    "当前状态、进度和阻塞问题只能写入 STATE.json。",
+    "生成抖音项目输出前必须确认店铺名称、作品编号和时间戳。",
+    "同一商家输出必须连续编号，不同商家输出必须隔离命名。"
   ],
   "codex_tasks": [
     "按 BOOT.md 的最高优先级执行顺序读取 BOOT、STATE、TASKS、CORE。",
     "执行任务前确认 STATE.json 是唯一当前状态来源。",
     "执行任务时只处理用户明确授权的文件范围。",
+    "生成输出前读取 CORE.md 的输出命名规则、ZIP 规则和防冲突规则。",
+    "生成输出时按 {店铺名称}-{作品数量}-{时间} 命名，时间格式使用 YYYYMMDD_HHMM。",
+    "生成 zip 文件时必须输出到 /output_zip/，并使用 {店铺名称}-{作品数量}-{时间}.zip 命名。",
     "任务结束前更新 STATE.json。",
     "任务结束前把已发生事实写入 LOGS.md。",
     "任务变化时同步 TASKS.json。"
+  ],
+  "output_next_actions": [
+    "生成抖音内容输出前确认商家名称。",
+    "生成抖音内容输出前确认该商家的下一个连续作品编号。",
+    "生成抖音内容输出前生成统一时间戳 YYYYMMDD_HHMM。",
+    "写入输出文件前检查目标文件名是否已存在，禁止同名覆盖。",
+    "生成 zip 输出时确认 /output_zip/ 目录和 zip 命名规则。"
   ],
   "gpt_review_tasks": [
     "检查 BOOT.md 是否声明最高优先级执行顺序。",
     "检查 BOOT.md 是否包含强制执行锁。",
     "检查 STATE.json 是否只包含 project_name、current_stage、current_task、progress、blockers、last_update。",
     "检查 TASKS.json 是否只包含待执行任务和下一步行动。",
-    "检查 LOGS.md 是否只记录已发生事实。"
+    "检查 LOGS.md 是否只记录已发生事实。",
+    "检查 CORE.md 是否包含抖音输出统一命名规则、ZIP 规则、防冲突规则和当前运行模式。"
   ],
   "acceptance_criteria": [
     "BOOT.md 明确自己是当前项目实例的唯一入口。",
@@ -31,6 +44,9 @@
     "TASKS.json 不记录当前状态、已完成内容或历史记录。",
     "LOGS.md 不写计划或未来任务。",
     "project_brain 只作为 AI_MEMORY_SYSTEM/projects/project_brain 下的单项目实例存在。",
+    "输出文件必须符合 {店铺名称}-{作品数量}-{时间} 命名规则。",
+    "zip 文件必须存放在 /output_zip/ 并符合统一命名规则。",
+    "同商家必须连续编号，不同商家必须隔离命名，所有输出必须唯一。",
     "不修改采集代码。",
     "任务结束后不强制生成本地交付包。"
   ]
