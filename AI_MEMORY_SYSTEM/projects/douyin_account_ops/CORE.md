@@ -314,6 +314,49 @@ location evidence 不得抓网页备案文本。
 - missing_due_to_error
 - 异常作品列表
 
+## 运行模式字段规则
+
+- 5 条样本包必须输出 `run_mode=sample_check`、`sample_size=5`、`formal_acceptance=false`。
+- 手动指定小于 30 的采集数量，或显式使用 `--test-mode`，都属于样本检查包。
+- 30 条正式包必须输出 `run_mode=formal_collection`、`formal_acceptance=true`。
+- 默认 30 条正式采集遇到账号作品数小于等于 30 时，虽然实际采集数量小于 30，仍属于正式采集包。
+- 这些字段必须写入 `account_summary.md`、`works.json`、每条作品 `meta.json`，并同步到 `works.xlsx`。
+
+为什么这样定：GPT 检查样本包和正式包时必须先判断包的验收口径，避免把 5 条样本包误判为正式诊断包，也避免账号不足 30 条时把正式包误判为样本包。
+
+## 评论状态补充规则
+
+- 如果 `public_comment_count > 0` 且 `comments.items` 为空，不得标记 `ok_with_reply_filtered`。
+- 如果页面显示有评论数但未抽取到有效评论，标记 `visible_count_but_items_empty`。
+- 如果提取结果被过滤后没有可写入正式 items 的真实评论，标记 `partial_no_valid_comments_extracted`。
+- `ok_with_reply_filtered` 只用于确认差异来自作者回复或无效占位评论被过滤，且仍有有效用户评论进入 `comments.items` 的情况。
+
+为什么这样定：公开评论数表示页面存在可见评论入口，正式 items 为空时不能虚标采集成功，否则会掩盖评论采集失败或解析失败。
+
+## 位置证据补充规则
+
+- `has_location_evidence` 不得使用账号名兜底。
+- 位置证据优先来自主页地址入口、简介地名、作品标题地名、评论区地址问答。
+- 店铺身份判断可以记录到 `has_shop_evidence`，但不能替代位置证据。
+
+为什么这样定：账号名常包含门店名或分店名，但不等于可验证地址。位置证据必须能支撑“地址/到店/导航”判断。
+
+## 时长与媒体类型规则
+
+- 如果 `duration_seconds` 不可用，但 `frames_contact_sheet` 和 `video_crop` 正常，标记 `duration_status=unavailable_but_frames_ok`。
+- 如果作品表现为图文或静态卡片，标记 `media_type=static_or_image_card`。
+- 如果可见视频时长正常，标记 `duration_status=ok`、`media_type=video`。
+
+为什么这样定：图文或短静态作品可能无法稳定读取视频时长，但只要关键帧和裁剪图可用，仍能支持内容诊断，不应直接判失败。
+
+## 标题输出补充规则
+
+- `canonical_title` 是主标题，优先使用主页卡片 `card_text`。
+- `detail_title` 只作为 Debug 信息保存，不参与主标题判断。
+- `summary.md` 的主标题必须使用 `canonical_title`，不要把详情页标题错位污染到主标题。
+
+为什么这样定：详情页标题更容易受弹窗错位、SEO 标题或页面环境影响；主页卡片文案是视觉顺序绑定的主证据。
+
 ## summary.md 规则
 
 summary.md 不要混入：
