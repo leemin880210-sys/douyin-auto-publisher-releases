@@ -113,3 +113,37 @@
 - `STATE.json` 保持 JSON 格式。
 - `TASKS.json` 保持 JSON 格式。
 - `CODE_EVOLUTION.md` 已创建并包含 2026-06-27 采集稳定性优化记录。
+
+## 2026-06-27 指定采集数量修复与 4 账号采集
+
+### 已发生事实
+
+- 修改 `douyin_auto_tool.ps1` 中正式模式采集数量计算逻辑。
+- 当用户明确指定小于 30 的 `MaxWorks` 时，正式模式尊重指定数量。
+- 运行 `powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\douyin_auto_tool.ps1 -SelfTest`，结果通过。
+- 从 `C:\Users\cc\Desktop\新建文本文档 (3).txt` 读取 4 个抖音主页链接。
+- 按顺序批量采集 4 个账号，每个账号指定 `-MaxWorks 5`。
+- 第 1 个账号输出：`C:\Users\cc\Documents\抖音作品分析\output\douyin_package_20260627_233227\douyin_analysis_package.zip`。
+- 第 2 个账号输出：`C:\Users\cc\Documents\抖音作品分析\output\douyin_package_20260627_233414\douyin_analysis_package.zip`。
+- 第 3 个账号输出：`C:\Users\cc\Documents\抖音作品分析\output\douyin_package_20260627_233621\douyin_analysis_package.zip`。
+- 第 4 个账号输出：`C:\Users\cc\Documents\抖音作品分析\output\douyin_package_20260627_233857\douyin_analysis_package.zip`。
+- 批量采集日志：`C:\Users\cc\Documents\抖音作品分析\output\batch_collect_4x5_20260627_233226.log`。
+- 更新 `CODE_EVOLUTION.md`，记录本次指定采集数量修复。
+- 更新 `CORE.md`，补充“明确指定小于 30 的采集数量时正式模式必须尊重指定数量”规则。
+
+### 影响范围
+
+- 只修改账号采集模块数量计算逻辑。
+- 未修改评论、OCR、抽帧、摘要、授权指标采集逻辑。
+- 未修改全局记忆规则。
+- 未修改 `project_brain`。
+- 未生成 `_codex_delivery` 本地交付包。
+
+### 验证结果
+
+- 4 个输出包的 `works.json` 均为 5 条。
+- 4 个输出包的 `visual_order` 均为 1-5 连续。
+- 4 个输出包的 `status` 均为 `public_success=5`。
+- 4 个输出包的 `frame_status` 均为 `ok=5`。
+- 4 个输出包的 `video_crop_status` 均为 `ok=5`。
+- 4 个输出包均生成标准 `douyin_analysis_package.zip`。
