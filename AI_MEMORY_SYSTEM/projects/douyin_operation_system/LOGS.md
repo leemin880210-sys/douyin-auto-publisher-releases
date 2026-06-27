@@ -59,3 +59,9 @@ The following entries were migrated from `AI_MEMORY_SYSTEM/projects/project_brai
 - action: Executed account_ops 5-work sample collection under douyin_operation_system v2.0 rules and updated local ZIP output layer.
 - result: Local script SelfTest passed; generated output zip $zipPath; works.json contains 5 records with visual_order 1-5; frame_status and video_crop_status are ok for all 5; failed_count is 0; summary.md has no detected OCR fallback or obvious OCR-noise pollution; zip is stored in output_zip using {店铺名称}-{作品数量}-{时间}.zip naming.
 - notes: No GLOBAL_MEMORY files were modified. The old independent douyin_account_ops project was not used as the active project. 30-work formal collection remains pending.
+
+- timestamp: 2026-06-28
+- actor: Codex
+- action: Applied account_ops sample-package polish for relative ZIP path and comment statistics fields.
+- result: account_summary.md now writes relative output_zip_path $relZip; works/meta/comments/xlsx include valid_comment_items_count, reply_items_count and comment_count_match_status; ZIP naming remains fixed as {店铺名称}-{作品数量三位数}-{YYYYMMDD_HHMM}.zip; regenerated 5-work sample package $zipPath passed structure checks.
+- notes: No GLOBAL_MEMORY files were modified. No collection architecture changes were made. 30-work formal collection remains pending.
