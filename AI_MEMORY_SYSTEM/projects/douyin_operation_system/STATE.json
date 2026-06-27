@@ -1,0 +1,23 @@
+{
+  "project_name": "douyin_operation_system",
+  "current_stage": "project_brain 与 douyin_account_ops 已合并为统一抖音代运营业务项目",
+  "current_task": "以 core system 统一管理抖音代运营业务规则，并通过 modules/account_ops 承载账号采集模块；等待下一轮采集复测或内容流程任务。",
+  "progress": "100%",
+  "blockers": "account_ops 仍需实际 5 条样本包和 30 条正式包复测；未实现每商家独立文件夹隔离；未实现自动上传/同步机制。",
+  "last_update": "2026-06-28",
+  "modules": {
+    "account_ops": {
+      "path": "AI_MEMORY_SYSTEM/projects/douyin_operation_system/modules/account_ops",
+      "source_project": "douyin_account_ops",
+      "status": "active"
+    },
+    "data_analysis": {
+      "path": "AI_MEMORY_SYSTEM/projects/douyin_operation_system/modules/data_analysis",
+      "status": "reserved"
+    },
+    "content_pipeline": {
+      "path": "AI_MEMORY_SYSTEM/projects/douyin_operation_system/modules/content_pipeline",
+      "status": "reserved"
+    }
+  }
+}
