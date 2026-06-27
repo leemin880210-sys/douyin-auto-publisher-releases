@@ -62,3 +62,9 @@ This file is a passive log system and does not influence execution logic.
 - action: Strengthened `AI_MEMORY_SYSTEM/00_GLOBAL_MEMORY/system_rules.md` and `execution_principles.md`, updated registry summaries, and updated project `STATE.json`.
 - result: The global layer now explicitly states no cross-project data reads, no shared STATE, and the BOOT → STATE → TASKS execution order.
 - notes: No business code was modified and no project instance file was removed.
+
+- timestamp: 2026-06-28
+- actor: Codex
+- action: Recorded Douyin output standardization rules in project_brain memory files.
+- result: CORE.md now contains unified output naming, ZIP storage, anti-conflict, numbering, running mode and limitation rules; TASKS.json now contains output-generation dependencies; STATE.json and registry summaries were synchronized.
+- notes: User-provided rule version timestamp `2026-01-24_1530` was preserved in CORE.md. No business code was modified.
