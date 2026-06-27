@@ -201,3 +201,24 @@
 - `TASKS.json` 保持 JSON 格式。
 - `CORE.md` 包含 `{店铺名称}-{作品数量}-{时间}`、`/output_zip/` 和防冲突规则。
 - registry 中 `douyin_account_ops` 摘要与 `STATE.json` 当前阶段一致。
+
+## 2026-06-28 代码快照记录规则同步
+
+### 已发生事实
+
+- 更新 `AI_MEMORY_SYSTEM/projects/douyin_account_ops/CODE_EVOLUTION.md`。
+- 在 `CODE_EVOLUTION.md` 中新增“最近3次完整代码版本快照”规则。
+- 在标准记录格式中加入 `Code Snapshot History`、`v1`、`v2`、`v3`。
+- 在 `CODE_EVOLUTION.md` 中新增快照轮转规则。
+
+### 影响范围
+
+- 只修改 `douyin_account_ops` 项目实例的外部大脑文件。
+- 未修改抖音采集工具代码。
+- 未修改全局记忆规则。
+- 未修改 `project_brain`。
+
+### 验证结果
+
+- `CODE_EVOLUTION.md` 包含“最近3次完整代码版本快照”。
+- `CODE_EVOLUTION.md` 包含 `Code Snapshot History`、`v1`、`v2`、`v3`。
