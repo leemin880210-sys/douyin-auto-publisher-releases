@@ -367,3 +367,17 @@
 - 拾久休闲吧官方号：10 条，ZIP `output_zip/拾久休闲吧官方号-010-20260628_0359.zip`，visual_order 1-10 连续，mapping/frame/crop 全部 ok，contact_sheet 10，状态 public_success=10。
 - 闽侯甘蔗记得来四果汤营业中：主页实际检测到 6 条作品，ZIP `output_zip/闽侯甘蔗记得来四果汤营业中-006-20260628_0404.zip`，visual_order 1-6 连续，mapping/frame/crop 全部 ok，contact_sheet 6，状态 public_success=5、partial=1。
 - 寂燃CRAFT BEER BAR：主页实际检测到 9 条作品，ZIP `output_zip/寂燃CRAFTBEERBAR-009-20260628_0409.zip`，visual_order 1-9 连续，mapping/frame/crop 全部 ok，contact_sheet 9，状态 public_success=8、partial=1。
+
+## 2026-06-28 评论统计字段增强
+
+### 已发生事实
+
+- 修改 douyin_auto_tool.ps1，只新增评论统计字段。
+- 保持 comments.items / comments.replies / raw_comments_debug 分层规则不变。
+- 新增 main_comment_count、reply_comment_count、total_extracted_comment_count、comment_gap_count。
+- comment_count_match_status 切换为 public_zero、matched、matched_with_replies、partial_with_replies_filtered、visible_count_but_items_empty、extracted_more_than_public、unknown。
+- SelfTest 通过。
+
+### 影响范围
+
+- 未修改评论采集 API、DOM 解析、过滤规则、抽帧、OCR、摘要或 ZIP 主流程。
