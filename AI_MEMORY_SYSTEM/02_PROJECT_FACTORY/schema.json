@@ -1,0 +1,49 @@
+{
+  "name": "Project Factory v2",
+  "version": "2.0.0",
+  "description": "Input one sentence and generate a complete isolated AI_MEMORY_SYSTEM project instance.",
+  "input": {
+    "project_name": {
+      "type": "string",
+      "required": true
+    },
+    "project_type": {
+      "type": "string",
+      "required": true,
+      "allowed": ["default", "data_analysis", "automation", "ai_agent"]
+    },
+    "description": {
+      "type": "string",
+      "required": false
+    }
+  },
+  "router": {
+    "data_analysis": ["data", "analysis"],
+    "automation": ["bot", "automation"],
+    "ai_agent": ["ai", "agent"],
+    "default": []
+  },
+  "templates": {
+    "default": "AI_MEMORY_SYSTEM/02_PROJECT_FACTORY/project_templates/default",
+    "data_analysis": "AI_MEMORY_SYSTEM/02_PROJECT_FACTORY/project_templates/data_analysis",
+    "automation": "AI_MEMORY_SYSTEM/02_PROJECT_FACTORY/project_templates/automation",
+    "ai_agent": "AI_MEMORY_SYSTEM/02_PROJECT_FACTORY/project_templates/ai_agent"
+  },
+  "output": {
+    "project_path": "AI_MEMORY_SYSTEM/projects/{project_name}",
+    "files": ["BOOT.md", "STATE.json", "TASKS.json", "CORE.md", "LOGS.md"]
+  },
+  "state_initializer": {
+    "project_name": "{project_name}",
+    "current_stage": "initialized",
+    "current_task": "setup",
+    "progress": "0%",
+    "blockers": "",
+    "last_update": "2026-06-27"
+  },
+  "registry_append": {
+    "id": "{project_name}",
+    "path": "projects/{project_name}",
+    "status": "active"
+  }
+}
