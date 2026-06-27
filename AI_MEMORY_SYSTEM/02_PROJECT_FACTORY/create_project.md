@@ -1,42 +1,145 @@
-# AI项目工厂系统 v1：create_project
+# Project Factory v2: create_project
 
-本文件定义 AI_MEMORY_SYSTEM 中创建新项目实例的标准流程。
+本文件定义 AI_MEMORY_SYSTEM 的自动项目生成流程。
 
-## 输入
+目标：输入一句话，自动解析项目名、项目类型和描述，然后生成完整项目结构。
 
-创建项目时必须提供：
+## INPUT
 
-- `project_name`：项目唯一名称，只能用于创建 `AI_MEMORY_SYSTEM/projects/{project_name}/`。
-- `project_type`：项目类型，用于选择模板。v1 默认使用 `templates/default_project/`。
+```json
+{
+  "project_name": "string",
+  "project_type": "string",
+  "description": "optional string"
+}
+```
 
-## 输出
+也允许一句话输入，例如：
 
-执行完成后必须得到：
+```text
+创建一个 test project 用来做 data analysis
+```
 
-1. `AI_MEMORY_SYSTEM/projects/{project_name}/` 项目目录。
-2. 从对应模板复制得到的 `BOOT.md`、`STATE.json`、`TASKS.json`、`CORE.md`、`LOGS.md`。
-3. 已初始化的 `STATE.json`。
-4. 已写入项目基础认知的 `CORE.md`。
-5. 已注册到 `AI_MEMORY_SYSTEM/01_PROJECT_REGISTRY/index.json` 的项目记录。
+一句话输入必须先经过 `router.md` 解析为结构化 INPUT。
 
-## 创建流程
+## PROCESS
 
-1. 校验 `project_name` 不为空，且不能与已有项目重名。
-2. 校验 `project_type`，如果没有专用模板，则使用 `templates/default_project/`。
-3. 创建目录：`AI_MEMORY_SYSTEM/projects/{project_name}/`。
-4. 复制模板文件到新项目目录。
-5. 初始化 `STATE.json`：
-   - `project_name` 写入输入项目名。
-   - `current_stage` 保持 `initialized`。
-   - `progress` 保持 `0%`。
-   - `last_update` 写入执行日期。
-6. 写入 `CORE.md`：记录项目名称、项目类型、项目边界和禁止跨项目读取规则。
-7. 按 `registry_hooks.md` 更新 `AI_MEMORY_SYSTEM/01_PROJECT_REGISTRY/index.json`。
-8. 按需更新 `AI_MEMORY_SYSTEM/01_PROJECT_REGISTRY/active_projects.md`。
+### 1. 根据 project_type 选择模板
+
+模板映射：
+
+- `default` → `AI_MEMORY_SYSTEM/02_PROJECT_FACTORY/project_templates/default/`
+- `data_analysis` → `AI_MEMORY_SYSTEM/02_PROJECT_FACTORY/project_templates/data_analysis/`
+- `automation` → `AI_MEMORY_SYSTEM/02_PROJECT_FACTORY/project_templates/automation/`
+- `ai_agent` → `AI_MEMORY_SYSTEM/02_PROJECT_FACTORY/project_templates/ai_agent/`
+
+如果 `project_type` 未命中，必须使用 `default`。
+
+### 2. 创建项目目录
+
+创建：
+
+```text
+AI_MEMORY_SYSTEM/projects/{project_name}/
+```
+
+禁止覆盖已有同名项目。
+
+### 3. 复制模板文件
+
+从模板目录复制以下文件到新项目目录：
+
+- `BOOT.md`
+- `STATE.json`
+- `TASKS.json`
+- `CORE.md`
+- `LOGS.md`
+
+### 4. 初始化 STATE.json
+
+新项目 `STATE.json` 必须写入：
+
+```json
+{
+  "project_name": "{project_name}",
+  "current_stage": "initialized",
+  "current_task": "setup",
+  "progress": "0%",
+  "blockers": "",
+  "last_update": "2026-06-27"
+}
+```
+
+### 5. 写入 CORE.md
+
+`CORE.md` 必须写入：
+
+- project_name
+- project_type
+- description
+- 项目边界
+- 不跨项目读取数据
+- 不共享 STATE
+
+### 6. 写入 PROJECT_REGISTRY/index.json
+
+必须自动追加：
+
+```json
+{
+  "id": "{project_name}",
+  "path": "projects/{project_name}",
+  "status": "active"
+}
+```
+
+### 7. 标记 active
+
+新项目必须在注册中心标记：
+
+```json
+"status": "active"
+```
+
+## OUTPUT
+
+成功后必须存在：
+
+```text
+AI_MEMORY_SYSTEM/projects/{project_name}/
+├── BOOT.md
+├── STATE.json
+├── TASKS.json
+├── CORE.md
+└── LOGS.md
+```
+
+并且 `AI_MEMORY_SYSTEM/01_PROJECT_REGISTRY/index.json` 已包含新项目记录。
+
+## 自动生成函数逻辑
+
+```text
+function create_project(project_name, project_type, description = ""):
+    resolved_type = route(project_type, description)
+    template_path = project_templates[resolved_type]
+    target_path = AI_MEMORY_SYSTEM/projects/{project_name}
+
+    assert project_name is not empty
+    assert target_path does not already exist
+
+    create target_path
+    copy BOOT.md, STATE.json, TASKS.json, CORE.md, LOGS.md from template_path
+    render STATE.json with project_name, setup, 0%, 2026-06-27
+    render CORE.md with project_name, resolved_type, description
+    append { id, path, status } to PROJECT_REGISTRY/index.json
+    mark status active
+    return target_path
+```
 
 ## 成功标准
 
-- 新项目拥有完整五件套：BOOT、STATE、TASKS、CORE、LOGS。
-- 新项目的 STATE 不共享任何其他项目状态。
-- 新项目被注册为 active。
-- 未修改任何未授权项目。
+- 输入一句话可以通过 router 转换为 project_name、project_type、description。
+- 新项目拥有完整五件套。
+- 新项目 STATE 已初始化。
+- 新项目已注册为 active。
+- 未修改未授权项目。
