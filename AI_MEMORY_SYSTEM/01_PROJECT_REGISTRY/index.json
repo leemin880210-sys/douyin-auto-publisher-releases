@@ -6,9 +6,14 @@
       "id": "project_brain",
       "name": "project_brain",
       "path": "AI_MEMORY_SYSTEM/projects/project_brain",
+      "link": "https://github.com/leemin880210-sys/douyin-auto-publisher-releases/tree/main/AI_MEMORY_SYSTEM/projects/project_brain",
+      "purpose": "AI Project Brain System (state machine memory for AI agents)",
+      "description": "This entry registers the project_brain system as a reusable AI project memory and execution framework.",
       "status": "active",
+      "template_status": "Final Template v1.0",
       "current_stage": "已迁移为全局AI记忆系统下的单项目实例",
       "current_task": "等待接入新项目或继续执行授权项目任务",
+      "created_at": "2026-06-27",
       "last_update": "2026-06-27"
     }
   ]
