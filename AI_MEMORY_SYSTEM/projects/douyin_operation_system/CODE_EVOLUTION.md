@@ -215,11 +215,11 @@ AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/v3_previous_pre
 
 ### 代码变化
 
-- API 评论采集拆分主评论 items 与回复 eplies。
-- web_comment_reply_api 写入 eplies，不再写入 comments.items。
-- 评论合并按 uthor_name + text 去重，遍历顺序保持 API 主评论优先、DOM 仅补漏。
-- dom_node 结果写入 aw_comments_debug，不进入正式 comments.items。
-- eply_items_count 优先来自 eplies.Count。
+- API 评论采集拆分主评论 items 与回复 replies。
+- web_comment_reply_api 写入 replies，不再写入 comments.items。
+- 评论合并按 author_name + text 去重，遍历顺序保持 API 主评论优先、DOM 仅补漏。
+- dom_node 结果写入 raw_comments_debug，不进入正式 comments.items。
+- reply_items_count 优先来自 replies.Count。
 - 新增 package_metadata.json，并在 account_summary.md 中同步包元数据字段。
 - 每次运行开始清空旧的包元数据状态，避免连续运行沿用旧值。
 
@@ -274,7 +274,7 @@ AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/v3_previous_pre
 - 包目录与 ZIP 名使用同一个 package_base_name。
 - GPT 可通过 package_metadata.json.package_output_dir 定位包目录。
 - 无评论作品不再出现空的 public_comment_count。
-- 无评论状态与评论可见但未提取状态分离：无评论为 public_zero，可见数字但无有效 items 仍为 isible_count_but_items_empty。
+- 无评论状态与评论可见但未提取状态分离：无评论为 public_zero，可见数字但无有效 items 仍为 visible_count_but_items_empty。
 
 ### 验证结果
 
@@ -293,3 +293,47 @@ AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/v3_previous_pre
 - 本次未改变评论结构，继续保留 items / replies / raw_comments_debug。
 - 本次未改变作品打开、抽帧、OCR、主页卡片采集主流程。
 - 仍需 30 条正式包复测。
+---
+
+## 2026-06-28 外部大脑一致性清理与恢复路径确认
+
+- 修改内容：修正过期阶段限制、更新样本验证结论、清理转义控制字符导致的缺字，并明确 GitHub 可恢复源码路径。
+- 修改原因：保持 `douyin_operation_system` 与 `modules/account_ops` 的外部大脑记忆一致，避免新 AI 接手时误把 30 条正式包当作每轮默认任务，或误判样本验证尚未通过。
+- 修改路径：
+  - `AI_MEMORY_SYSTEM/projects/douyin_operation_system/CORE.md`
+  - `AI_MEMORY_SYSTEM/projects/douyin_operation_system/TASKS.json`
+  - `AI_MEMORY_SYSTEM/projects/douyin_operation_system/STATE.json`
+  - `AI_MEMORY_SYSTEM/projects/douyin_operation_system/LOGS.md`
+  - `AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_EVOLUTION.md`
+  - `AI_MEMORY_SYSTEM/projects/douyin_operation_system/CHAT_LOGS.md`
+  - `AI_MEMORY_SYSTEM/projects/douyin_operation_system/modules/account_ops/CORE.md`
+  - `AI_MEMORY_SYSTEM/projects/douyin_operation_system/modules/account_ops/TASKS.json`
+  - `AI_MEMORY_SYSTEM/projects/douyin_operation_system/modules/account_ops/STATE.json`
+  - `AI_MEMORY_SYSTEM/projects/douyin_operation_system/modules/account_ops/LOGS.md`
+  - `AI_MEMORY_SYSTEM/projects/douyin_operation_system/modules/account_ops/CODE_EVOLUTION.md`
+  - `AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/`
+- 修改前：外部大脑仍包含“未实现自动文件夹隔离”“新字段和输出命名规则仍需继续通过 5 条样本包复测”“30 条正式包复测作为默认任务”等过期表达，并存在 replies/raw_comments_debug/author_name 等字段的控制字符缺字。
+- 修改后：当前阶段锁定为 account_ops 多账号样本验证；5 条/10 条样本包已多账号通过；30 条正式包只作为阶段性验收；data_analysis 和 content_pipeline 暂不启动。
+- 本地路径说明：`C:\Users\cc\Documents\抖音作品分析\...` 只作为历史执行路径，不作为 GitHub 恢复依据。
+- GitHub 可恢复源码路径：`AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/v1_latest/douyin_auto_tool.ps1`
+- 备注：未修改采集工具代码；未修改 GLOBAL_MEMORY。
+
+## Code Snapshot History
+
+### v1（最新版本）
+
+```text
+AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/v1_latest/
+```
+
+### v2（上一版本）
+
+```text
+AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/v2_previous/
+```
+
+### v3（上上版本）
+
+```text
+AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/v3_previous_previous/
+```

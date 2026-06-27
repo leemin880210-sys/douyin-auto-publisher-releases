@@ -1,25 +1,23 @@
 {
-  "project_id": "douyin_account_ops",
-  "name": "抖音代运营采集工具",
-  "type": "data_analysis",
-  "status": "active",
-  "purpose": "账号采集模块：输入抖音主页链接，输出标准 douyin_analysis_package.zip；当前阶段不扩展账号诊断、运营方案、脚本生成、自动发布或商家建档。新增输出命名、ZIP目录、防冲突和连续编号规则用于规范采集包与后续交付文件命名。",
-  "current_stage": "采集稳定性小优化已完成；输出命名与ZIP防冲突规则已同步",
-  "current_task": "按新增输出命名、连续编号、/output_zip/ 和防覆盖规则继续复测 5 条样本包或 30 条正式包。",
-  "progress": "已完成 run_mode/sample_size/formal_acceptance 输出；已优化公开评论数大于 0 但 comments.items 为空时的 comment_status；已移除 has_location_evidence 使用账号名兜底；已新增 duration_status 和 media_type；已将 detail_title 移入 summary.md Debug 区并保留 canonical_title 作为主标题；SelfTest 已通过；已同步输出统一命名、ZIP目录和防冲突规则。",
-  "default_collection_mode": "public",
-  "default_test_mode": false,
-  "default_max_works": 30,
-  "output_naming_rule": "{店铺名称}-{作品数量}-{时间}",
-  "output_time_format": "YYYYMMDD_HHMM",
-  "zip_output_dir": "/output_zip/",
-  "zip_naming_rule": "{店铺名称}-{作品数量}-{时间}.zip",
-  "blockers": [
-    "PaddleOCR 或 Tesseract 的 OCR 质量仍依赖本机环境，低质量 OCR 不应进入摘要。",
-    "新字段和新 comment_status 仍需通过实际 5 条样本包与 30 条正式包复测。",
-    "当前阶段不得扩展到账号诊断、运营方案、脚本生成、自动发布或商家建档。",
-    "未实现自动文件夹隔离（每商家独立目录）。",
-    "未实现自动上传/同步机制。"
-  ],
-  "last_update": "2026-06-28"
+    "project_id":  "douyin_account_ops",
+    "name":  "抖音代运营采集工具",
+    "type":  "data_analysis",
+    "status":  "active",
+    "purpose":  "账号采集模块：输入抖音主页链接，输出标准 douyin_analysis_package.zip；当前阶段不扩展账号诊断、运营方案、脚本生成、自动发布或商家建档。新增输出命名、ZIP目录、防冲突和连续编号规则用于规范采集包与后续交付文件命名。",
+    "current_stage":  "account_ops 账号采集模块多账号样本验证阶段",
+    "current_task":  "继续用 5-10 条样本包采更多账号，观察评论、OCR、partial 类型；30 条正式包仅作阶段性验收。",
+    "progress":  "当前 output/packages 与 output_zip 命名规则已通过多账号样本包验证；5 条/10 条样本包已多账号通过。",
+    "default_collection_mode":  "public",
+    "default_test_mode":  false,
+    "default_max_works":  30,
+    "output_naming_rule":  "{店铺名称}-{作品数量}-{时间}",
+    "output_time_format":  "YYYYMMDD_HHMM",
+    "zip_output_dir":  "/output_zip/",
+    "zip_naming_rule":  "{店铺名称}-{作品数量三位数}-{时间}.zip",
+    "blockers":  [
+                     "继续观察评论、OCR、partial 类型。",
+                     "30 条正式包只作为阶段性验收。",
+                     "data_analysis 和 content_pipeline 暂不启动。"
+                 ],
+    "last_update":  "2026-06-28"
 }

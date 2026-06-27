@@ -1,36 +1,36 @@
 {
-  "project_name": "douyin_operation_system",
-  "current_stage": "AI_MEMORY_SYSTEM 容器 v2.0 已启用",
-  "current_task": "按 CHAT_LOGS 与 CODE_SNAPSHOTS 三版本快照规则维护项目可追溯和可恢复能力。",
-  "progress": "100%",
-  "blockers": "CODE_SNAPSHOTS 首次启用时 v3_previous_previous 无更早历史版本；account_ops 仍需实际 5 条样本包和 30 条正式包复测；未实现每商家独立文件夹隔离；未实现自动上传/同步机制。",
-  "last_update": "2026-06-28",
-  "container_version": "v2.0",
-  "required_memory_files": [
-    "CHAT_LOGS.md",
-    "CODE_EVOLUTION.md",
-    "CODE_SNAPSHOTS/v1_latest",
-    "CODE_SNAPSHOTS/v2_previous",
-    "CODE_SNAPSHOTS/v3_previous_previous",
-    "BOOT.md",
-    "STATE.json",
-    "TASKS.json",
-    "CORE.md",
-    "LOGS.md"
-  ],
-  "modules": {
-    "account_ops": {
-      "path": "AI_MEMORY_SYSTEM/projects/douyin_operation_system/modules/account_ops",
-      "source_project": "douyin_account_ops",
-      "status": "active"
-    },
-    "data_analysis": {
-      "path": "AI_MEMORY_SYSTEM/projects/douyin_operation_system/modules/data_analysis",
-      "status": "reserved"
-    },
-    "content_pipeline": {
-      "path": "AI_MEMORY_SYSTEM/projects/douyin_operation_system/modules/content_pipeline",
-      "status": "reserved"
-    }
-  }
+    "project_name":  "douyin_operation_system",
+    "current_stage":  "account_ops 账号采集模块多账号样本验证阶段",
+    "current_task":  "继续采更多账号样本，不做不影响使用的微优化。",
+    "progress":  "当前 output/packages 与 output_zip 命名规则已通过多账号样本包验证；5 条/10 条样本包已多账号通过，继续观察评论、OCR、partial 类型。",
+    "blockers":  "无关键阻塞；30 条正式包仅作为阶段性验收；data_analysis 与 content_pipeline 暂不启动。",
+    "last_update":  "2026-06-28",
+    "container_version":  "v2.0",
+    "required_memory_files":  [
+                                  "CHAT_LOGS.md",
+                                  "CODE_EVOLUTION.md",
+                                  "CODE_SNAPSHOTS/v1_latest",
+                                  "CODE_SNAPSHOTS/v2_previous",
+                                  "CODE_SNAPSHOTS/v3_previous_previous",
+                                  "BOOT.md",
+                                  "STATE.json",
+                                  "TASKS.json",
+                                  "CORE.md",
+                                  "LOGS.md"
+                              ],
+    "modules":  {
+                    "account_ops":  {
+                                        "path":  "AI_MEMORY_SYSTEM/projects/douyin_operation_system/modules/account_ops",
+                                        "source_project":  "douyin_account_ops",
+                                        "status":  "active"
+                                    },
+                    "data_analysis":  {
+                                          "path":  "AI_MEMORY_SYSTEM/projects/douyin_operation_system/modules/data_analysis",
+                                          "status":  "reserved"
+                                      },
+                    "content_pipeline":  {
+                                             "path":  "AI_MEMORY_SYSTEM/projects/douyin_operation_system/modules/content_pipeline",
+                                             "status":  "reserved"
+                                         }
+                }
 }

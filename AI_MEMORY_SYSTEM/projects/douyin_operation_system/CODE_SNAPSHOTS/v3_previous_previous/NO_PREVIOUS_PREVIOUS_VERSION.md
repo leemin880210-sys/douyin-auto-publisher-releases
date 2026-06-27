@@ -1,3 +1,3 @@
-# No previous previous code snapshot
+# Historical marker
 
-当前仅有两次 douyin_auto_tool.ps1 完整代码快照；尚无可下移的 v3 业务代码版本。
+This marker is retained for history. The directory now also contains a rolled previous-previous snapshot.

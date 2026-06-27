@@ -12,7 +12,7 @@
     "codex_tasks":  [
                         {
                             "priority":  1,
-                            "task":  "用 30 条正式包复测 run_mode=formal_collection、formal_acceptance=true；如果账号作品数小于等于 30，确认采集全部作品，并检查 zip 是否按 /output_zip/{店铺名称}-{作品数量三位数}-{时间}.zip 规则归档。"
+                            "task":  "当前阶段继续用 5-10 条样本包复测更多账号，重点观察评论、OCR、partial 类型；30 条正式包只作为阶段性验收，不作为每轮默认任务。"
                         },
                         {
                             "priority":  2,
@@ -66,7 +66,10 @@
                                 "低质量 OCR 和 OCR fallback 提示不得进入 summary.md 或 conversion_flags。",
                                 "account_summary.md 的 output_zip_path 必须使用 output_zip/... 相对路径。",
                                 "评论统计必须包含 valid_comment_items_count、reply_items_count、comment_count_match_status。",
-                                "ZIP 命名固定为 {店铺名称}-{作品数量三位数}-{YYYYMMDD_HHMM}.zip。"
+                                "ZIP 命名固定为 {店铺名称}-{作品数量三位数}-{YYYYMMDD_HHMM}.zip。",
+                                "当前阶段以 5-10 条样本包复测更多账号为默认任务。",
+                                "30 条正式包只作为阶段性验收，不作为每轮默认任务。",
+                                "data_analysis 和 content_pipeline 暂不启动。"
                             ],
     "acceptance_rules":  [
                              "SelfTest 必须通过。",

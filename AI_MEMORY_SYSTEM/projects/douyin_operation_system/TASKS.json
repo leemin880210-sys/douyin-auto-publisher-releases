@@ -38,7 +38,7 @@
                         },
                         {
                             "priority":  6,
-                            "task":  "用 30 条正式包复测 account_ops 模块的新字段、状态规则和 output_zip 命名规则；继续观察 5 条样本包中的 partial 类型是否可下降。"
+                            "task":  "当前阶段继续用 5-10 条样本包复测更多账号，重点观察评论、OCR、partial 类型；30 条正式包只作为阶段性验收，不作为每轮默认任务。"
                         }
                     ],
     "module_routes":  {
@@ -57,6 +57,8 @@
                                 "v3_previous_previous 保存上上版完整代码文件或明确记录首次启用时无更早历史版本。",
                                 "registry 中只注册 douyin_operation_system 一个活跃项目。",
                                 "不删除任何历史 LOGS。",
-                                "不修改 GLOBAL_MEMORY。"
+                                "不修改 GLOBAL_MEMORY。",
+                                "当前只运行 modules/account_ops 账号采集模块，data_analysis 和 content_pipeline 暂不启动。",
+                                "30 条正式包只作为阶段性验收，不作为每轮默认任务。"
                             ]
 }

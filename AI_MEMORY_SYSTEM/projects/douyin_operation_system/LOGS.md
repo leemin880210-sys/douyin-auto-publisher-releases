@@ -71,10 +71,10 @@ The following entries were migrated from `AI_MEMORY_SYSTEM/projects/project_brai
 ### 已发生事实
 
 - 修改 douyin_auto_tool.ps1。
-- comments.json 输出新增 eplies 数组。
+- comments.json 输出新增 replies 数组。
 - web_comment_reply_api 回复不再写入 comments.items。
-- comments.items 按 uthor_name + text 去重，API 主评论优先于 DOM 补漏。
-- dom_node 解析结果不再进入正式 items，改写入 aw_comments_debug。
+- comments.items 按 author_name + text 去重，API 主评论优先于 DOM 补漏。
+- dom_node 解析结果不再进入正式 items，改写入 raw_comments_debug。
 - 包根新增 package_metadata.json，包含 package_base_name、shop_name、safe_shop_name、collected_works_count、run_timestamp、package_output_dir、zip_output_path。
 - 运行 SelfTest 通过。
 - 使用新链接实际采集 5 条样本，生成 output_zip/寂燃CRAFTBEERBAR-005-20260628_0311.zip。
@@ -130,3 +130,8 @@ The following entries were migrated from `AI_MEMORY_SYSTEM/projects/project_brai
 - 拾久休闲吧官方号：10 条，ZIP `output_zip/拾久休闲吧官方号-010-20260628_0359.zip`，visual_order 1-10 连续，mapping/frame/crop 全部 ok，contact_sheet 10，状态 public_success=10。
 - 闽侯甘蔗记得来四果汤营业中：主页实际检测到 6 条作品，ZIP `output_zip/闽侯甘蔗记得来四果汤营业中-006-20260628_0404.zip`，visual_order 1-6 连续，mapping/frame/crop 全部 ok，contact_sheet 6，状态 public_success=5、partial=1。
 - 寂燃CRAFT BEER BAR：主页实际检测到 9 条作品，ZIP `output_zip/寂燃CRAFTBEERBAR-009-20260628_0409.zip`，visual_order 1-9 连续，mapping/frame/crop 全部 ok，contact_sheet 9，状态 public_success=8、partial=1。
+- timestamp: 2026-06-28
+- actor: Codex
+- action: Performed external-brain memory consistency cleanup for `douyin_operation_system`.
+- result: Updated CORE, TASKS, STATE, LOGS and CODE_EVOLUTION; corrected escaped-control-character text; documented that local paths are historical execution paths and that GitHub recovery source lives under CODE_SNAPSHOTS/v1_latest.
+- notes: No collection tool code was modified. GLOBAL_MEMORY was not modified. data_analysis and content_pipeline were not started.

@@ -285,10 +285,10 @@
 ### 已发生事实
 
 - 修改 douyin_auto_tool.ps1。
-- comments.json 增加 eplies 数组。
+- comments.json 增加 replies 数组。
 - web_comment_reply_api 不再进入 comments.items。
-- comments.items 按 uthor_name + text 去重，并优先保留 web_comment_api。
-- dom_node 解析结果不进入正式 items，写入 aw_comments_debug。
+- comments.items 按 author_name + text 去重，并优先保留 web_comment_api。
+- dom_node 解析结果不进入正式 items，写入 raw_comments_debug。
 - 包根新增 package_metadata.json。
 - account_summary.md 增加 package_base_name、shop_name、safe_shop_name、collected_works_count、run_timestamp、package_output_dir、zip_output_path。
 - 运行 SelfTest 通过。
@@ -381,3 +381,25 @@
 ### 影响范围
 
 - 未修改评论采集 API、DOM 解析、过滤规则、抽帧、OCR、摘要或 ZIP 主流程。
+
+## 2026-06-28 外部大脑一致性清理
+
+### 已发生事实
+
+- 更新 account_ops 外部大脑记忆文件。
+- 修正 LOGS.md 与 CODE_EVOLUTION.md 中由转义控制字符导致的缺字：replies、raw_comments_debug、author_name + text、reply_items_count、run_timestamp、visible_count_but_items_empty。
+- 将当前阶段调整为多账号样本验证阶段。
+- 明确 output/packages 与 output_zip 命名规则已通过多账号样本包验证。
+- 明确 30 条正式包只作为阶段性验收，不作为每轮默认任务。
+
+### 影响范围
+
+- 只修改 AI_MEMORY_SYSTEM 外部大脑记忆文件。
+- 未修改采集工具代码。
+- 未修改 GLOBAL_MEMORY。
+- 未启动 data_analysis 或 content_pipeline。
+
+### 验证结果
+
+- 当前继续用 5-10 条样本包复测更多账号。
+- 当前继续观察评论、OCR、partial 类型。

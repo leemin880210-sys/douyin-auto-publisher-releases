@@ -1,5 +1,3 @@
 # v3_previous_previous
 
-无历史版本。
-
-AI_MEMORY_SYSTEM v2.0 首次启用前，本项目尚未保存第三份完整源码快照。后续修改时，当前 `v2_previous/` 将按规则滚动为 `v3_previous_previous/`。
+This directory now contains the rolled previous-previous snapshot copied from the former v2_previous snapshot during the 2026-06-28 external-brain consistency cleanup.

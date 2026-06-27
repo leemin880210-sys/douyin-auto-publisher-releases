@@ -1,25 +1,23 @@
 {
-  "project_id": "douyin_account_ops",
-  "name": "抖音代运营采集工具",
-  "type": "data_analysis",
-  "status": "active",
-  "purpose": "账号采集模块：输入抖音主页链接，输出标准 douyin_analysis_package.zip；当前阶段不扩展账号诊断、运营方案、脚本生成、自动发布或商家建档。新增输出命名、ZIP目录、防冲突和连续编号规则用于规范采集包与后续交付文件命名。",
-  "current_stage": "采集稳定性小优化已完成；输出命名与ZIP防冲突规则已同步",
-  "current_task": "按新增输出命名、连续编号、/output_zip/ 和防覆盖规则继续复测 5 条样本包或 30 条正式包。",
-  "progress": "已完成 run_mode/sample_size/formal_acceptance 输出；已优化公开评论数大于 0 但 comments.items 为空时的 comment_status；已移除 has_location_evidence 使用账号名兜底；已新增 duration_status 和 media_type；已将 detail_title 移入 summary.md Debug 区并保留 canonical_title 作为主标题；SelfTest 已通过；已同步输出统一命名、ZIP目录和防冲突规则。",
-  "default_collection_mode": "public",
-  "default_test_mode": false,
-  "default_max_works": 30,
-  "output_naming_rule": "{店铺名称}-{作品数量}-{时间}",
-  "output_time_format": "YYYYMMDD_HHMM",
-  "zip_output_dir": "/output_zip/",
-  "zip_naming_rule": "{店铺名称}-{作品数量}-{时间}.zip",
-  "blockers": [
-    "PaddleOCR 或 Tesseract 的 OCR 质量仍依赖本机环境，低质量 OCR 不应进入摘要。",
-    "新字段和新 comment_status 仍需通过实际 5 条样本包与 30 条正式包复测。",
-    "当前阶段不得扩展到账号诊断、运营方案、脚本生成、自动发布或商家建档。",
-    "未实现自动文件夹隔离（每商家独立目录）。",
-    "未实现自动上传/同步机制。"
-  ],
-  "last_update": "2026-06-28"
+    "project_id":  "douyin_account_ops",
+    "name":  "抖音代运营采集工具",
+    "type":  "data_analysis",
+    "status":  "active",
+    "purpose":  "账号采集模块：输入抖音主页链接，输出标准 douyin_analysis_package.zip；当前阶段不扩展账号诊断、运营方案、脚本生成、自动发布或商家建档。新增输出命名、ZIP目录、防冲突和连续编号规则用于规范采集包与后续交付文件命名。",
+    "current_stage":  "批量采集完成：4 个主页链接已按每个最多 10 条执行并生成 ZIP",
+    "current_task":  "等待用户检查批量包或继续发起下一轮采集。",
+    "progress":  "已完成 4 个主页链接批量采集：LeGuè 浅滩·猫咖·鸡尾酒官方号 10 条、拾久休闲吧官方号 10 条、闽侯甘蔗记得来四果汤营业中 6 条、寂燃CRAFT BEER BAR 9 条。四个包 visual_order 连续，content_mapping/frame/video_crop 全部 ok，ZIP 均存在。",
+    "default_collection_mode":  "public",
+    "default_test_mode":  false,
+    "default_max_works":  30,
+    "output_naming_rule":  "{店铺名称}-{作品数量}-{时间}",
+    "output_time_format":  "YYYYMMDD_HHMM",
+    "zip_output_dir":  "/output_zip/",
+    "zip_naming_rule":  "{店铺名称}-{作品数量三位数}-{时间}.zip",
+    "blockers":  [
+                     "第三个账号主页实际只检测到 6 条作品。",
+                     "第四个账号主页实际只检测到 9 条作品。",
+                     "若用户预期作品更多，需要确认主页可见作品、筛选、隐藏作品或权限状态。"
+                 ],
+    "last_update":  "2026-06-28"
 }

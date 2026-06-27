@@ -1,3 +1,3 @@
-# No previous code snapshot
+# v2_previous
 
-首次启用 account_ops 本地业务代码快照时，云端没有可下移的 v1 历史版本。
+This directory now contains the complete project snapshot from before the 2026-06-28 external-brain consistency cleanup.

@@ -1749,25 +1749,55 @@ function ResolvePublicMetricStatus([string]$PublicCardLike, [string]$LikeMatched
     return [ordered]@{ status = "ok"; reason = "ok" }
 }
 
-function GetCommentCountMatchStatus($PublicCommentCount, [int]$ValidCommentItemsCount, [int]$ReplyItemsCount) {
+function GetCommentCountStats($PublicCommentCount, [int]$MainCommentCount, [int]$ReplyCommentCount) {
+    $totalExtracted = $MainCommentCount + $ReplyCommentCount
+    $gap = $null
+    $status = "unknown"
     if ($null -eq $PublicCommentCount -or [string]::IsNullOrWhiteSpace([string]$PublicCommentCount)) {
-        return "unknown_no_public_count"
+        return [ordered]@{
+            main_comment_count = $MainCommentCount
+            reply_comment_count = $ReplyCommentCount
+            total_extracted_comment_count = $totalExtracted
+            comment_gap_count = $gap
+            comment_count_match_status = $status
+        }
     }
     $publicCount = 0
     if (-not [int]::TryParse([string]$PublicCommentCount, [ref]$publicCount)) {
-        return "unknown_public_count_parse_failed"
-    }
-    if ($publicCount -le 0 -and $ValidCommentItemsCount -eq 0) { return "public_zero" }
-    if ($ValidCommentItemsCount -eq $publicCount) { return "match" }
-    if ($ValidCommentItemsCount -eq 0 -and $publicCount -gt 0) { return "visible_count_but_items_empty" }
-    if ($ValidCommentItemsCount -lt $publicCount) {
-        if (($ValidCommentItemsCount + $ReplyItemsCount) -ge $publicCount) {
-            return "ok_with_reply_filtered"
+        return [ordered]@{
+            main_comment_count = $MainCommentCount
+            reply_comment_count = $ReplyCommentCount
+            total_extracted_comment_count = $totalExtracted
+            comment_gap_count = $gap
+            comment_count_match_status = $status
         }
-        return "partial"
     }
-    if ($ValidCommentItemsCount -gt $publicCount) { return "over_collected" }
-    return "unknown"
+    $gap = $publicCount - $totalExtracted
+    if ($publicCount -le 0 -and $totalExtracted -eq 0) {
+        $status = "public_zero"
+    } elseif ($totalExtracted -gt $publicCount) {
+        $status = "extracted_more_than_public"
+    } elseif ($publicCount -gt 0 -and $totalExtracted -eq 0) {
+        $status = "visible_count_but_items_empty"
+    } elseif ($totalExtracted -eq $publicCount -and $ReplyCommentCount -gt 0) {
+        $status = "matched_with_replies"
+    } elseif ($totalExtracted -eq $publicCount) {
+        $status = "matched"
+    } elseif ($totalExtracted -lt $publicCount -and $totalExtracted -gt 0) {
+        $status = "partial_with_replies_filtered"
+    }
+    return [ordered]@{
+        main_comment_count = $MainCommentCount
+        reply_comment_count = $ReplyCommentCount
+        total_extracted_comment_count = $totalExtracted
+        comment_gap_count = $gap
+        comment_count_match_status = $status
+    }
+}
+
+function GetCommentCountMatchStatus($PublicCommentCount, [int]$MainCommentCount, [int]$ReplyCommentCount) {
+    $stats = GetCommentCountStats $PublicCommentCount $MainCommentCount $ReplyCommentCount
+    return [string]$stats.comment_count_match_status
 }
 
 function AddCommentStats($CommentResult, $PublicCommentCount, [int]$ValidCommentItemsCount) {
@@ -1779,10 +1809,14 @@ function AddCommentStats($CommentResult, $PublicCommentCount, [int]$ValidComment
     } elseif ($null -ne $CommentResult.filtered_author_reply_count -and [int]::TryParse([string]$CommentResult.filtered_author_reply_count, [ref]$n)) {
         $replyItemsCount = $n
     }
-    $matchStatus = GetCommentCountMatchStatus $PublicCommentCount $ValidCommentItemsCount $replyItemsCount
+    $countStats = GetCommentCountStats $PublicCommentCount $ValidCommentItemsCount $replyItemsCount
     $CommentResult | Add-Member -NotePropertyName valid_comment_items_count -NotePropertyValue $ValidCommentItemsCount -Force
     $CommentResult | Add-Member -NotePropertyName reply_items_count -NotePropertyValue $replyItemsCount -Force
-    $CommentResult | Add-Member -NotePropertyName comment_count_match_status -NotePropertyValue $matchStatus -Force
+    $CommentResult | Add-Member -NotePropertyName main_comment_count -NotePropertyValue $countStats.main_comment_count -Force
+    $CommentResult | Add-Member -NotePropertyName reply_comment_count -NotePropertyValue $countStats.reply_comment_count -Force
+    $CommentResult | Add-Member -NotePropertyName total_extracted_comment_count -NotePropertyValue $countStats.total_extracted_comment_count -Force
+    $CommentResult | Add-Member -NotePropertyName comment_gap_count -NotePropertyValue $countStats.comment_gap_count -Force
+    $CommentResult | Add-Member -NotePropertyName comment_count_match_status -NotePropertyValue $countStats.comment_count_match_status -Force
 }
 
 function IsLikelyUiText([string]$Text) {
@@ -3164,7 +3198,8 @@ function CollectWork([string]$Url, [int]$Index, [string]$PackageDir, $LogBox) {
         } elseif ($null -ne $commentResult.filtered_author_reply_count -and [int]::TryParse([string]$commentResult.filtered_author_reply_count, [ref]$n)) {
             $replyItemsCount = $n
         }
-        $commentCountMatchStatus = GetCommentCountMatchStatus $publicCommentCount $validCommentItemsCount $replyItemsCount
+        $commentCountStats = GetCommentCountStats $publicCommentCount $validCommentItemsCount $replyItemsCount
+        $commentCountMatchStatus = [string]$commentCountStats.comment_count_match_status
         AddCommentStats $commentResult $publicCommentCount $validCommentItemsCount
         $publicMetricCheck = ResolvePublicMetricStatus $publicCardLike $likeMatchedState $commentResult
         $publicMetricStatus = [string]$publicMetricCheck.status
@@ -3273,6 +3308,10 @@ function CollectWork([string]$Url, [int]$Index, [string]$PackageDir, $LogBox) {
             comments_count_collected = $commentTexts.Count
             valid_comment_items_count = $validCommentItemsCount
             reply_items_count = $replyItemsCount
+            main_comment_count = $commentCountStats.main_comment_count
+            reply_comment_count = $commentCountStats.reply_comment_count
+            total_extracted_comment_count = $commentCountStats.total_extracted_comment_count
+            comment_gap_count = $commentCountStats.comment_gap_count
             comment_count_match_status = $commentCountMatchStatus
             comments_status = $commentStatus
             comments_reason = $commentReason
@@ -3382,7 +3421,11 @@ function CollectWork([string]$Url, [int]$Index, [string]$PackageDir, $LogBox) {
             comments_count_collected = 0
             valid_comment_items_count = 0
             reply_items_count = 0
-            comment_count_match_status = "unknown_no_public_count"
+            main_comment_count = 0
+            reply_comment_count = 0
+            total_extracted_comment_count = 0
+            comment_gap_count = $null
+            comment_count_match_status = "unknown"
             comments_status = "failed"
             comments_reason = $failureReason
             comment_status = "failed"
@@ -3403,7 +3446,7 @@ function CollectWork([string]$Url, [int]$Index, [string]$PackageDir, $LogBox) {
             folder = (RelPath $folder $PackageDir)
         }
         Set-Content -LiteralPath (Join-Path $folder "meta.json") -Encoding UTF8 -Value ($item | ConvertTo-Json -Depth 30)
-        Set-Content -LiteralPath (Join-Path $folder "comments.json") -Encoding UTF8 -Value (@{ comments_status = "failed"; comments_reason = $failureReason; items = @(); replies = @(); raw_comments_debug = @(); valid_comment_items_count = 0; reply_items_count = 0; comment_count_match_status = "unknown_no_public_count" } | ConvertTo-Json -Depth 10)
+        Set-Content -LiteralPath (Join-Path $folder "comments.json") -Encoding UTF8 -Value (@{ comments_status = "failed"; comments_reason = $failureReason; items = @(); replies = @(); raw_comments_debug = @(); valid_comment_items_count = 0; reply_items_count = 0; main_comment_count = 0; reply_comment_count = 0; total_extracted_comment_count = 0; comment_gap_count = $null; comment_count_match_status = "unknown" } | ConvertTo-Json -Depth 10)
         Set-Content -LiteralPath (Join-Path $folder "transcript.txt") -Encoding UTF8 -Value "speech_transcription_status: not_configured`r`ntranscript: `"`""
         Set-Content -LiteralPath (Join-Path $folder "ocr_text.txt") -Encoding UTF8 -Value ""
         Set-Content -LiteralPath (Join-Path $folder "ocr_items.json") -Encoding UTF8 -Value "[]"
@@ -3495,7 +3538,11 @@ function NewFailedWork([string]$Url, [int]$Index, [string]$PackageDir, [string]$
         comments_count_collected = 0
         valid_comment_items_count = 0
         reply_items_count = 0
-        comment_count_match_status = "unknown_no_public_count"
+        main_comment_count = 0
+        reply_comment_count = 0
+        total_extracted_comment_count = 0
+        comment_gap_count = $null
+        comment_count_match_status = "unknown"
         comments_status = "failed"
         comments_reason = $Reason
         comment_status = "failed"
@@ -3516,7 +3563,7 @@ function NewFailedWork([string]$Url, [int]$Index, [string]$PackageDir, [string]$
         folder = (RelPath $folder $PackageDir)
     }
     Set-Content -LiteralPath (Join-Path $folder "meta.json") -Encoding UTF8 -Value ($item | ConvertTo-Json -Depth 30)
-    Set-Content -LiteralPath (Join-Path $folder "comments.json") -Encoding UTF8 -Value (@{ comments_status = "failed"; comments_reason = $Reason; items = @(); replies = @(); raw_comments_debug = @(); valid_comment_items_count = 0; reply_items_count = 0; comment_count_match_status = "unknown_no_public_count" } | ConvertTo-Json -Depth 10)
+    Set-Content -LiteralPath (Join-Path $folder "comments.json") -Encoding UTF8 -Value (@{ comments_status = "failed"; comments_reason = $Reason; items = @(); replies = @(); raw_comments_debug = @(); valid_comment_items_count = 0; reply_items_count = 0; main_comment_count = 0; reply_comment_count = 0; total_extracted_comment_count = 0; comment_gap_count = $null; comment_count_match_status = "unknown" } | ConvertTo-Json -Depth 10)
     Set-Content -LiteralPath (Join-Path $folder "transcript.txt") -Encoding UTF8 -Value "speech_transcription_status: not_configured`r`ntranscript: `"`""
     Set-Content -LiteralPath (Join-Path $folder "ocr_text.txt") -Encoding UTF8 -Value ""
     Set-Content -LiteralPath (Join-Path $folder "ocr_items.json") -Encoding UTF8 -Value "[]"
@@ -3769,11 +3816,11 @@ function WriteXlsx([string]$Path, $Items) {
     Set-Content -LiteralPath "$temp\_rels\.rels" -Encoding UTF8 -Value '<?xml version="1.0" encoding="UTF-8"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>'
     Set-Content -LiteralPath "$temp\xl\workbook.xml" -Encoding UTF8 -Value '<?xml version="1.0" encoding="UTF-8"?><workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets><sheet name="works" sheetId="1" r:id="rId1"/></sheets></workbook>'
     Set-Content -LiteralPath "$temp\xl\_rels\workbook.xml.rels" -Encoding UTF8 -Value '<?xml version="1.0" encoding="UTF-8"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet1.xml"/></Relationships>'
-    $headers = @("index","visual_order","video_id","status","content_mapping_status","mapping_status","mapping_check_reason","title_consistency_status","title_consistency_reason","title_similarity_score","opened_modal_id","card_modal_id","frame_status","video_crop_status","ocr_status","comment_status","speech_status","public_metric_status","public_metric_reason","authorized_metric_status","collection_mode","run_mode","sample_size","formal_acceptance","authorization_status","data_level","is_pinned","card_row","card_col","card_bbox","card_cover","failure_reason","url","canonical_title","detail_title","title","card_text","published_at_raw","duration_seconds","duration_status","media_type","frame_strategy","frame_count","frame_retry_count","contact_sheet_path","frames_dir","full_frame_dir","video_crop_dir","public_card_like_count","public_card_like_source","authorized_play_count","authorized_like_count","authorized_comment_count","authorized_favorite_count","authorized_share_count","fan_profile","traffic_source","completion_rate","five_second_play_rate","engagement_rate","follower_gain","profile_visit_count","public_comment_count","comment_button_label","comments_expected_count","comments_count_collected","valid_comment_items_count","reply_items_count","comment_count_match_status","comments_status","comments_reason","no_speech","missing_due_to_authorization","missing_due_to_error","summary","conversion_flags","comment_keywords","folder")
+    $headers = @("index","visual_order","video_id","status","content_mapping_status","mapping_status","mapping_check_reason","title_consistency_status","title_consistency_reason","title_similarity_score","opened_modal_id","card_modal_id","frame_status","video_crop_status","ocr_status","comment_status","speech_status","public_metric_status","public_metric_reason","authorized_metric_status","collection_mode","run_mode","sample_size","formal_acceptance","authorization_status","data_level","is_pinned","card_row","card_col","card_bbox","card_cover","failure_reason","url","canonical_title","detail_title","title","card_text","published_at_raw","duration_seconds","duration_status","media_type","frame_strategy","frame_count","frame_retry_count","contact_sheet_path","frames_dir","full_frame_dir","video_crop_dir","public_card_like_count","public_card_like_source","authorized_play_count","authorized_like_count","authorized_comment_count","authorized_favorite_count","authorized_share_count","fan_profile","traffic_source","completion_rate","five_second_play_rate","engagement_rate","follower_gain","profile_visit_count","public_comment_count","comment_button_label","comments_expected_count","comments_count_collected","valid_comment_items_count","reply_items_count","main_comment_count","reply_comment_count","total_extracted_comment_count","comment_gap_count","comment_count_match_status","comments_status","comments_reason","no_speech","missing_due_to_authorization","missing_due_to_error","summary","conversion_flags","comment_keywords","folder")
     $rows = New-Object System.Collections.Generic.List[object]
     $rows.Add($headers)
     foreach ($it in $Items) {
-        $rows.Add(@($it.index,$it.visual_order,$it.video_id,$it.status,$it.content_mapping_status,$it.mapping_status,$it.mapping_check_reason,$it.title_consistency_status,$it.title_consistency_reason,$it.title_similarity_score,$it.opened_modal_id,$it.card_modal_id,$it.frame_status,$it.video_crop_status,$it.ocr_status,$it.comment_status,$it.speech_status,$it.public_metric_status,$it.public_metric_reason,$it.authorized_metric_status,$it.collection_mode,$it.run_mode,$it.sample_size,$it.formal_acceptance,$it.authorization_status,$it.data_level,$it.is_pinned,$it.card_row,$it.card_col,($it.card_bbox | ConvertTo-Json -Compress),$it.card_cover,$it.failure_reason,$it.url,$it.canonical_title,$it.detail_title,$it.title,$it.card_text,$it.published_at_raw,$it.duration_seconds,$it.duration_status,$it.media_type,$it.frame_strategy,$it.frame_count,$it.frame_retry_count,$it.contact_sheet_path,$it.frames_dir,$it.full_frame_dir,$it.video_crop_dir,$it.public_card_like_count,$it.public_card_like_source,$it.authorized_play_count,$it.authorized_like_count,$it.authorized_comment_count,$it.authorized_favorite_count,$it.authorized_share_count,$it.fan_profile,$it.traffic_source,$it.completion_rate,$it.five_second_play_rate,$it.engagement_rate,$it.follower_gain,$it.profile_visit_count,$it.public_comment_count,$it.comment_button_label,$it.comments_expected_count,$it.comments_count_collected,$it.valid_comment_items_count,$it.reply_items_count,$it.comment_count_match_status,$it.comments_status,$it.comments_reason,$it.no_speech,($it.missing_due_to_authorization -join ", "),($it.missing_due_to_error -join ", "),$it.summary,($it.conversion_flags | ConvertTo-Json -Compress),($it.comment_keywords -join ", "),$it.folder))
+        $rows.Add(@($it.index,$it.visual_order,$it.video_id,$it.status,$it.content_mapping_status,$it.mapping_status,$it.mapping_check_reason,$it.title_consistency_status,$it.title_consistency_reason,$it.title_similarity_score,$it.opened_modal_id,$it.card_modal_id,$it.frame_status,$it.video_crop_status,$it.ocr_status,$it.comment_status,$it.speech_status,$it.public_metric_status,$it.public_metric_reason,$it.authorized_metric_status,$it.collection_mode,$it.run_mode,$it.sample_size,$it.formal_acceptance,$it.authorization_status,$it.data_level,$it.is_pinned,$it.card_row,$it.card_col,($it.card_bbox | ConvertTo-Json -Compress),$it.card_cover,$it.failure_reason,$it.url,$it.canonical_title,$it.detail_title,$it.title,$it.card_text,$it.published_at_raw,$it.duration_seconds,$it.duration_status,$it.media_type,$it.frame_strategy,$it.frame_count,$it.frame_retry_count,$it.contact_sheet_path,$it.frames_dir,$it.full_frame_dir,$it.video_crop_dir,$it.public_card_like_count,$it.public_card_like_source,$it.authorized_play_count,$it.authorized_like_count,$it.authorized_comment_count,$it.authorized_favorite_count,$it.authorized_share_count,$it.fan_profile,$it.traffic_source,$it.completion_rate,$it.five_second_play_rate,$it.engagement_rate,$it.follower_gain,$it.profile_visit_count,$it.public_comment_count,$it.comment_button_label,$it.comments_expected_count,$it.comments_count_collected,$it.valid_comment_items_count,$it.reply_items_count,$it.main_comment_count,$it.reply_comment_count,$it.total_extracted_comment_count,$it.comment_gap_count,$it.comment_count_match_status,$it.comments_status,$it.comments_reason,$it.no_speech,($it.missing_due_to_authorization -join ", "),($it.missing_due_to_error -join ", "),$it.summary,($it.conversion_flags | ConvertTo-Json -Compress),($it.comment_keywords -join ", "),$it.folder))
     }
     $sb = [Text.StringBuilder]::new()
     for ($r = 0; $r -lt $rows.Count; $r++) {
@@ -3952,6 +3999,13 @@ function InvokeSelfTest {
     $fallbackFlags = DetectConversion @{ title = ""; ocr = "OCR 状态：已逐帧生成 ocr_items.json；当前未检测到本机 OCR 输出或 OCR 引擎不可用。关键帧可上传给 ChatGPT 识别画面文字、价格、地址、活动和团购信息。"; transcript = ""; comments = "" }
     AssertSelfTest (($fallbackFlags.address.present -eq $false) -and ($fallbackFlags.group_buy.present -eq $false)) "OCR fallback 提示不触发转化"
     AssertSelfTest ((GetCommentCountMatchStatus 0 0 0) -eq "public_zero") "无评论公开计数状态"
+    AssertSelfTest ((GetCommentCountMatchStatus 4 2 2) -eq "matched_with_replies") "主评论加回复匹配公开评论数"
+    AssertSelfTest ((GetCommentCountMatchStatus 3 3 0) -eq "matched") "主评论匹配公开评论数"
+    AssertSelfTest ((GetCommentCountMatchStatus 6 4 0) -eq "partial_with_replies_filtered") "评论部分采集状态"
+    AssertSelfTest ((GetCommentCountMatchStatus 1 0 0) -eq "visible_count_but_items_empty") "可见评论数但无有效评论"
+    AssertSelfTest ((GetCommentCountMatchStatus 1 2 0) -eq "extracted_more_than_public") "提取数超过公开评论数"
+    $commentStats = GetCommentCountStats 4 2 2
+    AssertSelfTest (($commentStats.main_comment_count -eq 2) -and ($commentStats.reply_comment_count -eq 2) -and ($commentStats.total_extracted_comment_count -eq 4) -and ($commentStats.comment_gap_count -eq 0)) "评论统计字段"
 
     $oldIsTestMode = $Script:IsTestMode
     try {
@@ -4009,7 +4063,7 @@ function InvokeSelfTest {
         AssertSelfTest (($failed.frame_strategy -eq "dense_first_5s_then_every_3s") -and ($failed.frame_count -eq 0)) "失败作品抽帧字段"
         AssertSelfTest (($failed.duration_status -eq "unavailable") -and ($failed.media_type -eq "unknown")) "失败作品时长/媒体字段"
         AssertSelfTest (($failed.run_mode -eq "formal_collection") -and ($failed.formal_acceptance -eq $true)) "失败作品运行模式字段"
-        AssertSelfTest (($failed.valid_comment_items_count -eq 0) -and ($failed.reply_items_count -eq 0) -and ($failed.comment_count_match_status -eq "unknown_no_public_count")) "失败作品评论统计字段"
+        AssertSelfTest (($failed.valid_comment_items_count -eq 0) -and ($failed.reply_items_count -eq 0) -and ($failed.main_comment_count -eq 0) -and ($failed.reply_comment_count -eq 0) -and ($failed.total_extracted_comment_count -eq 0) -and ($failed.comment_count_match_status -eq "unknown")) "失败作品评论统计字段"
 
         $xlsx = Join-Path $tmp "works.xlsx"
         WriteXlsx $xlsx @($failed)

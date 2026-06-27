@@ -1,68 +1,85 @@
 {
-  "project_id": "douyin_account_ops",
-  "task_rules": [
-    "只记录待执行任务、下一步行动和验收标准。",
-    "不记录已完成内容。",
-    "不记录当前状态；当前状态只写入 STATE.json。",
-    "不记录历史事实；历史事实只写入 LOGS.md。",
-    "生成抖音项目输出前必须确认店铺名称、作品编号和时间戳。",
-    "同一商家输出必须连续编号，不同商家输出必须隔离命名。",
-    "写入输出文件前必须检查重名，禁止同名覆盖。"
-  ],
-  "codex_tasks": [
-    {
-      "priority": 1,
-      "task": "用一个 5 条样本包复测 run_mode=sample_check、sample_size=5、formal_acceptance=false 是否写入 account_summary.md、works.json、meta.json 和 works.xlsx，并检查输出命名规则 {店铺名称}-{作品数量}-{时间}。"
-    },
-    {
-      "priority": 2,
-      "task": "用一个 30 条正式包复测 run_mode=formal_collection、formal_acceptance=true；如果账号作品数小于等于 30，确认采集全部作品，并检查 zip 是否可按 /output_zip/{店铺名称}-{作品数量}-{时间}.zip 规则归档。"
-    },
-    {
-      "priority": 3,
-      "task": "复核 public_comment_count > 0 但 comments.items 为空的作品是否标记 visible_count_but_items_empty 或 partial_no_valid_comments_extracted，且不再误标 ok_with_reply_filtered。"
-    },
-    {
-      "priority": 4,
-      "task": "复核 has_location_evidence 是否只来自主页地址入口、简介地名、作品标题地名或评论地址问答，不再使用账号名兜底。"
-    },
-    {
-      "priority": 5,
-      "task": "后续凡涉及采集代码修改，必须同步记录到 CODE_EVOLUTION.md，说明变更原因、影响文件、代码变化、行为变化和验证结果。"
-    },
-    {
-      "priority": 6,
-      "task": "复测多商家输出时确认作品编号按商家隔离且连续递增，不同商家不得混用编号。"
-    }
-  ],
-  "output_next_actions": [
-    "生成抖音内容输出前确认商家名称。",
-    "生成抖音内容输出前确认该商家的下一个连续作品编号。",
-    "生成抖音内容输出前生成统一时间戳 YYYYMMDD_HHMM。",
-    "写入输出文件前检查目标文件名是否已存在，禁止同名覆盖。",
-    "生成 zip 输出时确认 /output_zip/ 目录和 zip 命名规则。"
-  ],
-  "gpt_review_tasks": [
-    "检查 works.json 是否为数组且 visual_order 连续。",
-    "检查 sample 包与 formal 包的 run_mode、sample_size、formal_acceptance 是否符合包类型。",
-    "检查 public_success_count、partial_count、failed_count 是否与各作品状态一致。",
-    "检查 comments.json 是否未写入纯数字、抢首评、无意义 UI 文本或解析乱码。",
-    "检查 transcript.txt 是否只标记 speech_transcription_status=not_configured，未假装语音转写。",
-    "检查 summary.md 是否未混入网页 UI、OCR 乱码、账号名、直播提示，且 detail_title 只在 Debug 区。",
-    "检查输出文件是否符合统一命名、连续编号、ZIP 目录和防冲突规则。"
-  ],
-  "acceptance_criteria": [
-    "正式模式默认 test_mode=false、max_works=30。",
-    "账号作品数 <= 30 时采满全部作品；账号作品数 > 30 时采最近 30 条。",
-    "手动指定小于 30 的采集数量或 --test-mode 时，输出 run_mode=sample_check。",
-    "正式 30 条包输出 run_mode=formal_collection、formal_acceptance=true。",
-    "public_comment_count > 0 且 comments.items=0 时不得标 ok_with_reply_filtered。",
-    "has_location_evidence 不得使用账号名兜底。",
-    "duration_seconds 不可用但 frames/video_crop 正常时输出 duration_status=unavailable_but_frames_ok。",
-    "图文或静态卡片输出 media_type=static_or_image_card。",
-    "summary.md 以 canonical_title 为主标题，detail_title 只放 Debug 区。",
-    "所有输出必须符合 {店铺名称}-{作品数量}-{时间} 命名规则。",
-    "zip 文件必须存放在 /output_zip/ 并符合 {店铺名称}-{作品数量}-{时间}.zip 命名规则。",
-    "同商家必须连续编号，不同商家必须隔离命名，所有输出必须唯一。"
-  ]
+    "project_id":  "douyin_account_ops",
+    "task_rules":  [
+                       "只记录待执行任务、下一步行动和验收标准。",
+                       "不记录已完成内容。",
+                       "不记录当前状态；当前状态只写入 STATE.json。",
+                       "不记录历史事实；历史事实只写入 LOGS.md。",
+                       "生成抖音项目输出前必须确认店铺名称、作品编号和时间戳。",
+                       "同一商家输出必须连续编号，不同商家输出必须隔离命名。",
+                       "写入输出文件前必须检查重名，禁止同名覆盖。"
+                   ],
+    "codex_tasks":  [
+                        {
+                            "priority":  1,
+                            "task":  "用 30 条正式包复测 run_mode=formal_collection、formal_acceptance=true；如果账号作品数小于等于 30，确认采集全部作品，并检查 zip 是否按 /output_zip/{店铺名称}-{作品数量三位数}-{时间}.zip 规则归档。"
+                        },
+                        {
+                            "priority":  2,
+                            "task":  "复核 package_metadata.json：package_output_dir 必须为 output/packages/{package_base_name}/，zip_output_path 必须为 output_zip/{package_base_name}.zip，二者均为相对路径。"
+                        },
+                        {
+                            "priority":  3,
+                            "task":  "复核 comments.json：items/replies/raw_comments_debug 三段结构保持；无评论作品 public_comment_count=0 且 comment_count_match_status=public_zero。"
+                        },
+                        {
+                            "priority":  4,
+                            "task":  "继续观察 public_comment_count \u003e 0 但 comments.items 为空的作品，确认保持 visible_count_but_items_empty 或 partial_no_valid_comments_extracted。"
+                        },
+                        {
+                            "priority":  5,
+                            "task":  "后续凡涉及采集代码修改，必须同步记录到 CODE_EVOLUTION.md，说明变更原因、影响文件、代码变化、行为变化和验证结果。"
+                        }
+                    ],
+    "output_next_actions":  [
+                                "生成抖音内容输出前确认商家名称。",
+                                "生成抖音内容输出前确认该商家的下一个连续作品编号。",
+                                "生成抖音内容输出前生成统一时间戳 YYYYMMDD_HHMM。",
+                                "写入输出文件前检查目标文件名是否已存在，禁止同名覆盖。",
+                                "生成 zip 输出时确认 /output_zip/ 目录和 zip 命名规则。"
+                            ],
+    "gpt_review_tasks":  [
+                             "检查 works.json 是否为数组且 visual_order 连续。",
+                             "检查 sample 包与 formal 包的 run_mode、sample_size、formal_acceptance 是否符合包类型。",
+                             "检查 public_success_count、partial_count、failed_count 是否与各作品状态一致。",
+                             "检查 comments.json 是否未写入纯数字、抢首评、无意义 UI 文本或解析乱码。",
+                             "检查 transcript.txt 是否只标记 speech_transcription_status=not_configured，未假装语音转写。",
+                             "检查 summary.md 是否未混入网页 UI、OCR 乱码、账号名、直播提示，且 detail_title 只在 Debug 区。",
+                             "检查输出文件是否符合统一命名、连续编号、ZIP 目录和防冲突规则。",
+                             "检查 summary.md 是否未混入 OCR fallback 提示、低质量 OCR 乱码或网页 UI。",
+                             "检查 output_zip_path 是否为项目相对路径，不得包含 C:\\Users 或其他本机绝对路径。",
+                             "检查 works.json、meta.json、comments.json、works.xlsx 是否包含 valid_comment_items_count、reply_items_count、comment_count_match_status。"
+                         ],
+    "acceptance_criteria":  [
+                                "正式模式默认 test_mode=false、max_works=30。",
+                                "账号作品数 \u003c= 30 时采满全部作品；账号作品数 \u003e 30 时采最近 30 条。",
+                                "手动指定小于 30 的采集数量或 --test-mode 时，输出 run_mode=sample_check。",
+                                "正式 30 条包输出 run_mode=formal_collection、formal_acceptance=true。",
+                                "public_comment_count \u003e 0 且 comments.items=0 时不得标 ok_with_reply_filtered。",
+                                "has_location_evidence 不得使用账号名兜底。",
+                                "duration_seconds 不可用但 frames/video_crop 正常时输出 duration_status=unavailable_but_frames_ok。",
+                                "图文或静态卡片输出 media_type=static_or_image_card。",
+                                "summary.md 以 canonical_title 为主标题，detail_title 只放 Debug 区。",
+                                "所有输出必须符合 {店铺名称}-{作品数量}-{时间} 命名规则。",
+                                "zip 文件必须存放在 /output_zip/ 并符合 {店铺名称}-{作品数量}-{时间}.zip 命名规则。",
+                                "同商家必须连续编号，不同商家必须隔离命名，所有输出必须唯一。",
+                                "低质量 OCR 和 OCR fallback 提示不得进入 summary.md 或 conversion_flags。",
+                                "account_summary.md 的 output_zip_path 必须使用 output_zip/... 相对路径。",
+                                "评论统计必须包含 valid_comment_items_count、reply_items_count、comment_count_match_status。",
+                                "ZIP 命名固定为 {店铺名称}-{作品数量三位数}-{YYYYMMDD_HHMM}.zip。"
+                            ],
+    "acceptance_rules":  [
+                             "SelfTest 必须通过。",
+                             "5 条样本包 works.json 必须为 5 条，visual_order 必须连续。",
+                             "content_mapping_status 必须基于 card_modal_id == opened_modal_id。",
+                             "frame_status 与 video_crop_status 应尽量为 ok。",
+                             "comments.json 必须包含 items、replies、raw_comments_debug。",
+                             "web_comment_reply_api 不允许出现在 comments.items。",
+                             "dom_node 不允许出现在 comments.items。",
+                             "comments.items 必须按 author_name + text 去重，API 与 DOM 重复时优先保留 web_comment_api。",
+                             "package_metadata.json 必须包含 package_base_name、shop_name、safe_shop_name、collected_works_count、run_timestamp、package_output_dir、zip_output_path。",
+                             "package_output_dir 必须为 output/packages/{package_base_name}/，带尾斜杠。",
+                             "package_output_dir 与 zip_output_path 必须是项目相对路径，不允许输出 C:\\Users\\ 绝对路径。",
+                             "页面无评论时 public_comment_count 必须为 0，comment_count_match_status 必须为 public_zero。"
+                         ]
 }

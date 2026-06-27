@@ -451,11 +451,19 @@ zip 命名规则：
 
 当前不是自动执行系统。
 
+### 当前阶段结论
+
+- 当前 `output/packages` 与 `output_zip` 命名规则已通过多账号样本包验证。
+- 5 条/10 条样本包已多账号通过。
+- 当前继续观察评论、OCR、partial 类型。
+- 30 条正式包只作为阶段性验收，不作为每轮默认任务。
+- 当前只运行 account_ops 账号采集模块。
+- data_analysis 与 content_pipeline 暂不启动。
+
 ### 当前限制
 
-- 未实现自动文件夹隔离（每商家独立目录）。
 - 未实现自动上传/同步机制。
-
+- 不做不影响使用的微优化。
 ## 输出路径补充规则
 
 - account_summary.md 中的 output_zip_path 必须使用项目相对路径，例如 output_zip/店铺名-005-YYYYMMDD_HHMM.zip。
@@ -472,12 +480,12 @@ zip 命名规则：
 
 ## 评论结构规则（2026-06-28）
 
-- comments.json 必须包含 items、eplies、aw_comments_debug。
+- comments.json 必须包含 items、replies、raw_comments_debug。
 - items 只保存可用于分析的正式主评论。
-- web_comment_reply_api 不允许进入 items，必须进入 eplies。
-- API 与 DOM 重复时，按 uthor_name + text 去重，并优先保留 web_comment_api。
-- dom_node、line_fallback 等无法确认结构的解析结果不得进入正式 items，只能进入 aw_comments_debug。
-- eply_items_count 优先使用 eplies.Count。
+- web_comment_reply_api 不允许进入 items，必须进入 replies。
+- API 与 DOM 重复时，按 author_name + text 去重，并优先保留 web_comment_api。
+- dom_node、line_fallback 等无法确认结构的解析结果不得进入正式 items，只能进入 raw_comments_debug。
+- reply_items_count 优先使用 replies.Count。
 
 为什么这样定：评论区经常同时存在 API 数据、DOM 可见文本、回复和 UI 文本。如果不分流，回复会被误当主评论，DOM 异常节点会污染正式评论，导致 GPT 对用户反馈判断失真。
 
@@ -489,7 +497,7 @@ zip 命名规则：
 - shop_name
 - safe_shop_name
 - collected_works_count
-- un_timestamp
+- run_timestamp
 - package_output_dir
 - zip_output_path
 
@@ -504,7 +512,7 @@ zip 命名规则：
 - package_output_dir 与 zip_output_path 均必须是相对路径，不能写入本机绝对路径。
 - 页面无评论时，public_comment_count=0。
 - 页面无评论时，comment_count_match_status=public_zero。
-- isible_count_but_items_empty 只用于公开评论数大于 0，但没有提取到有效 comments.items 的情况。
+- visible_count_but_items_empty 只用于公开评论数大于 0，但没有提取到有效 comments.items 的情况。
 - 评论结构继续保持 items / replies / raw_comments_debug，不得回退。
 
 为什么这样定：包目录和 ZIP 需要一一对应，方便 GPT 和人工按包名定位文件；无评论和评论可见但未提取是两种不同状态，必须拆开，避免误判评论采集失败。

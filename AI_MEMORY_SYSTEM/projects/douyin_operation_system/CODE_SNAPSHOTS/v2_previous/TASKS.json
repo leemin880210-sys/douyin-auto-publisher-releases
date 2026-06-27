@@ -1,48 +1,62 @@
 {
-  "project_id": "douyin_operation_system",
-  "task_rules": [
-    "TASKS.json 只能写待做任务、下一步行动、模块路由和验收标准。",
-    "当前状态、进度和阻塞问题只能写入 STATE.json。",
-    "已发生事实只能写入 LOGS.md。",
-    "涉及账号采集模块时必须读取 modules/account_ops 下的 BOOT、STATE、TASKS、CORE、LOGS、CODE_EVOLUTION。",
-    "生成抖音项目输出前必须确认店铺名称、作品编号和时间戳。",
-    "同一商家输出必须连续编号，不同商家输出必须隔离命名。",
-    "写入输出文件前必须检查重名，禁止同名覆盖。"
-  ],
-  "codex_tasks": [
-    {
-      "priority": 1,
-      "task": "进入统一项目后按 BOOT → STATE → TASKS → CORE → LOGS 顺序读取根项目记忆。"
-    },
-    {
-      "priority": 2,
-      "task": "涉及账号采集、采集包、run_mode、评论状态、OCR、抽帧或 ZIP 输出时，进入 modules/account_ops 模块读取完整模块记忆。"
-    },
-    {
-      "priority": 3,
-      "task": "继续按 {店铺名称}-{作品数量}-{时间}、YYYYMMDD_HHMM、/output_zip/ 和防覆盖规则生成交付输出。"
-    },
-    {
-      "priority": 4,
-      "task": "后续凡涉及采集代码修改，必须同步记录到 modules/account_ops/CODE_EVOLUTION.md，并维护最近3次完整代码版本快照。"
-    },
-    {
-      "priority": 5,
-      "task": "用 5 条样本包和 30 条正式包复测 account_ops 模块的新字段、状态规则和输出命名规则。"
-    }
-  ],
-  "module_routes": {
-    "account_ops": "账号采集、采集包、公开数据、评论/OCR/抽帧、run_mode、douyin_analysis_package.zip、采集代码演进。",
-    "data_analysis": "数据复盘、指标分析、商家表现对比，当前为预留模块。",
-    "content_pipeline": "内容生成、脚本、图片/视频输出、交付命名，当前为预留模块。"
-  },
-  "acceptance_criteria": [
-    "registry 中只注册 douyin_operation_system 一个活跃项目。",
-    "project_brain 的核心规则已进入 douyin_operation_system 根项目。",
-    "douyin_account_ops 的所有项目记忆文件已迁移到 modules/account_ops。",
-    "不删除任何历史 LOGS。",
-    "不修改 GLOBAL_MEMORY。",
-    "不新增系统层级。",
-    "不创建 PROJECT_FACTORY。"
-  ]
+    "project_id":  "douyin_operation_system",
+    "container_version":  "v2.0",
+    "task_rules":  [
+                       "每次进入项目必须先读取 CHAT_LOGS.md。",
+                       "每次进入项目必须读取 STATE.json。",
+                       "每次进入项目必须读取 CODE_SNAPSHOTS/v1_latest/。",
+                       "TASKS.json 只能写待做任务、下一步行动、模块路由和验收标准。",
+                       "当前状态、进度和阻塞问题只能写入 STATE.json。",
+                       "已发生事实只能写入 LOGS.md。",
+                       "聊天记录只能追加到 CHAT_LOGS.md，不允许覆盖或折叠隐藏历史。",
+                       "源码快照必须保存在 CODE_SNAPSHOTS/v1_latest、v2_previous、v3_previous_previous。",
+                       "涉及账号采集模块时必须读取 modules/account_ops 下的 BOOT、STATE、TASKS、CORE、LOGS、CODE_EVOLUTION。",
+                       "生成抖音项目输出前必须确认店铺名称、作品编号和时间戳。",
+                       "同一商家输出必须连续编号，不同商家输出必须隔离命名。",
+                       "写入输出文件前必须检查重名，禁止同名覆盖。"
+                   ],
+    "codex_tasks":  [
+                        {
+                            "priority":  1,
+                            "task":  "进入统一项目后按 CHAT_LOGS → STATE → CODE_SNAPSHOTS/v1_latest → BOOT → TASKS → CORE → LOGS 顺序读取根项目记忆。"
+                        },
+                        {
+                            "priority":  2,
+                            "task":  "每次修改结束前追加 CHAT_LOGS.md，记录用户、AI、Codex 对话。"
+                        },
+                        {
+                            "priority":  3,
+                            "task":  "每次修改结束前更新 LOGS.md、STATE.json、CODE_EVOLUTION.md，并滚动 CODE_SNAPSHOTS 三版本快照。"
+                        },
+                        {
+                            "priority":  4,
+                            "task":  "涉及账号采集、采集包、run_mode、评论状态、OCR、抽帧或 ZIP 输出时，进入 modules/account_ops 模块读取完整模块记忆。"
+                        },
+                        {
+                            "priority":  5,
+                            "task":  "后续凡涉及采集代码修改，必须同步记录到 modules/account_ops/CODE_EVOLUTION.md，并维护最近3次完整代码版本快照。"
+                        },
+                        {
+                            "priority":  6,
+                            "task":  "用 30 条正式包复测 account_ops 模块的新字段、状态规则和 output_zip 命名规则；继续观察 5 条样本包中的 partial 类型是否可下降。"
+                        }
+                    ],
+    "module_routes":  {
+                          "account_ops":  "账号采集、采集包、公开数据、评论/OCR/抽帧、run_mode、douyin_analysis_package.zip、采集代码演进。",
+                          "data_analysis":  "数据复盘、指标分析、商家表现对比，当前为预留模块。",
+                          "content_pipeline":  "内容生成、脚本、图片/视频输出、交付命名，当前为预留模块。"
+                      },
+    "acceptance_criteria":  [
+                                "项目根目录存在 CHAT_LOGS.md。",
+                                "项目根目录存在 CODE_EVOLUTION.md。",
+                                "项目根目录存在 CODE_SNAPSHOTS/v1_latest/。",
+                                "项目根目录存在 CODE_SNAPSHOTS/v2_previous/。",
+                                "项目根目录存在 CODE_SNAPSHOTS/v3_previous_previous/。",
+                                "v1_latest 保存当前完整代码文件。",
+                                "v2_previous 保存上一版完整代码文件。",
+                                "v3_previous_previous 保存上上版完整代码文件或明确记录首次启用时无更早历史版本。",
+                                "registry 中只注册 douyin_operation_system 一个活跃项目。",
+                                "不删除任何历史 LOGS。",
+                                "不修改 GLOBAL_MEMORY。"
+                            ]
 }

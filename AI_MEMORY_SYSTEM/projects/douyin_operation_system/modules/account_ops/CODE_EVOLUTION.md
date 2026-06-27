@@ -355,11 +355,11 @@ AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/v3_previous_pre
 
 ### 代码变化
 
-- API 评论采集增加 eplies 容器。
-- web_comment_reply_api 改写入 eplies。
-- 评论合并时按 uthor_name + text 去重，保留 API 主评论优先级。
-- dom_node 解析结果不进入正式 items，写入 aw_comments_debug。
-- eply_items_count 使用 eplies.Count。
+- API 评论采集增加 replies 容器。
+- web_comment_reply_api 改写入 replies。
+- 评论合并时按 author_name + text 去重，保留 API 主评论优先级。
+- dom_node 解析结果不进入正式 items，写入 raw_comments_debug。
+- reply_items_count 使用 replies.Count。
 - 新增 NewPackageMetadata，写出 package_metadata.json。
 - account_summary.md 输出包元数据字段和相对 ZIP 路径。
 
@@ -433,7 +433,7 @@ AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/v3_previous_pre
 
 - 包目录从 output/douyin_package_时间戳 改为 output/packages/{package_base_name}/。
 - 无评论作品不再输出空的公开评论计数字段。
-- isible_count_but_items_empty 继续只表示公开评论数大于 0 但没有提取到有效正式评论。
+- visible_count_but_items_empty 继续只表示公开评论数大于 0 但没有提取到有效正式评论。
 
 ### 验证结果
 
@@ -483,3 +483,65 @@ AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/v3_previous_pre
 ### 风险与边界
 
 - 本次只增强评论统计字段，未修改评论 API、DOM 解析、过滤规则、抽帧、OCR、摘要或 ZIP 主流程。
+## 2026-06-28 account_ops 外部大脑一致性清理
+
+### 变更原因
+
+多账号样本包已经验证 output/packages 与 output_zip 命名规则，外部大脑中仍保留部分过期限制和默认 30 条正式包复测表达；同时历史记录中存在转义控制字符导致的字段缺字，需要清理以便新 AI 正确接手。
+
+### 影响文件
+
+- `AI_MEMORY_SYSTEM/projects/douyin_operation_system/modules/account_ops/CORE.md`
+- `AI_MEMORY_SYSTEM/projects/douyin_operation_system/modules/account_ops/TASKS.json`
+- `AI_MEMORY_SYSTEM/projects/douyin_operation_system/modules/account_ops/STATE.json`
+- `AI_MEMORY_SYSTEM/projects/douyin_operation_system/modules/account_ops/LOGS.md`
+- `AI_MEMORY_SYSTEM/projects/douyin_operation_system/modules/account_ops/CODE_EVOLUTION.md`
+- `AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/`
+
+### 代码变化
+
+- 未修改 `douyin_auto_tool.ps1`。
+- 仅更新外部大脑记忆文件。
+- 清理字段缺字：replies、raw_comments_debug、author_name + text、reply_items_count、run_timestamp、visible_count_but_items_empty。
+- 将 30 条正式包复测从每轮默认任务改为阶段性验收。
+- 将当前默认任务改为继续用 5-10 条样本包复测更多账号。
+
+### 行为变化
+
+- 新 AI 接手时应先判断当前处于 account_ops 多账号样本验证阶段。
+- data_analysis 与 content_pipeline 暂不启动。
+- 不做不影响使用的微优化。
+
+### 验证结果
+
+- 5 条/10 条样本包已多账号通过。
+- output/packages 与 output_zip 命名规则已通过多账号样本包验证。
+- 后续继续观察评论、OCR、partial 类型。
+
+### 风险与边界
+
+- 本次只优化外部大脑记忆一致性。
+- 未修改采集工具代码。
+- 未修改 GLOBAL_MEMORY。
+- 本地路径只是历史执行路径。
+- GitHub 可恢复源码路径：`AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/v1_latest/douyin_auto_tool.ps1`
+
+## Code Snapshot History
+
+### v1（最新版本）
+
+```text
+AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/v1_latest/douyin_auto_tool.ps1
+```
+
+### v2（上一版本）
+
+```text
+AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/v2_previous/douyin_auto_tool.ps1
+```
+
+### v3（上上版本）
+
+```text
+AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/v3_previous_previous/douyin_auto_tool.ps1
+```

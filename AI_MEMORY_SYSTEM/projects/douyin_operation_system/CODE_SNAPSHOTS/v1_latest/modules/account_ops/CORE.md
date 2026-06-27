@@ -167,6 +167,8 @@ OCR 只能对 `video_crop` 执行。
 - PaddleOCR 优先，Tesseract 可作为本地 fallback。
 - `ocr_items.json` 记录 `frame_time`、`source_frame`、`cropped_video_frame_path`、`text`、`confidence`、`is_ui_text`、`clean_text`。
 - OCR 乱码不能进入 summary.md。
+- 低质量 OCR 不能进入 summary.md、visual_rhythm_analysis 或 conversion_flags。
+- OCR fallback 提示文本不能被当作 OCR 证据。
 - 价格判断必须有证据：`¥+数字`、`数字+元`、`人均+数字`、`套餐+价格` 等。
 - 单独出现 `¥` 不能判断 price=true。
 
@@ -201,6 +203,12 @@ conversion_flags 必须证据制。
 
 - evidence
 - source
+
+补充规则：
+
+- OCR 证据必须先通过低质量文本过滤。
+- OCR 状态、ChatGPT、关键帧可上传、OCR 引擎不可用等说明性 fallback 文案不得触发地址、价格、团购、活动等转化判断。
+- 评论来源可以触发转化判断，但必须是有效评论文本，不能是纯数字、UI 文本、作者回复或解析乱码。
 
 重点判断：
 
@@ -443,7 +451,79 @@ zip 命名规则：
 
 当前不是自动执行系统。
 
+### 当前阶段结论
+
+- 当前 `output/packages` 与 `output_zip` 命名规则已通过多账号样本包验证。
+- 5 条/10 条样本包已多账号通过。
+- 当前继续观察评论、OCR、partial 类型。
+- 30 条正式包只作为阶段性验收，不作为每轮默认任务。
+- 当前只运行 account_ops 账号采集模块。
+- data_analysis 与 content_pipeline 暂不启动。
+
 ### 当前限制
 
-- 未实现自动文件夹隔离（每商家独立目录）。
 - 未实现自动上传/同步机制。
+- 不做不影响使用的微优化。
+## 输出路径补充规则
+
+- account_summary.md 中的 output_zip_path 必须使用项目相对路径，例如 output_zip/店铺名-005-YYYYMMDD_HHMM.zip。
+- 不得在采集包内容中写入 C:\\Users 或其他本机绝对路径。
+- ZIP 命名固定为 {店铺名称}-{作品数量三位数}-{YYYYMMDD_HHMM}.zip，后续所有包保持一致。
+
+## 评论统计字段规则
+
+每条作品必须补齐：
+
+- valid_comment_items_count：写入 comments.items 的有效评论数。
+- reply_items_count：已识别并过滤的作者回复数量。
+- comment_count_match_status：公开评论数与有效评论/过滤回复的匹配状态，可取 match、ok_with_reply_filtered、partial、visible_count_but_items_empty、unknown_no_public_count。
+
+## 评论结构规则（2026-06-28）
+
+- comments.json 必须包含 items、replies、raw_comments_debug。
+- items 只保存可用于分析的正式主评论。
+- web_comment_reply_api 不允许进入 items，必须进入 replies。
+- API 与 DOM 重复时，按 author_name + text 去重，并优先保留 web_comment_api。
+- dom_node、line_fallback 等无法确认结构的解析结果不得进入正式 items，只能进入 raw_comments_debug。
+- reply_items_count 优先使用 replies.Count。
+
+为什么这样定：评论区经常同时存在 API 数据、DOM 可见文本、回复和 UI 文本。如果不分流，回复会被误当主评论，DOM 异常节点会污染正式评论，导致 GPT 对用户反馈判断失真。
+
+## 包元数据规则（2026-06-28）
+
+每个采集包根目录必须输出 package_metadata.json，字段包括：
+
+- package_base_name
+- shop_name
+- safe_shop_name
+- collected_works_count
+- run_timestamp
+- package_output_dir
+- zip_output_path
+
+路径字段必须使用项目相对路径，不允许写入 C:\Users\... 本机绝对路径。
+
+为什么这样定：GPT 检查多个样本包或正式包时，需要直接读取包名、店铺名、作品数、时间戳和 ZIP 位置；使用相对路径可避免泄露本机目录，也方便跨机器检查。
+## 包目录与无评论计数规则（2026-06-28）
+
+- 采集包实际目录必须为 output/packages/{package_base_name}/。
+- package_metadata.json.package_output_dir 必须为 output/packages/{package_base_name}/，并保留尾斜杠。
+- zip_output_path 必须继续为 output_zip/{package_base_name}.zip。
+- package_output_dir 与 zip_output_path 均必须是相对路径，不能写入本机绝对路径。
+- 页面无评论时，public_comment_count=0。
+- 页面无评论时，comment_count_match_status=public_zero。
+- visible_count_but_items_empty 只用于公开评论数大于 0，但没有提取到有效 comments.items 的情况。
+- 评论结构继续保持 items / replies / raw_comments_debug，不得回退。
+
+为什么这样定：包目录和 ZIP 需要一一对应，方便 GPT 和人工按包名定位文件；无评论和评论可见但未提取是两种不同状态，必须拆开，避免误判评论采集失败。
+## 评论统计字段规则（2026-06-28）
+
+- `comments.items` 只放正式主评论。
+- `comments.replies` 放回复 / 楼中楼。
+- `raw_comments_debug` 放不确定结构、UI、乱码、DOM 错位内容。
+- `web_comment_reply_api` 不进入 `comments.items`。
+- 所有作品和 `comments.json` 必须输出 `main_comment_count`、`reply_comment_count`、`total_extracted_comment_count`、`comment_gap_count`。
+- `comment_count_match_status` 只允许：`public_zero`、`matched`、`matched_with_replies`、`partial_with_replies_filtered`、`visible_count_but_items_empty`、`extracted_more_than_public`、`unknown`。
+- GPT 检查评论数量时必须同时看主评论、回复、总提取数和缺口数，不得只看 `comments.items.length`。
+
+为什么这样定：回复和主评论分层保存，单看 `comments.items` 会低估实际采集评论数量。
