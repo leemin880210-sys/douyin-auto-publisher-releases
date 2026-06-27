@@ -292,7 +292,7 @@
 - 包根新增 package_metadata.json。
 - account_summary.md 增加 package_base_name、shop_name、safe_shop_name、collected_works_count、run_timestamp、package_output_dir、zip_output_path。
 - 运行 SelfTest 通过。
-- 使用新测试链接采集 5 条样本，生成 $zipRel。
+- 使用新测试链接采集 5 条样本，生成 output_zip/寂燃CRAFTBEERBAR-005-20260628_0311.zip。
 
 ### 影响范围
 
@@ -316,7 +316,7 @@
 ### 已发生事实
 
 - 使用测试链接 https://www.douyin.com/user/MS4wLjABAAAAZ7h_wxv0gOamIrt-mmcgN8AA-SVRsL7wQ-372C8hgQ55U5Uiu_22UoMCWuYM284X?from_tab_name=main 采集 5 条样本。
-- 生成 ZIP：$zipRel。
+- 生成 ZIP：output_zip/寂燃CRAFTBEERBAR-005-20260628_0311.zip。
 - 检查 comments.items 中 web_comment_reply_api=0、dom_node=0、重复项=0。
 - 检查 ZIP 包含 package_metadata.json。
 
