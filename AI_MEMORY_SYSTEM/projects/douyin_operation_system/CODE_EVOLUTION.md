@@ -159,3 +159,23 @@ AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/v3_previous_pre
 - 修改后必须维护最近3次完整代码版本快照。
 - 修改后必须滚动更新 `CODE_SNAPSHOTS/`。
 - 不允许跳过记录步骤。
+
+## 2026-06-28 account_ops ZIP 输出层与样本复测
+
+- 修改内容：本地 douyin_auto_tool.ps1 增加 output_zip 输出目录、{店铺名称}-{作品数量}-{时间}.zip 命名、防同名覆盖路径生成，并在 account_summary.md 写入 output_zip_path 与 output_zip_rule。
+- 修改原因：执行 douyin_operation_system 中的统一 ZIP 命名和防冲突规则。
+- 修改文件路径：C:\Users\cc\Documents\抖音作品分析\douyin_auto_tool.ps1
+- 修改前状态：ZIP 输出在单次采集目录下，固定名为 douyin_analysis_package.zip。
+- 修改后状态：ZIP 输出到 C:\Users\cc\Documents\抖音作品分析\output_zip\，本次文件为 C:\Users\cc\Documents\抖音作品分析\output_zip\未满_MOONFLOW官方号-005-20260628_0152.zip，采集目录只保留原始展开文件。
+- 验证：SelfTest 通过；5 条样本包生成并通过基础检查。
+
+## Code Snapshot History
+
+### v1（最新版本）
+AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/v1_latest/douyin_auto_tool.ps1
+
+### v2（上一版本）
+AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/v2_previous/NO_PREVIOUS_VERSION.md
+
+### v3（上上版本）
+AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/v3_previous_previous/NO_PREVIOUS_PREVIOUS_VERSION.md
