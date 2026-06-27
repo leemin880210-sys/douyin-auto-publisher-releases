@@ -279,3 +279,35 @@
 - SelfTest 通过。
 - 5 条样本包复测通过小修检查。
 - 30 条正式包仍待复测。
+
+## 2026-06-28 评论结构与包元数据小修
+
+### 已发生事实
+
+- 修改 douyin_auto_tool.ps1。
+- comments.json 增加 eplies 数组。
+- web_comment_reply_api 不再进入 comments.items。
+- comments.items 按 uthor_name + text 去重，并优先保留 web_comment_api。
+- dom_node 解析结果不进入正式 items，写入 aw_comments_debug。
+- 包根新增 package_metadata.json。
+- account_summary.md 增加 package_base_name、shop_name、safe_shop_name、collected_works_count、run_timestamp、package_output_dir、zip_output_path。
+- 运行 SelfTest 通过。
+- 使用新测试链接采集 5 条样本，生成 $zipRel。
+
+### 影响范围
+
+- 只修改账号采集模块脚本和 account_ops 外部大脑记录。
+- 未修改采集主结构。
+- 未扩展账号诊断、运营方案、脚本生成、自动发布或商家建档。
+
+### 验证结果
+
+- works.json 共 5 条。
+- visual_order 为 1-5 连续。
+- content_mapping_status 全部 ok。
+- frame_status/video_crop_status 全部 ok。
+- failed_count 为 0。
+- comments.items 中 web_comment_reply_api 为 0。
+- comments.items 中 dom_node 为 0。
+- comments.items 重复项为 0。
+- ZIP 包含 package_metadata.json。
