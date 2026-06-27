@@ -290,3 +290,55 @@ AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/v2_previous/NO_
 ### v3（上上版本）
 
 AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/v3_previous_previous/NO_PREVIOUS_PREVIOUS_VERSION.md
+
+## 2026-06-28 相对 ZIP 路径与评论统计字段小修
+
+### 变更原因
+
+5 条样本包通过基础检查后，GPT 复核要求去掉 account_summary.md 中的本机绝对路径，并补齐评论统计解释字段。
+
+### 影响文件
+
+- douyin_auto_tool.ps1
+
+### 代码变化
+
+- 新增 ProjectRelPath，用于把项目内输出路径转换为相对路径。
+- account_summary.md 的 output_zip_path 改为 ProjectRelPath 输出。
+- 新增 GetCommentCountMatchStatus 与 AddCommentStats。
+- 每条作品新增 valid_comment_items_count、reply_items_count、comment_count_match_status。
+- comments.json、meta.json、works.json、works.xlsx 同步新增上述字段。
+- SelfTest 增加 output_zip 相对路径和失败作品评论统计字段断言。
+
+### 行为变化
+
+- 采集包内不再出现 output_zip_path 的 C:\Users 本机绝对路径。
+- 评论统计可以区分有效评论、过滤作者回复以及评论数匹配状态。
+- ZIP 命名继续沿用短格式并固定：店铺名-005-YYYYMMDD_HHMM.zip。
+
+### 验证结果
+
+- SelfTest 通过。
+- 5 条样本包生成：C:\Users\cc\Documents\抖音作品分析\output_zip\未满_MOONFLOW官方号-005-20260628_0237.zip。
+- works.json 中 5 条均包含新增评论统计字段。
+- 每条 comments.json 均包含新增评论统计字段。
+- account_summary.md 中 output_zip_path 为相对路径。
+
+### 风险与边界
+
+- 本次不改变评论采集策略，只补充统计字段。
+- 本次不改变抽帧、OCR、作品映射或授权指标逻辑。
+
+## Code Snapshot History
+
+### v1（最新版本）
+
+AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/v1_latest/douyin_auto_tool.ps1
+
+### v2（上一版本）
+
+AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/v2_previous/douyin_auto_tool.ps1
+
+### v3（上上版本）
+
+AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/v3_previous_previous/NO_PREVIOUS_PREVIOUS_VERSION.md
