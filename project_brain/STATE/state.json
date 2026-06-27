@@ -1,8 +1,8 @@
 {
-  "project_name": "抖音作品分析与微小商家代运营 AI 工作流",
-  "current_stage": "交付规则调整阶段",
-  "current_task": "等待 GPT 检查 project_brain 是否已取消本地交付包强制规则。",
-  "progress": "本地交付包不再作为任务结束后的强制步骤；TASKS 已删除 _codex_delivery/package_delivery.ps1 强制执行项；CORE 已删除刷新 _codex_delivery/latest.zip 的硬要求；后续外部检查以 GitHub project_brain 为主。",
-  "blockers": "",
-  "last_update": "2026-06-27 19:23:49 +08:00"
+  "project_name": "",
+  "goal": "",
+  "current_stage": "",
+  "current_task": "",
+  "progress": "",
+  "last_update": ""
 }
