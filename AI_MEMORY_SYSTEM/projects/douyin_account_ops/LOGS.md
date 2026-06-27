@@ -179,46 +179,56 @@
 - `STATE.json` 可被 `ConvertFrom-Json` 正常解析。
 - `TASKS.json` 可被 `ConvertFrom-Json` 正常解析。
 
-## 2026-06-28 输出命名与 ZIP 防冲突规则同步
+## 2026-06-28 OCR 摘要与转化证据过滤补强
 
 ### 已发生事实
 
-- 更新 `AI_MEMORY_SYSTEM/projects/douyin_account_ops/CORE.md`，追加输出命名、ZIP 目录、防冲突、连续编号和运行模式规则。
-- 更新 `AI_MEMORY_SYSTEM/projects/douyin_account_ops/STATE.json`，同步当前阶段和输出规则字段。
-- 更新 `AI_MEMORY_SYSTEM/projects/douyin_account_ops/TASKS.json`，加入输出命名、连续编号、ZIP 目录和防覆盖复测任务。
-- 同步 `AI_MEMORY_SYSTEM/01_PROJECT_REGISTRY/index.json` 和 `active_projects.md` 的项目摘要。
+- 读取 `BOOT.md`、`STATE.json`、`TASKS.json`、`CORE.md`、`LOGS.md` 和 `CODE_EVOLUTION.md`。
+- 对比本地与 GitHub 云端大脑，确认两端最新记录停留在采集输出字段与状态小优化版本。
+- 修改 `douyin_auto_tool.ps1`，新增低质量 OCR 文本过滤逻辑。
+- 修改 `summary.md` 生成逻辑，低质量 OCR 不再进入视频画面简述。
+- 修改画面节奏分析逻辑，低质量 OCR 不再进入 `visual_rhythm_analysis`。
+- 修改 `conversion_flags` 证据逻辑，OCR 来源先进行可信度过滤。
+- 排除 `OCR 状态`、`ChatGPT`、`关键帧可上传`、`OCR 引擎不可用` 等 fallback 提示文本作为转化证据。
+- 新增 SelfTest 断言，覆盖低质量 OCR 不进入摘要、低质量 OCR 不触发团购、可靠 OCR 可触发价格、OCR fallback 提示不触发转化。
+- 更新 `STATE.json`、`TASKS.json`、`CORE.md` 和 `CODE_EVOLUTION.md`。
 
 ### 影响范围
 
-- 只修改 `douyin_account_ops` 项目实例记忆文件和项目注册摘要。
-- 未修改抖音采集工具代码。
+- 只修改账号采集模块与 `douyin_account_ops` 项目实例记忆文件。
+- 未扩展账号诊断、运营方案、脚本生成、自动发布或商家建档。
 - 未修改全局记忆规则。
 - 未修改 `project_brain`。
+- 未生成 `_codex_delivery` 本地交付包。
 
 ### 验证结果
 
-- `STATE.json` 保持 JSON 格式。
-- `TASKS.json` 保持 JSON 格式。
-- `CORE.md` 包含 `{店铺名称}-{作品数量}-{时间}`、`/output_zip/` 和防冲突规则。
-- registry 中 `douyin_account_ops` 摘要与 `STATE.json` 当前阶段一致。
+- `powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\douyin_auto_tool.ps1 -SelfTest` 通过。
+- 本次记录后仍需重新执行 5 条样本包复测。
 
-## 2026-06-28 代码快照记录规则同步
+## 2026-06-28 评论统计字段增强
 
 ### 已发生事实
 
-- 更新 `AI_MEMORY_SYSTEM/projects/douyin_account_ops/CODE_EVOLUTION.md`。
-- 在 `CODE_EVOLUTION.md` 中新增“最近3次完整代码版本快照”规则。
-- 在标准记录格式中加入 `Code Snapshot History`、`v1`、`v2`、`v3`。
-- 在 `CODE_EVOLUTION.md` 中新增快照轮转规则。
+- 读取 `BOOT.md`、`STATE.json`、`TASKS.json`、`CORE.md`、`LOGS.md` 和 `CODE_EVOLUTION.md`。
+- 修改 `douyin_auto_tool.ps1`，只增强评论统计字段。
+- 保持 `comments.items / comments.replies / raw_comments_debug` 分层规则不变。
+- 保持 `web_comment_reply_api` 不进入 `comments.items` 的规则不变。
+- 保持纯数字、抢首评、UI 文本不得进入 `comments.items` 的规则不变。
+- 新增 `main_comment_count`、`reply_comment_count`、`total_extracted_comment_count`、`comment_gap_count`。
+- 将 `comment_count_match_status` 数量匹配状态统一为：`public_zero`、`matched`、`matched_with_replies`、`partial_with_replies_filtered`、`visible_count_but_items_empty`、`extracted_more_than_public`、`unknown`。
+- 更新 `CORE.md`，补充长期评论统计字段规则。
+- 更新 `TASKS.json`，补充后续 GPT 检查口径。
+- 更新 `STATE.json`，记录当前阶段。
 
 ### 影响范围
 
-- 只修改 `douyin_account_ops` 项目实例的外部大脑文件。
-- 未修改抖音采集工具代码。
-- 未修改全局记忆规则。
-- 未修改 `project_brain`。
+- 只修改评论统计字段输出。
+- 未修改评论采集 API。
+- 未修改 DOM 评论解析逻辑。
+- 未修改评论过滤规则。
+- 未修改作品采集、抽帧、OCR、摘要或 ZIP 输出主流程。
 
 ### 验证结果
 
-- `CODE_EVOLUTION.md` 包含“最近3次完整代码版本快照”。
-- `CODE_EVOLUTION.md` 包含 `Code Snapshot History`、`v1`、`v2`、`v3`。
+- `powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\douyin_auto_tool.ps1 -SelfTest` 通过。
