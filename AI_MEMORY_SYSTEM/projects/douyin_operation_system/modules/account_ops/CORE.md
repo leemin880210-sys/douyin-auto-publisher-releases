@@ -167,6 +167,8 @@ OCR 只能对 `video_crop` 执行。
 - PaddleOCR 优先，Tesseract 可作为本地 fallback。
 - `ocr_items.json` 记录 `frame_time`、`source_frame`、`cropped_video_frame_path`、`text`、`confidence`、`is_ui_text`、`clean_text`。
 - OCR 乱码不能进入 summary.md。
+- 低质量 OCR 不能进入 summary.md、visual_rhythm_analysis 或 conversion_flags。
+- OCR fallback 提示文本不能被当作 OCR 证据。
 - 价格判断必须有证据：`¥+数字`、`数字+元`、`人均+数字`、`套餐+价格` 等。
 - 单独出现 `¥` 不能判断 price=true。
 
@@ -201,6 +203,12 @@ conversion_flags 必须证据制。
 
 - evidence
 - source
+
+补充规则：
+
+- OCR 证据必须先通过低质量文本过滤。
+- OCR 状态、ChatGPT、关键帧可上传、OCR 引擎不可用等说明性 fallback 文案不得触发地址、价格、团购、活动等转化判断。
+- 评论来源可以触发转化判断，但必须是有效评论文本，不能是纯数字、UI 文本、作者回复或解析乱码。
 
 重点判断：
 
