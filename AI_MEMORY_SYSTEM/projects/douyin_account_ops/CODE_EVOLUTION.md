@@ -8,7 +8,6 @@
 - 说明每次代码变化为什么发生。
 - 保存行为前后差异，便于 GPT/Codex 后续判断是否回归。
 - 保存验证方式和验证结果。
-- 保存最近3次完整代码版本快照，防止多轮修改后丢失上下文。
 
 ## 记录边界
 
@@ -36,55 +35,7 @@
 ### 验证结果
 
 ### 风险与边界
-
-## Code Snapshot History
-
-### v1（最新版本）
-
-```text
-完整修改后的代码
 ```
-
-### v2（上一版本）
-
-```text
-修改前最近一次完整代码；如果不存在，则写：无历史版本
-```
-
-### v3（上上版本）
-
-```text
-再之前的一次完整代码；如果不存在，则写：无历史版本
-```
-```
-
-## 最近3次完整代码版本快照规则
-
-每一个代码修改记录必须维护：
-
-### v1（最新版本）
-
-完整修改后的代码。
-
-### v2（上一版本）
-
-修改前最近一次完整代码。
-
-### v3（上上版本）
-
-再之前的一次完整代码。
-
-如果历史版本不足3次，缺失版本必须明确写为“无历史版本”。
-
-## 快照轮转规则
-
-当发生新的代码修改时：
-
-1. 新代码写入 v1。
-2. 修改前的 v1 下移为 v2。
-3. 修改前的 v2 下移为 v3。
-4. 修改前的 v3 超出最近3次范围，不再保留在当前记录的快照区。
-5. 历史记录本身不得覆盖或删除。
 
 ## 2026-06-27 账号采集模块稳定性优化
 
@@ -139,6 +90,52 @@
 - 本次只修改账号采集模块稳定性。
 - 未扩展账号诊断、运营方案、脚本生成、自动发布或商家建档。
 - 未绕过验证码、未破解登录、未抓取无权限内容。
+
+## 2026-06-28 OCR 摘要与转化证据过滤补强
+
+### 变更原因
+
+5 条样本包复测时发现两个内容质量问题：
+
+- 第 1 条作品的 `summary` 曾混入低质量 OCR 文本，例如 `moonfiow/noonfiow/wm F/Se a S` 等乱码。
+- 当 OCR 失败时，展示用 fallback 文案“关键帧可上传给 ChatGPT 识别画面文字、价格、地址、活动和团购信息”被误当作 OCR 证据，导致 `conversion_flags.address/group_buy` 误标 true。
+
+### 影响文件
+
+- `douyin_auto_tool.ps1`
+- `AI_MEMORY_SYSTEM/projects/douyin_account_ops/STATE.json`
+- `AI_MEMORY_SYSTEM/projects/douyin_account_ops/TASKS.json`
+- `AI_MEMORY_SYSTEM/projects/douyin_account_ops/CORE.md`
+- `AI_MEMORY_SYSTEM/projects/douyin_account_ops/LOGS.md`
+- `AI_MEMORY_SYSTEM/projects/douyin_account_ops/CODE_EVOLUTION.md`
+
+### 代码变化
+
+- 新增 `GetReliableVisualSummaryText`，过滤低质量 OCR 文本。
+- `NewVisualRhythmAnalysis` 在写入画面节奏前先执行可靠 OCR 过滤。
+- 单条作品 `summary` 生成逻辑只使用可靠 OCR 或口播转写；没有可靠内容时写“需根据关键帧判断”。
+- `FindConversionEvidence` 对 OCR 来源先执行可靠 OCR 过滤。
+- `FindConversionEvidence` 排除 `OCR 状态`、`ChatGPT`、`关键帧可上传`、`OCR 引擎不可用` 等 fallback 提示文本。
+- `SelfTest` 增加低质量 OCR 摘要过滤、低质量 OCR 团购误判、可靠 OCR 价格识别、OCR fallback 提示不触发转化的断言。
+
+### 行为变化
+
+- 低质量 OCR 不再进入 `summary.md` 的视频画面简述。
+- 低质量 OCR 不再进入 `visual_rhythm_analysis`。
+- 低质量 OCR 不再触发 `conversion_flags`。
+- OCR 失败时的说明性 fallback 文案只用于提示人工查看关键帧，不再作为地址、价格、团购、活动证据。
+- 可靠 OCR 中的价格、套餐、营业时间等业务文本仍可用于摘要和转化判断。
+
+### 验证结果
+
+- `powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\douyin_auto_tool.ps1 -SelfTest` 通过。
+- 后续仍需重新执行 5 条样本包，检查 `summary.md` 和 `conversion_flags` 是否不再被 OCR 乱码或 fallback 提示污染。
+
+### 风险与边界
+
+- 本次只优化 OCR 文本使用和转化证据过滤。
+- 未修改作品链接采集、关键帧抽取、评论采集、授权指标或账号诊断逻辑。
+- 未扩展账号诊断、运营方案、脚本生成、自动发布或商家建档。
 - 当前仍有 1 条作品因 `ocr_status=failed` 进入 `partial`；frame/video_crop 已恢复为 ok。
 
 ## 2026-06-27 指定采集数量修复
@@ -236,3 +233,66 @@
 - 本次只优化采集输出字段和状态规则。
 - 未扩展账号诊断、运营方案、脚本生成、自动发布或商家建档。
 - 未绕过验证码、未破解登录、未抓取无权限内容。
+
+## 2026-06-28 评论统计字段增强
+
+### 变更原因
+
+GPT 检查评论数量时容易只看 `comments.items`，从而误以为工具没有采集到 `comments.replies` 中的回复 / 楼中楼。
+
+本次目标是在不改变评论采集逻辑、不改变评论分层规则的前提下，增加清晰的评论统计字段，让主评论、回复、总提取数和缺口数可以被直接检查。
+
+### 影响文件
+
+- `douyin_auto_tool.ps1`
+- `AI_MEMORY_SYSTEM/projects/douyin_account_ops/STATE.json`
+- `AI_MEMORY_SYSTEM/projects/douyin_account_ops/TASKS.json`
+- `AI_MEMORY_SYSTEM/projects/douyin_account_ops/CORE.md`
+- `AI_MEMORY_SYSTEM/projects/douyin_account_ops/LOGS.md`
+- `AI_MEMORY_SYSTEM/projects/douyin_account_ops/CODE_EVOLUTION.md`
+
+### 代码变化
+
+- 新增 `GetCommentCountStats`。
+- 保留 `GetCommentCountMatchStatus` 作为兼容入口，但内部使用新统计函数。
+- `AddCommentStats` 新增写入：
+  - `main_comment_count`
+  - `reply_comment_count`
+  - `total_extracted_comment_count`
+  - `comment_gap_count`
+- 每条作品的 `works.json` / `meta.json` 新增同名评论统计字段。
+- `comments.json` 新增同名评论统计字段。
+- `works.xlsx` 新增同名列。
+- 失败作品和异常作品也输出这些字段，缺少公开评论数时 `comment_count_match_status=unknown`。
+- `SelfTest` 增加评论统计字段和新状态枚举断言。
+
+### 行为变化
+
+- `comments.items` 仍然只放正式主评论。
+- `comments.replies` 仍然只放回复 / 楼中楼。
+- `raw_comments_debug` 仍然只放不确定结构、UI、乱码、DOM 错位内容。
+- `web_comment_reply_api` 仍然不进入 `comments.items`。
+- 纯数字、抢首评、UI 文本仍然不得进入 `comments.items`。
+- GPT 后续检查评论数量时应看 `main_comment_count + reply_comment_count`，不能只看 `comments.items.length`。
+
+### comment_count_match_status 新取值
+
+- `public_zero`
+- `matched`
+- `matched_with_replies`
+- `partial_with_replies_filtered`
+- `visible_count_but_items_empty`
+- `extracted_more_than_public`
+- `unknown`
+
+### 验证结果
+
+- `powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\douyin_auto_tool.ps1 -SelfTest` 通过。
+
+### 风险与边界
+
+- 本次只增强评论统计字段。
+- 未修改评论采集 API。
+- 未修改 DOM 评论解析逻辑。
+- 未修改评论过滤规则。
+- 未修改作品链接采集、抽帧、OCR、摘要、授权指标或 ZIP 输出主流程。
