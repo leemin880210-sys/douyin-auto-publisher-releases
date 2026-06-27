@@ -178,3 +178,26 @@
 - `powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\douyin_auto_tool.ps1 -SelfTest` 通过。
 - `STATE.json` 可被 `ConvertFrom-Json` 正常解析。
 - `TASKS.json` 可被 `ConvertFrom-Json` 正常解析。
+
+## 2026-06-28 输出命名与 ZIP 防冲突规则同步
+
+### 已发生事实
+
+- 更新 `AI_MEMORY_SYSTEM/projects/douyin_account_ops/CORE.md`，追加输出命名、ZIP 目录、防冲突、连续编号和运行模式规则。
+- 更新 `AI_MEMORY_SYSTEM/projects/douyin_account_ops/STATE.json`，同步当前阶段和输出规则字段。
+- 更新 `AI_MEMORY_SYSTEM/projects/douyin_account_ops/TASKS.json`，加入输出命名、连续编号、ZIP 目录和防覆盖复测任务。
+- 同步 `AI_MEMORY_SYSTEM/01_PROJECT_REGISTRY/index.json` 和 `active_projects.md` 的项目摘要。
+
+### 影响范围
+
+- 只修改 `douyin_account_ops` 项目实例记忆文件和项目注册摘要。
+- 未修改抖音采集工具代码。
+- 未修改全局记忆规则。
+- 未修改 `project_brain`。
+
+### 验证结果
+
+- `STATE.json` 保持 JSON 格式。
+- `TASKS.json` 保持 JSON 格式。
+- `CORE.md` 包含 `{店铺名称}-{作品数量}-{时间}`、`/output_zip/` 和防冲突规则。
+- registry 中 `douyin_account_ops` 摘要与 `STATE.json` 当前阶段一致。
