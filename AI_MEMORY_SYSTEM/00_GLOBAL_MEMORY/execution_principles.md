@@ -11,7 +11,7 @@
 5. 执行用户授权任务。
 6. 回写项目自己的 `STATE.json`、`LOGS.md`，并在任务变化时同步 `TASKS.json`。
 
-简写顺序：BOOT → STATE → TASKS。
+简写顺序：BOOT → STATE → TASKS → CORE。
 
 ## 可恢复
 
