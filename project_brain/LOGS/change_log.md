@@ -93,3 +93,25 @@
 
 - `STATE/state.json` 保持 JSON 格式。
 - `TASKS/next_actions.json` 保持 JSON 格式。
+
+## 2026-06-27 取消本地交付包强制规则
+
+### 已发生事实
+
+- 修改 `project_brain/STATE/state.json`，记录本地交付包不再作为任务结束后的强制步骤。
+- 修改 `project_brain/TASKS/next_actions.json`，删除 `任务结束后执行 _codex_delivery/package_delivery.ps1`。
+- 修改 `project_brain/TASKS/next_actions.json`，加入 `任务结束后不强制生成本地交付包` 的验收规则。
+- 修改 `project_brain/CORE/memory.md`，删除刷新 `_codex_delivery/latest.zip` 的硬要求。
+- 修改 `project_brain/CORE/memory.md`，记录外部检查优先同步 GitHub 上的 `project_brain/`。
+
+### 影响范围
+
+- 只影响 `project_brain` 内部规则文件。
+- 未新增目录结构。
+- 未修改抖音采集工具代码。
+- 未刷新 `_codex_delivery/latest.zip`。
+
+### 验证结果
+
+- `STATE/state.json` 保持 JSON 格式。
+- `TASKS/next_actions.json` 保持 JSON 格式。
