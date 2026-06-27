@@ -1,36 +1,36 @@
 {
-  "project_name": "douyin_operation_system",
-  "current_stage": "AI_MEMORY_SYSTEM 容器 v2.0 已启用",
-  "current_task": "按 CHAT_LOGS 与 CODE_SNAPSHOTS 三版本快照规则维护项目可追溯和可恢复能力。",
-  "progress": "100%",
-  "blockers": "CODE_SNAPSHOTS 首次启用时 v3_previous_previous 无更早历史版本；account_ops 仍需实际 5 条样本包和 30 条正式包复测；未实现每商家独立文件夹隔离；未实现自动上传/同步机制。",
-  "last_update": "2026-06-28",
-  "container_version": "v2.0",
-  "required_memory_files": [
-    "CHAT_LOGS.md",
-    "CODE_EVOLUTION.md",
-    "CODE_SNAPSHOTS/v1_latest",
-    "CODE_SNAPSHOTS/v2_previous",
-    "CODE_SNAPSHOTS/v3_previous_previous",
-    "BOOT.md",
-    "STATE.json",
-    "TASKS.json",
-    "CORE.md",
-    "LOGS.md"
-  ],
-  "modules": {
-    "account_ops": {
-      "path": "AI_MEMORY_SYSTEM/projects/douyin_operation_system/modules/account_ops",
-      "source_project": "douyin_account_ops",
-      "status": "active"
-    },
-    "data_analysis": {
-      "path": "AI_MEMORY_SYSTEM/projects/douyin_operation_system/modules/data_analysis",
-      "status": "reserved"
-    },
-    "content_pipeline": {
-      "path": "AI_MEMORY_SYSTEM/projects/douyin_operation_system/modules/content_pipeline",
-      "status": "reserved"
-    }
-  }
+    "project_name":  "douyin_operation_system",
+    "current_stage":  "account_ops 5 条样本包复测完成，output_zip 命名规则已验证",
+    "current_task":  "等待执行 30 条正式包复测；继续降低样本包 partial 样本，重点关注 OCR failed、评论 partial 与 visible_count_but_items_empty。",
+    "progress":  "已按 AI_MEMORY_SYSTEM v2.0 顺序读取 root 与 modules/account_ops 记忆；已修改本地 douyin_auto_tool.ps1 的 ZIP 输出层，使采集 ZIP 写入 output_zip 并按 {店铺名称}-{作品数量}-{时间}.zip 命名；SelfTest 通过；5 条样本包已生成并检查，visual_order=1-5 连续，frame_status/video_crop_status 全部 ok，summary.md 未检出 OCR fallback 或明显乱码污染，failed_count=0。",
+    "blockers":  "30 条正式包仍需复测；样本包仍有 partial 样本，包括 1 条 ocr_status=failed、1 条 visible_count_but_items_empty、1 条评论 partial；未实现每商家独立文件夹隔离；未实现自动上传/同步机制。",
+    "last_update":  "2026-06-28",
+    "container_version":  "v2.0",
+    "required_memory_files":  [
+                                  "CHAT_LOGS.md",
+                                  "CODE_EVOLUTION.md",
+                                  "CODE_SNAPSHOTS/v1_latest",
+                                  "CODE_SNAPSHOTS/v2_previous",
+                                  "CODE_SNAPSHOTS/v3_previous_previous",
+                                  "BOOT.md",
+                                  "STATE.json",
+                                  "TASKS.json",
+                                  "CORE.md",
+                                  "LOGS.md"
+                              ],
+    "modules":  {
+                    "account_ops":  {
+                                        "path":  "AI_MEMORY_SYSTEM/projects/douyin_operation_system/modules/account_ops",
+                                        "source_project":  "douyin_account_ops",
+                                        "status":  "active"
+                                    },
+                    "data_analysis":  {
+                                          "path":  "AI_MEMORY_SYSTEM/projects/douyin_operation_system/modules/data_analysis",
+                                          "status":  "reserved"
+                                      },
+                    "content_pipeline":  {
+                                             "path":  "AI_MEMORY_SYSTEM/projects/douyin_operation_system/modules/content_pipeline",
+                                             "status":  "reserved"
+                                         }
+                }
 }
