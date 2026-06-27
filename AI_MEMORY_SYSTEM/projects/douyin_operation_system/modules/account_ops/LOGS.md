@@ -311,3 +311,19 @@
 - comments.items 中 dom_node 为 0。
 - comments.items 重复项为 0。
 - ZIP 包含 package_metadata.json。
+## 2026-06-28 样本包验证补充记录
+
+### 已发生事实
+
+- 使用测试链接 https://www.douyin.com/user/MS4wLjABAAAAZ7h_wxv0gOamIrt-mmcgN8AA-SVRsL7wQ-372C8hgQ55U5Uiu_22UoMCWuYM284X?from_tab_name=main 采集 5 条样本。
+- 生成 ZIP：$zipRel。
+- 检查 comments.items 中 web_comment_reply_api=0、dom_node=0、重复项=0。
+- 检查 ZIP 包含 package_metadata.json。
+
+### 验证结果
+
+- works.json 共 5 条。
+- visual_order 为 1-5 连续。
+- content_mapping_status 全部 ok。
+- frame_status/video_crop_status 全部 ok。
+- failed_count 为 0。
