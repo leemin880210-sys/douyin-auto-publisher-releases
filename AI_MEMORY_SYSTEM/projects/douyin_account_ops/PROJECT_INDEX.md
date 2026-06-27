@@ -27,6 +27,7 @@ path: `AI_MEMORY_SYSTEM/projects/douyin_account_ops`
 - `TASKS.json`：当前待修任务和验收标准。
 - `CORE.md`：长期稳定采集规则。
 - `LOGS.md`：已发生事实记录。
+- `CODE_EVOLUTION.md`：采集代码演进记录，说明代码为什么改、改了什么、行为变化和验证结果。
 - `PROJECT_INDEX.md`：项目索引和文件说明。
 
 ## 隔离要求
