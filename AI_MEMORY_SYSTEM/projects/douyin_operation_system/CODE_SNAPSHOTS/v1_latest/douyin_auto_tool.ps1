@@ -20,6 +20,7 @@ Add-Type -AssemblyName System.IO.Compression.FileSystem
 $ErrorActionPreference = "Stop"
 $Script:Root = Split-Path -Parent $MyInvocation.MyCommand.Path
 $Script:OutputRoot = Join-Path $Script:Root "output"
+$Script:OutputPackageRoot = Join-Path $Script:OutputRoot "packages"
 $Script:OutputZipRoot = Join-Path $Script:Root "output_zip"
 $Script:EdgeProfile = Join-Path $Script:Root ".edge_profile"
 $Script:Port = 9222
@@ -1756,7 +1757,7 @@ function GetCommentCountMatchStatus($PublicCommentCount, [int]$ValidCommentItems
     if (-not [int]::TryParse([string]$PublicCommentCount, [ref]$publicCount)) {
         return "unknown_public_count_parse_failed"
     }
-    if ($publicCount -le 0 -and $ValidCommentItemsCount -eq 0) { return "no_public_comments" }
+    if ($publicCount -le 0 -and $ValidCommentItemsCount -eq 0) { return "public_zero" }
     if ($ValidCommentItemsCount -eq $publicCount) { return "match" }
     if ($ValidCommentItemsCount -eq 0 -and $publicCount -gt 0) { return "visible_count_but_items_empty" }
     if ($ValidCommentItemsCount -lt $publicCount) {
@@ -3037,6 +3038,12 @@ function CollectWork([string]$Url, [int]$Index, [string]$PackageDir, $LogBox) {
             $parsedCommentCount = 0
             if ([int]::TryParse([string]$commentResult.public_comment_count, [ref]$parsedCommentCount)) { $publicCommentCount = $parsedCommentCount }
         }
+        if ($null -eq $publicCommentCount -and [string]$commentResult.comments_status -eq "empty") {
+            $publicCommentCount = 0
+            $commentResult | Add-Member -NotePropertyName public_comment_count -NotePropertyValue 0 -Force
+            $commentResult | Add-Member -NotePropertyName comment_button_label -NotePropertyValue "0" -Force
+            $commentResult | Add-Member -NotePropertyName comments_expected_count -NotePropertyValue 0 -Force
+        }
         $transcriptRaw = ""
         $noSpeech = "unknown"
         $transcript = ""
@@ -3842,14 +3849,46 @@ function GetUniqueFilePath([string]$Path) {
 
 function GetDeliveryZipPath([int]$WorkCount) {
     New-Item -ItemType Directory -Force -Path $Script:OutputZipRoot | Out-Null
+    New-Item -ItemType Directory -Force -Path $Script:OutputPackageRoot | Out-Null
     $shopName = SanitizeFileNamePart $Script:TargetProfileName "douyin_account"
     $countPart = "{0:D3}" -f [Math]::Max(0, $WorkCount)
     $timePart = if ([string]::IsNullOrWhiteSpace($Script:RunTimestamp)) { (Get-Date).ToString("yyyyMMdd_HHmm") } else { $Script:RunTimestamp }
-    $fileName = "$shopName-$countPart-$timePart.zip"
-    $zipPath = GetUniqueFilePath (Join-Path $Script:OutputZipRoot $fileName)
-    $Script:SafeShopName = $shopName
-    $Script:PackageBaseName = [IO.Path]::GetFileNameWithoutExtension($zipPath)
-    return $zipPath
+    $baseName = "$shopName-$countPart-$timePart"
+    for ($i = 1; $i -lt 1000; $i++) {
+        $candidateName = if ($i -eq 1) { $baseName } else { "{0}-{1:D2}" -f $baseName, $i }
+        $zipPath = Join-Path $Script:OutputZipRoot "$candidateName.zip"
+        $packageDir = Join-Path $Script:OutputPackageRoot $candidateName
+        if ((-not (Test-Path -LiteralPath $zipPath)) -and (-not (Test-Path -LiteralPath $packageDir))) {
+            $Script:SafeShopName = $shopName
+            $Script:PackageBaseName = $candidateName
+            return $zipPath
+        }
+    }
+    throw "无法生成唯一输出包名：$baseName"
+}
+
+function GetPackageDirectoryPath {
+    if ([string]::IsNullOrWhiteSpace($Script:PackageBaseName)) {
+        throw "package_base_name 为空，无法生成包目录。"
+    }
+    New-Item -ItemType Directory -Force -Path $Script:OutputPackageRoot | Out-Null
+    return Join-Path $Script:OutputPackageRoot $Script:PackageBaseName
+}
+
+function MovePackageToFinalDirectory([string]$CurrentDir) {
+    $finalDir = GetPackageDirectoryPath
+    $currentFull = [IO.Path]::GetFullPath($CurrentDir).TrimEnd('\','/')
+    $finalFull = [IO.Path]::GetFullPath($finalDir).TrimEnd('\','/')
+    if ($currentFull -ieq $finalFull) {
+        $Script:CurrentPackage = $finalDir
+        return $finalDir
+    }
+    if (Test-Path -LiteralPath $finalDir) {
+        throw "输出包目录已存在，无法覆盖：$(ProjectRelPath $finalDir)"
+    }
+    Move-Item -LiteralPath $CurrentDir -Destination $finalDir
+    $Script:CurrentPackage = $finalDir
+    return $finalDir
 }
 
 function ProjectRelPath([string]$Path) {
@@ -3868,7 +3907,7 @@ function NewPackageMetadata($Items, [string]$PackageDir) {
     $shopName = Compact $Script:TargetProfileName
     if ([string]::IsNullOrWhiteSpace($shopName)) { $shopName = "douyin_account" }
     $safeShopName = if ([string]::IsNullOrWhiteSpace($Script:SafeShopName)) { SanitizeFileNamePart $shopName "douyin_account" } else { $Script:SafeShopName }
-    $packageDirRel = ProjectRelPath $PackageDir
+    $packageDirRel = (ProjectRelPath $PackageDir).TrimEnd("/") + "/"
     $zipRel = ProjectRelPath $Script:CurrentOutputZipPath
     $collectedCount = if ($null -eq $Items) { 0 } elseif ($Items -is [System.Collections.ICollection]) { $Items.Count } else { @($Items).Count }
     $Script:PackageOutputDir = $packageDirRel
@@ -3912,6 +3951,7 @@ function InvokeSelfTest {
     AssertSelfTest ($goodFlags.price.present -eq $true) "可靠 OCR 可触发价格转化"
     $fallbackFlags = DetectConversion @{ title = ""; ocr = "OCR 状态：已逐帧生成 ocr_items.json；当前未检测到本机 OCR 输出或 OCR 引擎不可用。关键帧可上传给 ChatGPT 识别画面文字、价格、地址、活动和团购信息。"; transcript = ""; comments = "" }
     AssertSelfTest (($fallbackFlags.address.present -eq $false) -and ($fallbackFlags.group_buy.present -eq $false)) "OCR fallback 提示不触发转化"
+    AssertSelfTest ((GetCommentCountMatchStatus 0 0 0) -eq "public_zero") "无评论公开计数状态"
 
     $oldIsTestMode = $Script:IsTestMode
     try {
@@ -3932,20 +3972,32 @@ function InvokeSelfTest {
     New-Item -ItemType Directory -Force -Path $tmp | Out-Null
     try {
         $oldZipRoot = $Script:OutputZipRoot
+        $oldPackageRoot = $Script:OutputPackageRoot
         $oldTargetName = $Script:TargetProfileName
         $oldRunTimestamp = $Script:RunTimestamp
+        $oldPackageBaseName = $Script:PackageBaseName
+        $oldSafeShopName = $Script:SafeShopName
+        $oldPackageOutputDir = $Script:PackageOutputDir
         try {
             $Script:OutputZipRoot = Join-Path $tmp "output_zip"
+            $Script:OutputPackageRoot = Join-Path $tmp "output\packages"
             $Script:TargetProfileName = "测试店/账号"
             $Script:RunTimestamp = "20260628_0123"
             $deliveryZip = GetDeliveryZipPath 5
             AssertSelfTest ($deliveryZip.EndsWith("测试店_账号-005-20260628_0123.zip")) "output_zip 命名规则"
+            AssertSelfTest ((GetPackageDirectoryPath).EndsWith("output\packages\测试店_账号-005-20260628_0123")) "package 输出目录规则"
             $rootZip = Join-Path $Script:Root "output_zip\测试店_账号-005-20260628_0123.zip"
             AssertSelfTest ((ProjectRelPath $rootZip) -eq "output_zip/测试店_账号-005-20260628_0123.zip") "output_zip 相对路径"
+            $metadata = NewPackageMetadata @() (Join-Path $Script:Root "output\packages\测试店_账号-005-20260628_0123")
+            AssertSelfTest ($metadata.package_output_dir -eq "output/packages/测试店_账号-005-20260628_0123/") "package_output_dir 相对目录规则"
         } finally {
             $Script:OutputZipRoot = $oldZipRoot
+            $Script:OutputPackageRoot = $oldPackageRoot
             $Script:TargetProfileName = $oldTargetName
             $Script:RunTimestamp = $oldRunTimestamp
+            $Script:PackageBaseName = $oldPackageBaseName
+            $Script:SafeShopName = $oldSafeShopName
+            $Script:PackageOutputDir = $oldPackageOutputDir
         }
 
         $failed = NewFailedWork "https://www.douyin.com/user/abc?modal_id=7278200516037905701" 1 $tmp "self test failure"
@@ -4000,6 +4052,7 @@ function RunCollect([string]$ProfileUrl, [int]$Limit, [string]$Mode, $LogBox, $O
         SetStatus $StatusLabel "正在准备本地输出文件夹..."
         SetProgress $ProgressBar 0 1
         New-Item -ItemType Directory -Force -Path $Script:OutputRoot | Out-Null
+        New-Item -ItemType Directory -Force -Path $Script:OutputPackageRoot | Out-Null
         $Script:RunTimestamp = (Get-Date).ToString("yyyyMMdd_HHmm")
         $pkg = Join-Path $Script:OutputRoot ("douyin_package_" + (Get-Date).ToString("yyyyMMdd_HHmmss"))
         New-Item -ItemType Directory -Force -Path $pkg | Out-Null
@@ -4045,6 +4098,7 @@ function RunCollect([string]$ProfileUrl, [int]$Limit, [string]$Mode, $LogBox, $O
         }
         SetStatus $StatusLabel "正在写入 Markdown、JSON、XLSX 并打包 ZIP..."
         $Script:CurrentOutputZipPath = GetDeliveryZipPath $items.Count
+        $pkg = MovePackageToFinalDirectory $pkg
         $packageMetadata = NewPackageMetadata $items $pkg
         Set-Content -LiteralPath (Join-Path $pkg "package_metadata.json") -Encoding UTF8 -Value ($packageMetadata | ConvertTo-Json -Depth 10)
         Set-Content -LiteralPath (Join-Path $pkg "account_summary.md") -Encoding UTF8 -Value (RenderAccountSummary $items)
