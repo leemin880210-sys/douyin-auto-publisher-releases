@@ -222,3 +222,33 @@
 
 - `CODE_EVOLUTION.md` 包含“最近3次完整代码版本快照”。
 - `CODE_EVOLUTION.md` 包含 `Code Snapshot History`、`v1`、`v2`、`v3`。
+
+## 2026-06-28 douyin_operation_system 5 条样本包复测与 output_zip 输出层修复
+
+### 已发生事实
+
+- 按 douyin_operation_system v2.0 规则读取 root 项目记忆与 modules/account_ops 模块记忆。
+- 修改本地 douyin_auto_tool.ps1：新增 output_zip 输出目录、{店铺名称}-{作品数量}-{时间}.zip 命名、防同名覆盖路径生成。
+- account_summary.md 新增 output_zip_path 与 output_zip_rule。
+- 运行 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\douyin_auto_tool.ps1 -SelfTest，结果通过。
+- 使用主页链接采集 5 条样本包，生成 ZIP：C:\Users\cc\Documents\抖音作品分析\output_zip\未满_MOONFLOW官方号-005-20260628_0152.zip。
+- 输出展开目录：C:\Users\cc\Documents\抖音作品分析\output\douyin_package_20260628_015210。
+- works.json 为 5 条，visual_order 为 1-5 连续。
+- run_mode=sample_check、sample_size=5、formal_acceptance=false。
+- 5 条作品 content_mapping_status、frame_status、video_crop_status 均为 ok。
+- 状态分布为 public_success=2、partial=3、failed=0。
+- summary.md 未检出 OCR fallback 提示或明显 OCR 乱码污染。
+- ZIP 条目检查通过，包含 account_summary.md、works.json、works.xlsx、card_records.json 和 5 个作品文件夹。
+
+### 影响范围
+
+- 只修改账号采集模块本地脚本的 ZIP 输出层与 account_summary 输出字段。
+- 未扩展账号诊断、运营方案、脚本生成、自动发布或商家建档。
+- 未修改 AI_MEMORY_SYSTEM/00_GLOBAL_MEMORY。
+- 未生成 _codex_delivery 本地交付包。
+
+### 验证结果
+
+- SelfTest 通过。
+- 5 条样本包基础检查通过。
+- 仍需执行 30 条正式包复测。
