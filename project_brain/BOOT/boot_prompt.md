@@ -1,31 +1,29 @@
 # 项目接入规则
 
-本文件是当前项目的唯一入口。任何 AI（Codex / GPT）进入项目时，必须先读取本文件，再继续读取其他模块。
+本文件是当前项目的唯一入口。任何 AI（Codex / GPT）进入项目时，必须先读取本文件，再严格按状态机流程执行。
 
 ---
 
-## 强制执行顺序（不可跳过）
+## 执行强制顺序（最高优先级）
 
 任何 AI 进入项目必须严格按顺序执行：
 
-1. `CORE/memory.md`
-2. `STATE/state.json`
-3. `TASKS/next_actions.json`
-4. `LOGS/change_log.md`
+1. Step 1：读取 `BOOT/boot_prompt.md`，理解项目规则
+2. Step 2：读取 `STATE/state.json`，确认当前唯一状态
+3. Step 3：读取 `TASKS/next_actions.json`，获取唯一任务来源
+4. Step 4：读取 `CORE/memory.md`，确认项目边界与规则
+5. Step 5：执行任务
+6. Step 6：强制回写
 
 ---
 
-## 固定执行流程
+## 强制回写顺序
 
-所有执行必须按以下顺序：
+Step 6 必须按以下顺序执行：
 
-1. Step 1：读取 `BOOT/boot_prompt.md`
-2. Step 2：读取 `STATE/state.json`
-3. Step 3：读取 `TASKS/next_actions.json`
-4. Step 4：执行任务
-5. Step 5：更新 `STATE/state.json`
-6. Step 6：写入 `LOGS/change_log.md`
-7. Step 7：结束
+1. 更新 `STATE/state.json`，必须写入当前状态和进度
+2. 写入 `LOGS/change_log.md`，必须记录本次变更事实
+3. 同步 `TASKS/next_actions.json`，仅在任务变化时更新
 
 ---
 
@@ -40,6 +38,7 @@
 
 ## 强制行为规则
 
+- 不允许跳过 `BOOT/boot_prompt.md`
 - 不允许跳过 `STATE/state.json` 读取
 - 不允许直接执行 `TASKS/next_actions.json` 中的任务
 - 不允许在未更新 `STATE/state.json` 前结束任务
@@ -51,12 +50,53 @@
 
 ---
 
-## 状态与任务边界
+## STATE 强制唯一性
 
 - `STATE/state.json` 是唯一当前状态来源
+- 不允许在任何其他文件记录当前状态
+- 不允许在 `TASKS/next_actions.json` 写状态
+- 不允许在 `LOGS/change_log.md` 写状态描述
 - 所有进度必须写入 `STATE/state.json`
+
+---
+
+## TASKS 纯任务化
+
 - `TASKS/next_actions.json` 只能写待做任务
+- `TASKS/next_actions.json` 只能写下一步行动
+- `TASKS/next_actions.json` 禁止写已完成内容
+- `TASKS/next_actions.json` 禁止写当前状态
+- `TASKS/next_actions.json` 禁止写历史记录
+
+---
+
+## LOGS 纯事实记录
+
 - `LOGS/change_log.md` 只能记录已发生事实
+- `LOGS/change_log.md` 只能记录已发生的修改、已执行的操作和结果事实
+- `LOGS/change_log.md` 禁止写未来计划
+- `LOGS/change_log.md` 禁止写当前状态描述
+
+---
+
+## 强制执行锁
+
+如果未完成以下步骤，则任务视为失败：
+
+1. `STATE/state.json` 已更新
+2. `LOGS/change_log.md` 已记录
+3. `TASKS/next_actions.json` 已在任务变化时同步
+
+未完成执行锁时：
+
+- 不允许结束任务
+- 不允许返回完成状态
+
+---
+
+## 系统行为定义
+
+Codex 在本项目中不是普通开发者，而是严格按状态机执行的操作单元。
 
 ---
 
