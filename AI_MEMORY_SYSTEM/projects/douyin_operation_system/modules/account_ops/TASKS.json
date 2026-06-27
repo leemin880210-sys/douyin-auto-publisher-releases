@@ -12,22 +12,26 @@
     "codex_tasks":  [
                         {
                             "priority":  1,
-                            "task":  "用一个 30 条正式包复测 run_mode=formal_collection、formal_acceptance=true；如果账号作品数小于等于 30，确认采集全部作品，并检查 zip 是否按 /output_zip/{店铺名称}-{作品数量}-{时间}.zip 规则归档。"
+                            "task":  "用 30 条正式包复测 run_mode=formal_collection、formal_acceptance=true；如果账号作品数小于等于 30，确认采集全部作品，并检查 zip 是否按 /output_zip/{店铺名称}-{作品数量三位数}-{时间}.zip 规则归档。"
                         },
                         {
                             "priority":  2,
-                            "task":  "继续优化 5 条样本包中的 partial 样本，重点检查 ocr_status=failed、comment_status=partial、visible_count_but_items_empty 的触发原因。"
+                            "task":  "复核 comments.json 新结构：items 只保存正式主评论，replies 保存 web_comment_reply_api 回复，raw_comments_debug 保存 dom_node 或 line_fallback 等不可确认结构内容。"
                         },
                         {
                             "priority":  3,
-                            "task":  "复核 public_comment_count \u003e 0 但 comments.items 为空的作品是否标记 visible_count_but_items_empty 或 partial_no_valid_comments_extracted，且不再误标 ok_with_reply_filtered。"
+                            "task":  "继续观察 public_comment_count \u003e 0 但 comments.items 为空的作品，确认是否保持 visible_count_but_items_empty 或 partial_no_valid_comments_extracted，且不误标 ok_with_reply_filtered。"
                         },
                         {
                             "priority":  4,
-                            "task":  "复测多商家输出时确认作品编号按商家隔离且连续递增，不同商家不得混用编号。"
+                            "task":  "复测多商家输出时确认 package_metadata.json 的 package_base_name、shop_name、safe_shop_name、collected_works_count、run_timestamp、package_output_dir、zip_output_path 全部存在且路径为相对路径。"
                         },
                         {
                             "priority":  5,
+                            "task":  "复测多商家输出时确认作品编号按商家隔离且连续递增，不同商家不得混用编号。"
+                        },
+                        {
+                            "priority":  6,
                             "task":  "后续凡涉及采集代码修改，必须同步记录到 CODE_EVOLUTION.md，说明变更原因、影响文件、代码变化、行为变化和验证结果。"
                         }
                     ],
@@ -67,5 +71,17 @@
                                 "account_summary.md 的 output_zip_path 必须使用 output_zip/... 相对路径。",
                                 "评论统计必须包含 valid_comment_items_count、reply_items_count、comment_count_match_status。",
                                 "ZIP 命名固定为 {店铺名称}-{作品数量三位数}-{YYYYMMDD_HHMM}.zip。"
-                            ]
+                            ],
+    "acceptance_rules":  [
+                             "SelfTest 必须通过。",
+                             "5 条样本包 works.json 必须为 5 条，visual_order 必须连续。",
+                             "content_mapping_status 必须基于 card_modal_id == opened_modal_id。",
+                             "frame_status 与 video_crop_status 应尽量为 ok。",
+                             "comments.json 必须包含 items、replies、raw_comments_debug。",
+                             "web_comment_reply_api 不允许出现在 comments.items。",
+                             "dom_node 不允许出现在 comments.items。",
+                             "comments.items 必须按 author_name + text 去重，API 与 DOM 重复时优先保留 web_comment_api。",
+                             "package_metadata.json 必须包含 package_base_name、shop_name、safe_shop_name、collected_works_count、run_timestamp、package_output_dir、zip_output_path。",
+                             "package_output_dir 与 zip_output_path 必须是项目相对路径，不允许输出 C:\\Users\\ 绝对路径。"
+                         ]
 }
