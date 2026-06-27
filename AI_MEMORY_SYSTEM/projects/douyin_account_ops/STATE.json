@@ -1,0 +1,20 @@
+{
+  "project_id": "douyin_account_ops",
+  "name": "抖音代运营采集工具",
+  "type": "data_analysis",
+  "status": "active",
+  "purpose": "抖音账号采集包、未授权账号内容诊断、代运营接手前分析、Codex 中转工具",
+  "current_stage": "外部大脑项目实例接入",
+  "current_task": "等待修复正式采集包剩余问题并进行正式采集验证。",
+  "progress": "已确认公开未授权采集模式、授权模式、关键帧策略、输出包结构、卡片绑定规则、评论采集规则、OCR与摘要规则、状态统计规则；本次已作为独立项目实例接入 AI_MEMORY_SYSTEM。",
+  "default_collection_mode": "public",
+  "default_test_mode": false,
+  "default_max_works": 30,
+  "blockers": [
+    "正式采集包仍需修复标题优先级、content_mapping 判断、public_metric_status 规则。",
+    "图文作品或短作品可能播放完自动跳到下一个作品，需要锁定 card_modal_id/opened_modal_id。",
+    "主页下滑幅度过大可能导致视觉顺序跳号或采集非顺序作品。",
+    "部分作品 frame/crop 失败时需要增加视频加载等待与重试。"
+  ],
+  "last_update": "2026-06-27"
+}
