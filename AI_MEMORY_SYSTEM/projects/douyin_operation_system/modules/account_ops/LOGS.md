@@ -327,3 +327,27 @@
 - content_mapping_status 全部 ok。
 - frame_status/video_crop_status 全部 ok。
 - failed_count 为 0。
+## 2026-06-28 包目录与无评论计数小修
+
+### 已发生事实
+
+- 修改 douyin_auto_tool.ps1。
+- 包目录改为 output/packages/{package_base_name}/。
+- package_metadata.json.package_output_dir 输出为带尾斜杠的相对路径。
+- 页面无评论时写入 public_comment_count=0。
+- 页面无评论时写入 comment_count_match_status=public_zero。
+- 保留 items / replies / raw_comments_debug 评论结构。
+- 运行 SelfTest 通过。
+- 使用测试链接采集 5 条样本，生成 $zipRel。
+
+### 验证结果
+
+- 包目录为 $pkgRel。
+- works.json 共 5 条。
+- visual_order 为 1-5 连续。
+- content_mapping_status 全部 ok。
+- frame_status/video_crop_status 全部 ok。
+- frames_contact_sheet 共 5 张。
+- failed_count 为 0。
+- 空评论作品写入 public_comment_count=0 与 comment_count_match_status=public_zero。
+- account_summary.md 未发现本机绝对路径。
