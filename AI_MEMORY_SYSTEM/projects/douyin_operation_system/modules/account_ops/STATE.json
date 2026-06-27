@@ -4,9 +4,9 @@
     "type":  "data_analysis",
     "status":  "active",
     "purpose":  "账号采集模块：输入抖音主页链接，输出标准 douyin_analysis_package.zip；当前阶段不扩展账号诊断、运营方案、脚本生成、自动发布或商家建档。新增输出命名、ZIP目录、防冲突和连续编号规则用于规范采集包与后续交付文件命名。",
-    "current_stage":  "包目录与无评论计数小修完成：package_output_dir 已切到 output/packages/{package_base_name}/，public_zero 已验证",
-    "current_task":  "下一步执行 30 条正式包复测。",
-    "progress":  "已完成 output/packages/{package_base_name}/ 包目录规则；package_metadata.json 和 account_summary.md 的 package_output_dir 均输出带尾斜杠相对路径；无评论作品 public_comment_count 写 0，comment_count_match_status 写 public_zero；保留 comments.items/replies/raw_comments_debug；SelfTest 通过；5 条样本包 output_zip/寂燃CRAFTBEERBAR-005-20260628_0342.zip 已生成并检查，works=5，visual_order=1-5，content_mapping/frame/video_crop 全部 ok，contact_sheet=5，failed_count=0。",
+    "current_stage":  "批量采集完成：4 个主页链接已按每个最多 10 条执行并生成 ZIP",
+    "current_task":  "等待用户检查批量包或继续发起下一轮采集。",
+    "progress":  "已完成 4 个主页链接批量采集：LeGuè 浅滩·猫咖·鸡尾酒官方号 10 条、拾久休闲吧官方号 10 条、闽侯甘蔗记得来四果汤营业中 6 条、寂燃CRAFT BEER BAR 9 条。四个包 visual_order 连续，content_mapping/frame/video_crop 全部 ok，ZIP 均存在。",
     "default_collection_mode":  "public",
     "default_test_mode":  false,
     "default_max_works":  30,
@@ -15,11 +15,9 @@
     "zip_output_dir":  "/output_zip/",
     "zip_naming_rule":  "{店铺名称}-{作品数量三位数}-{时间}.zip",
     "blockers":  [
-                     "30 条正式包仍需实际复测。",
-                     "仍有 1 条 visible_count_but_items_empty，需继续观察评论权限或页面加载边界。",
-                     "PaddleOCR 或 Tesseract 的 OCR 质量仍依赖本机环境。",
-                     "当前阶段不得扩展到账号诊断、运营方案、脚本生成、自动发布或商家建档。",
-                     "未实现自动上传/同步机制。"
+                     "第三个账号主页实际只检测到 6 条作品。",
+                     "第四个账号主页实际只检测到 9 条作品。",
+                     "若用户预期作品更多，需要确认主页可见作品、筛选、隐藏作品或权限状态。"
                  ],
     "last_update":  "2026-06-28"
 }
