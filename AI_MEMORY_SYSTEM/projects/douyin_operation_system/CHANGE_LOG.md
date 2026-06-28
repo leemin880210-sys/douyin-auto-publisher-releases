@@ -1,0 +1,28 @@
+# CHANGE_LOG.md
+
+## CHANGE LOG
+
+### [2026-06-28]
+
+#### 修改内容
+- 新增 `CHANGE_LOG.md`，用于记录外部大脑系统每次变更的内容、原因和影响范围。
+- 新增 `DECISION_LOG.md`，用于记录关键设计决策和放弃方案。
+- 新增 `MEMORY_CONTINUITY.md`，用于保存当前状态、模块关系、关键决策摘要和系统演进路径。
+- 更新 `COGNITIVE_ENTRY.md`，加入版本演化理解，并要求新 AI 读取 `CHANGE_LOG.md` 和 `DECISION_LOG.md`。
+- 更新 `START_HERE_FOR_NEW_AI.md`，把 `COGNITIVE_ENTRY.md`、`CHANGE_LOG.md`、`DECISION_LOG.md` 加入优先读取链路。
+- 更新 `STATE.json`，增加记忆系统版本与追踪能力字段。
+- 更新 `LOGS.md`，记录外部大脑 3.0 升级事实。
+
+#### 修改原因
+- 解决多文件记忆造成的版本分裂问题。
+- 让新 AI 不只知道当前状态，也能知道状态为何演化到现在。
+- 避免重复判断已经做过的设计选择。
+- 将外部大脑从静态记忆升级为可演化记忆系统。
+
+#### 影响范围
+- 外部大脑记忆层。
+- `COGNITIVE_ENTRY.md` 认知入口。
+- `STATE.json` 记忆系统版本字段。
+- `START_HERE_FOR_NEW_AI.md` 新 AI 接入顺序。
+- 不影响 `account_ops` 采集工具逻辑。
+- 不影响业务模块，不新增分析、建档、内容生成或复盘功能。

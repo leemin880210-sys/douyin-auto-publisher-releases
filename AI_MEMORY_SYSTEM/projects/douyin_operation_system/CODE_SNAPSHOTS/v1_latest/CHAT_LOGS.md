@@ -226,3 +226,11 @@ Codex：
 
 Codex：
 重写 `COGNITIVE_ENTRY.md` 为单入口认知系统，更新 `START_HERE_FOR_NEW_AI.md` 将其设为第一读取项，并同步记录到 LOGS/CHAT 与最新快照。未修改 `STATE.json`、`TASKS.json`、采集工具代码或业务模块。
+
+## [2026-06-28]
+
+用户：
+要求进行“外部大脑 3.0 终极升级”，只增强记忆系统，不修改采集工具代码，不新增业务功能，不做分析/建档/内容生成；新增 CHANGE_LOG、DECISION_LOG，更新 MEMORY_CONTINUITY、COGNITIVE_ENTRY、START_HERE、STATE 和 LOGS，让系统从静态外部大脑升级为可演化外部大脑。
+
+Codex：
+新增 `CHANGE_LOG.md`、`DECISION_LOG.md`、`MEMORY_CONTINUITY.md`，更新 `COGNITIVE_ENTRY.md`、`START_HERE_FOR_NEW_AI.md`、`STATE.json`、`LOGS.md` 和 `CHAT_LOGS.md`，并同步最新恢复快照。未修改采集工具代码，未新增业务模块，未修改实际 `CODE_EVOLUTION.md`，未提交采集包 ZIP。

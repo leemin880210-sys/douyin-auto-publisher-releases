@@ -133,3 +133,23 @@ COGNITIVE_ENTRY_ENFORCED: true
 STATE_JSON_NOT_COGNITIVE_ENTRY: true
 VERSION_SPLIT_FIX: true
 STATE_SEMANTIC_POLLUTION_FIX: true
+---
+
+## 版本演化理解
+
+新 AI 必须理解：
+
+本系统是“持续演化系统”，不是静态系统。
+
+外部大脑 3.0 新增：
+
+- `CHANGE_LOG.md`：记录每次系统变更、修改原因和影响范围。
+- `DECISION_LOG.md`：记录关键设计决策、替代方案和最终原因。
+- `MEMORY_CONTINUITY.md`：记录系统连续性、模块关系、关键决策摘要和演进路径。
+
+新 AI 在接手系统时，必须读取：
+
+1. `CHANGE_LOG.md`
+2. `DECISION_LOG.md`
+
+只有知道“改过什么”和“为什么这样设计”，才能避免重复判断和版本分裂。

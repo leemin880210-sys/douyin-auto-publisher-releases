@@ -22,13 +22,17 @@ AI_MEMORY_SYSTEM/projects/douyin_operation_system/
 
 FIRST_READ: AI_MEMORY_SYSTEM/projects/douyin_operation_system/COGNITIVE_ENTRY.md
 
-任何新的 GPT / Codex / AI 进入后，必须首先读取：
-
-第一读取文件：`AI_MEMORY_SYSTEM/projects/douyin_operation_system/COGNITIVE_ENTRY.md`
+任何新的 GPT / Codex / AI 进入后，必须优先读取：
 
 1. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/COGNITIVE_ENTRY.md`
+2. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/CHANGE_LOG.md`
+3. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/DECISION_LOG.md`
+4. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/MEMORY_CONTINUITY.md`
 
-`COGNITIVE_ENTRY.md` 是整个系统唯一认知入口。
+`COGNITIVE_ENTRY.md` 是唯一认知入口。  
+`CHANGE_LOG.md` 说明系统改过什么。  
+`DECISION_LOG.md` 说明为什么这样设计。  
+`MEMORY_CONTINUITY.md` 帮助新 AI 连续接手上下文。
 
 随后按以下顺序读取：
 

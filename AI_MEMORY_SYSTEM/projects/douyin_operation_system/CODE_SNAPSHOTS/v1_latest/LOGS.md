@@ -276,3 +276,17 @@ The following entries were migrated from `AI_MEMORY_SYSTEM/projects/project_brai
 - 未修改采集工具代码。
 - 未新增业务模块。
 - 未做分析、商家建档或内容生成。
+
+### 2026-06-28 - 外部大脑 3.0 可演化记忆系统升级
+
+- 系统升级为外部大脑 3.0。
+- 新增 `CHANGE_LOG.md`，用于记录每次系统变更、修改原因和影响范围。
+- 新增 `DECISION_LOG.md`，用于记录关键设计决策、替代方案和最终原因。
+- 新增 `MEMORY_CONTINUITY.md`，用于记录系统最新状态、模块关系、关键决策摘要和演进路径。
+- 更新 `COGNITIVE_ENTRY.md`，加入版本演化理解，要求新 AI 读取 `CHANGE_LOG.md` 和 `DECISION_LOG.md`。
+- 更新 `START_HERE_FOR_NEW_AI.md`，将 `COGNITIVE_ENTRY.md`、`CHANGE_LOG.md`、`DECISION_LOG.md`、`MEMORY_CONTINUITY.md` 加入优先读取链路。
+- 更新 `STATE.json`，增加 `memory_version = v3_evolution_system`、`change_tracking = enabled`、`decision_tracking = enabled`。
+- 系统从“静态记忆”升级为“可演化记忆”。
+- 未修改采集工具代码。
+- 未新增业务模块。
+- 未做账号分析、商家建档或内容生成。
