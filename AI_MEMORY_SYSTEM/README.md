@@ -121,3 +121,12 @@ AI_MEMORY_SYSTEM v2.0 必须保证：
 ## 兼容说明
 
 `00_GLOBAL_MEMORY`、`01_PROJECT_REGISTRY`、`02_PROJECT_FACTORY` 等既有系统层文件保留为历史结构和容器辅助文件；v2.0 的当前核心定位是外部记忆容器，不直接承载业务逻辑。
+
+## 状态收敛提示
+
+README 只作为外部大脑入口说明，不作为状态源。
+
+- 当前状态以 `AI_MEMORY_SYSTEM/projects/douyin_operation_system/STATE.json` 为准。
+- 当前任务以 `AI_MEMORY_SYSTEM/projects/douyin_operation_system/TASKS.json` 为准。
+- 已发生事实以 `AI_MEMORY_SYSTEM/projects/douyin_operation_system/LOGS.md` 为准。
+- 状态冲突时按 `STATE_CONSOLIDATION_RULES.md` 处理。

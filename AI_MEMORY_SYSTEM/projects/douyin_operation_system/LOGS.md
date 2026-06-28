@@ -179,3 +179,15 @@ The following entries were migrated from `AI_MEMORY_SYSTEM/projects/project_brai
 - 未修改 `douyin_auto_tool.ps1`。
 - 未启动账号深度分析、商家建档、内容生产、自动发布或数据复盘。
 - 未提交采集包 ZIP。
+
+### 2026-06-28 - 新增 STATE_CONSOLIDATION_RULES 状态收敛规则
+
+- 新增 `STATE_CONSOLIDATION_RULES.md`，明确 `STATE.json` 是唯一状态源，`TASKS.json` 是唯一任务源，`LOGS.md` 是事实记录源。
+- 更新 `ENTRY_PROTOCOL.md`、`START_HERE_FOR_NEW_AI.md`、`BOOT.md`，要求新 AI 先读取 `STATE.json` 并按状态收敛规则判断当前阶段。
+- 更新 `MASTER_CONTROL.md`，明确其只约束执行权限，不描述当前状态。
+- 更新 `PROJECT_FRAMEWORK.md`、`MODULE_ROUTES.md`、`CORE.md`、`README.md`，避免这些文件被当作当前状态源。
+- 更新 `STATE.json` 和 `TASKS.json`，同步状态收敛规则与当前阶段任务。
+- 未修改采集工具代码。
+- 未修改 `douyin_auto_tool.ps1`。
+- 未修改实际 `CODE_EVOLUTION.md`。
+- 未提交采集包 ZIP。

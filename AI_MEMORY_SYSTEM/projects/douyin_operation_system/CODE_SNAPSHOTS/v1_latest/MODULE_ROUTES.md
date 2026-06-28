@@ -1,10 +1,16 @@
 # 模块路由规则
 
+## 状态边界
+
+本文件只描述用户请求如何匹配模块，不描述当前状态。  
+当前阶段、当前任务、进度和阻塞以 `STATE.json` 为准。  
+当前执行权限以 `MASTER_CONTROL.md` 为准。
+
 ## 路由执行原则
 
 1. 用户请求必须先匹配模块。
 2. 如果用户请求涉及多个模块，先确认当前允许执行哪个模块。
-3. 当前默认只允许执行 `account_ops` 相关任务。
+3. 是否允许执行某个模块，必须回到 `MASTER_CONTROL.md` 和 `STATE.json` 判断。
 4. `shop_account_analysis` 需要用户明确提供采集包并授权分析。
 5. `merchant_brain_factory` 需要用户明确指定商家并授权建档。
 6. `content_pipeline` 需要用户明确授权生成内容。

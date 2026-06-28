@@ -129,35 +129,25 @@ zip 命名规则：
 - 不同商家必须隔离命名。
 - 所有输出必须唯一。
 
-## 当前运行模式
+## 执行方式规则
 
 ```text
 人工触发 + AI生成 + 结构化输出模式
 ```
 
-当前不是自动执行系统。
+本项目默认不是自动执行系统。是否允许执行具体模块，以 `STATE.json` 和 `MASTER_CONTROL.md` 为准。
 
-## 当前阶段锁定
+## 阶段状态读取规则
 
-当前阶段只正式运行 `account_ops` 账号采集模块。
+`CORE.md` 不描述当前状态。
 
-当前已确认：
+- 当前阶段以 `STATE.json` 为准。
+- 当前任务以 `TASKS.json` 为准。
+- 已发生事实以 `LOGS.md` 为准。
+- 执行权限以 `MASTER_CONTROL.md` 为准。
+- 模块路由以 `MODULE_ROUTES.md` 为准。
 
-- `account_ops` 可以生成本地采集包 ZIP。
-- 5 条 / 10 条样本包已多账号通过。
-- `output/packages` 与 `output_zip` 命名规则已通过多账号样本包验证。
-- 采集包默认保存在本地，不默认提交到 `AI_MEMORY_SYSTEM`。
-- 采集包是业务数据，外部大脑只记录规则、状态、任务、日志、源码和模板。
-
-当前不启动：
-
-- `shop_account_analysis` 深度分析模块。
-- `merchant_brain_factory` 商家大脑创建模块。
-- `content_pipeline` 内容生产模块。
-- `data_review` 发布复盘模块。
-
-这些模块必须等用户明确授权后才能启动。
-## 当前限制
+## 通用限制
 
 - 未实现自动上传/同步机制。
 - 不做不影响使用的微优化。
@@ -226,3 +216,12 @@ zip 命名规则：
 4. 读取后必须输出当前系统目标、当前运行模块、当前阶段、下一步任务、是否允许跨模块、当前禁止模块。
 5. 没有用户明确指令前，只允许读取，不允许执行。
 6. 禁止直接执行 `shop_account_analysis`、创建 `merchant_brain`、跳过 `account_ops` 或跨模块执行。
+
+## STATE_CONSOLIDATION_RULES 状态收敛原则
+
+1. `STATE.json` 是唯一状态源。
+2. `TASKS.json` 是唯一任务源。
+3. `LOGS.md` 是事实记录源。
+4. `CORE.md`、`PROJECT_FRAMEWORK.md`、`MODULE_ROUTES.md`、`README.md` 不描述当前状态。
+5. 如果不同文件冲突，优先级为：`STATE.json` > `TASKS.json` > `LOGS.md` > 其他文件。
+6. `MASTER_CONTROL.md` 只用于约束执行权限，不用于描述状态。

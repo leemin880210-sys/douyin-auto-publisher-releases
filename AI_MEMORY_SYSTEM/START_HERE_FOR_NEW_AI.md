@@ -20,28 +20,31 @@ AI_MEMORY_SYSTEM/projects/douyin_operation_system/
 
 ## 3. 新 AI 必须读取的顺序
 
-任何新的 GPT / Codex / AI 进入后，必须先读取启动协议，再按协议读取控制链路：
+任何新的 GPT / Codex / AI 进入后，必须先读取当前状态源，再读取启动协议和控制链路：
 
-0. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/ENTRY_PROTOCOL.md`
-1. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/MASTER_CONTROL.md`
-2. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/PROJECT_FRAMEWORK.md`
-3. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/MODULE_ROUTES.md`
-4. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/STATE.json`
-5. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/TASKS.json`
+0. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/STATE.json`
+1. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/ENTRY_PROTOCOL.md`
+2. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/STATE_CONSOLIDATION_RULES.md`
+3. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/MASTER_CONTROL.md`
+4. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/PROJECT_FRAMEWORK.md`
+5. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/MODULE_ROUTES.md`
+6. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/TASKS.json`
 
-完成以上 5 个固定读取项并输出 6 项恢复信息后，再继续读取：
+完成以上固定读取项并输出 6 项恢复信息后，再继续读取：
 
-6. `AI_MEMORY_SYSTEM/README.md`
-7. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/CHAT_LOGS.md`
-8. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/v1_latest/`
-9. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/BOOT.md`
-10. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/CORE.md`
-11. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/LOGS.md`
-12. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_EVOLUTION.md`
+7. `AI_MEMORY_SYSTEM/README.md`
+8. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/CHAT_LOGS.md`
+9. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/v1_latest/`
+10. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/BOOT.md`
+11. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/CORE.md`
+12. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/LOGS.md`
+13. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_EVOLUTION.md`
 
+`STATE.json` 是当前阶段和当前状态的唯一事实源。  
+`STATE_CONSOLIDATION_RULES.md` 是状态收敛规则。  
 `ENTRY_PROTOCOL.md` 是系统启动协议。  
-`MASTER_CONTROL.md` 是最高优先级项目控制器。  
-新 AI 必须先用它们判断当前允许执行的模块与动作，再继续读取项目框架和任务。
+`MASTER_CONTROL.md` 只约束执行权限，不描述当前状态。  
+新 AI 必须先用这些文件判断当前状态、任务、权限和模块边界，再继续读取项目框架和历史。
 
 ## 4. 新 AI 接手判断规则
 

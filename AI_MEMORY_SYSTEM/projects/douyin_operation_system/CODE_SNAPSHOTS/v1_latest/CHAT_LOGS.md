@@ -162,3 +162,11 @@ Codex：
 
 Codex：
 新增 `ENTRY_PROTOCOL.md`，同步更新新 AI 入口、项目 BOOT、MASTER_CONTROL、STATE、TASKS、CORE 和 LOGS；未修改采集工具代码，未启动其他业务模块，未提交采集包 ZIP。
+
+## [2026-06-28]
+
+用户：
+提供 `STATE_CONSOLIDATION_RULES（状态收敛规则）`，要求系统只允许 `STATE.json` 描述状态、`TASKS.json` 描述任务、`LOGS.md` 记录事实；禁止 `CORE.md`、`FRAMEWORK`、`MODULE_ROUTES`、`README` 写状态；状态冲突时以 `STATE.json > TASKS.json > LOGS.md > 其他文件` 为准，并明确 `MASTER_CONTROL` 只约束执行权限，不描述状态。
+
+Codex：
+新增 `STATE_CONSOLIDATION_RULES.md`，同步更新启动协议、入口、控制器、框架、路由、核心规则、README、STATE、TASKS、LOGS 和 CHAT_LOGS；未修改采集工具代码，未修改实际 `CODE_EVOLUTION.md`，未提交采集包 ZIP。

@@ -2,6 +2,11 @@
     "project_id":  "douyin_operation_system",
     "container_version":  "v2.0",
     "task_rules":  [
+                       "状态冲突优先级：STATE.json \u003e TASKS.json \u003e LOGS.md \u003e 其他文件。",
+                       "CORE.md、PROJECT_FRAMEWORK.md、MODULE_ROUTES.md、README.md 不得描述当前状态。",
+                       "LOGS.md 是事实记录源。",
+                       "TASKS.json 是唯一任务源。",
+                       "STATE.json 是唯一状态源。",
                        "ENTRY_PROTOCOL.md 要求新 AI 输出 6 项恢复信息后才可继续判断任务。",
                        "没有用户明确指令前，只允许读取，不允许执行。",
                        "每次进入项目必须先读取 ENTRY_PROTOCOL.md。",
@@ -26,19 +31,19 @@
     "codex_tasks":  [
                         {
                             "priority":  1,
-                            "task":  "进入项目后先读取 ENTRY_PROTOCOL.md。"
+                            "task":  "进入项目后先读取 STATE.json，作为当前状态唯一事实源。"
                         },
                         {
                             "priority":  2,
-                            "task":  "按固定顺序读取 MASTER_CONTROL.md、PROJECT_FRAMEWORK.md、MODULE_ROUTES.md、STATE.json、TASKS.json。"
+                            "task":  "读取 STATE_CONSOLIDATION_RULES.md，确认状态、任务、事实的唯一写入位置。"
                         },
                         {
                             "priority":  3,
-                            "task":  "输出 6 项恢复信息：当前系统目标、当前运行模块、当前阶段、下一步任务、是否允许跨模块、当前禁止模块。"
+                            "task":  "按 ENTRY_PROTOCOL 继续读取 MASTER_CONTROL.md、PROJECT_FRAMEWORK.md、MODULE_ROUTES.md、TASKS.json。"
                         },
                         {
                             "priority":  4,
-                            "task":  "没有用户明确指令前，只允许读取，不允许执行。"
+                            "task":  "如果文件之间出现状态冲突，以 STATE.json \u003e TASKS.json \u003e LOGS.md \u003e 其他文件处理。"
                         },
                         {
                             "priority":  5,
@@ -58,6 +63,9 @@
                           "data_review":  "发布后数据复盘、反馈分析、下一轮调整。当前预留，未授权不得启动。"
                       },
     "acceptance_criteria":  [
+                                "PROJECT_FRAMEWORK.md、MODULE_ROUTES.md、CORE.md、README.md 已声明不作为状态源。",
+                                "ENTRY_PROTOCOL.md 已要求先读取 STATE.json。",
+                                "项目根目录存在 STATE_CONSOLIDATION_RULES.md。",
                                 "BOOT.md 已要求先读取 ENTRY_PROTOCOL.md。",
                                 "START_HERE_FOR_NEW_AI.md 已把 ENTRY_PROTOCOL.md 加入新 AI 启动入口。",
                                 "项目根目录存在 ENTRY_PROTOCOL.md。",

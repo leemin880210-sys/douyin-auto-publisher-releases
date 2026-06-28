@@ -10,9 +10,9 @@
 
 ---
 
-## 二、当前运行阶段（非常重要）
+## 二、当前执行权限（非常重要）
 
-当前系统只允许执行：
+当前执行权限只允许：
 
 ### ✔ account_ops（账号采集模块）
 
@@ -59,8 +59,13 @@
 
 ## 七、系统启动协议
 
-进入本系统必须先读取 `ENTRY_PROTOCOL.md`。启动协议要求：
+进入本系统必须先读取 `STATE.json` 和 `ENTRY_PROTOCOL.md`。启动协议要求：
 
-1. 按固定顺序读取 `MASTER_CONTROL.md`、`PROJECT_FRAMEWORK.md`、`MODULE_ROUTES.md`、`STATE.json`、`TASKS.json`。
-2. 输出当前系统目标、当前运行模块、当前阶段、下一步任务、是否允许跨模块、当前禁止模块。
-3. 没有用户明确指令前，只允许读取，不允许执行。
+1. `STATE.json` 是当前阶段和当前状态的唯一事实源。
+2. 按固定顺序读取 `STATE_CONSOLIDATION_RULES.md`、`MASTER_CONTROL.md`、`PROJECT_FRAMEWORK.md`、`MODULE_ROUTES.md`、`TASKS.json`。
+3. 输出当前系统目标、当前运行模块、当前阶段、下一步任务、是否允许跨模块、当前禁止模块。
+4. 没有用户明确指令前，只允许读取，不允许执行。
+
+## 八、状态边界
+
+`MASTER_CONTROL.md` 只用于约束执行权限，不用于描述当前状态。当前阶段、当前任务、进度和阻塞全部以 `STATE.json` 为准。
