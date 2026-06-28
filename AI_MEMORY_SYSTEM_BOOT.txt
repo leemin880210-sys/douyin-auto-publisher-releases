@@ -1,0 +1,75 @@
+# AI_MEMORY_SYSTEM_BOOT.txt
+
+Codex 唯一启动入口。
+
+任何新的 Codex / GPT / AI 进入本仓库时，必须先读取本文件。
+
+本文件的作用是把 Codex 引导到外部大脑，不让 Codex 从普通代码仓库视角开始工作。
+
+## 1. 系统定义
+
+这是一个可接管、可执行、可持续演化的 AI 运营操作系统（AI OPS SYSTEM），用于抖音代运营多客户场景。
+
+当前仓库的业务状态、记忆、决策和恢复信息都在：
+
+AI_MEMORY_SYSTEM/projects/douyin_operation_system/
+
+## 2. 唯一认知入口
+
+进入系统后，必须首先读取：
+
+AI_MEMORY_SYSTEM/projects/douyin_operation_system/COGNITIVE_ENTRY.md
+
+该文件是整个外部大脑系统的唯一认知入口。
+
+## 3. 启动恢复顺序
+
+读取本文件后，按顺序读取：
+
+1. AI_MEMORY_SYSTEM/projects/douyin_operation_system/COGNITIVE_ENTRY.md
+2. AI_MEMORY_SYSTEM/projects/douyin_operation_system/STATE.json
+3. AI_MEMORY_SYSTEM/projects/douyin_operation_system/CHANGE_LOG.md
+4. AI_MEMORY_SYSTEM/projects/douyin_operation_system/DECISION_LOG.md
+5. AI_MEMORY_SYSTEM/projects/douyin_operation_system/MEMORY_CONTINUITY.md
+6. AI_MEMORY_SYSTEM/projects/douyin_operation_system/BOOT.md
+7. AI_MEMORY_SYSTEM/projects/douyin_operation_system/MASTER_CONTROL.md
+8. AI_MEMORY_SYSTEM/projects/douyin_operation_system/TASKS.json
+9. AI_MEMORY_SYSTEM/projects/douyin_operation_system/PROJECT_FRAMEWORK.md
+10. AI_MEMORY_SYSTEM/projects/douyin_operation_system/MODULE_ROUTES.md
+11. AI_MEMORY_SYSTEM/projects/douyin_operation_system/LOGS.md
+
+## 4. 当前默认模式
+
+当前默认模式：account_ops。
+
+只允许：
+
+- 读取采集包
+- 生成采集包
+- 检查采集包
+
+禁止：
+
+- 跳过采集直接分析
+- 自动创建商家系统
+- 自动生成运营方案
+- 内容生成
+- 自动发布
+- 数据复盘
+- 修改采集工具代码
+
+## 5. 执行原则
+
+如果用户没有明确授权，Codex 只允许读取和恢复上下文，不允许执行跨模块任务。
+
+如果任务涉及采集工具代码，必须先读取 account_ops 模块记忆，并等待用户明确授权。
+
+如果任务只涉及外部大脑记忆文件，只能修改记忆系统，不得修改业务代码。
+
+## 6. 终极规则
+
+本文件是仓库根目录唯一启动入口。
+
+Codex 必须先从本文件进入外部大脑，再根据 COGNITIVE_ENTRY.md 和 STATE.json 判断当前系统状态。
+
+END
