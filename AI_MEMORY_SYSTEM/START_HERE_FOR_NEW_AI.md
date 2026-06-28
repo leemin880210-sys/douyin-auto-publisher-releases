@@ -22,6 +22,8 @@ AI_MEMORY_SYSTEM/projects/douyin_operation_system/
 
 任何新的 GPT / Codex / AI 进入后，必须首先读取：
 
+第一读取文件：`AI_MEMORY_SYSTEM/projects/douyin_operation_system/COGNITIVE_ENTRY.md`
+
 1. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/COGNITIVE_ENTRY.md`
 
 `COGNITIVE_ENTRY.md` 是整个系统唯一认知入口。
