@@ -71,4 +71,4 @@
 
 ## 八、状态边界
 
-`MASTER_CONTROL.md` 只用于约束执行权限，不用于描述状态。状态字段全部以 `STATE.json` 为准。
+`MASTER_CONTROL.md` 只负责执行权限，不负责状态判断。系统状态只允许来自 `STATE.json`。
