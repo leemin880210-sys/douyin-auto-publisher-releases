@@ -193,3 +193,16 @@ zip 命名规则：
 6. 如果需要 GPT 分析某个店铺，用户需要上传对应 ZIP 包，或者让 Codex 在本地读取该 ZIP 路径。
 7. 如果需要长期追踪采集包，只记录 `package_metadata` 或 `package_index`，不保存大文件。
 8. 不要把商家隐私数据、评论截图、视频关键帧批量提交到 GitHub 外部大脑。
+
+## 外部大脑恢复原则
+
+1. 外部大脑的首要目标是防止换 AI 后从 0 开始。
+2. 新 AI 必须先恢复项目总框架，再恢复当前阶段，再判断模块路由。
+3. `PROJECT_FRAMEWORK.md` 是系统总框架。
+4. `MODULE_ROUTES.md` 是模块入口判断规则。
+5. `STATE.json` 是当前状态。
+6. `TASKS.json` 是下一步任务。
+7. `LOGS.md` 是已发生事实。
+8. `CHAT_LOGS.md` 是用户与 AI/Codex 的关键对话记录。
+9. `CODE_EVOLUTION.md` 只记录采集工具代码演进。
+10. 采集包 ZIP 是本地业务数据，不进入外部大脑。

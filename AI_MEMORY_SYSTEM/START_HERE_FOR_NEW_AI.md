@@ -25,14 +25,30 @@ AI_MEMORY_SYSTEM/projects/douyin_operation_system/
 1. `AI_MEMORY_SYSTEM/README.md`
 2. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/CHAT_LOGS.md`
 3. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/STATE.json`
-4. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/v1_latest/`
-5. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/BOOT.md`
-6. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/TASKS.json`
-7. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/CORE.md`
-8. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/LOGS.md`
-9. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_EVOLUTION.md`
+4. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/PROJECT_FRAMEWORK.md`
+5. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/MODULE_ROUTES.md`
+6. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/v1_latest/`
+7. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/BOOT.md`
+8. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/TASKS.json`
+9. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/CORE.md`
+10. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/LOGS.md`
+11. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_EVOLUTION.md`
 
-## 4. 如果涉及账号采集模块
+## 4. 新 AI 接手判断规则
+
+新 AI 读取完成后，必须先回答：
+
+1. 当前项目总目标是什么？
+2. 当前正式运行模块是什么？
+3. 当前下一阶段模块是什么？
+4. 哪些模块只是规划，不能启动？
+5. 当前采集包在哪里？
+6. 当前是否允许创建真实商家大脑？
+7. 当前是否允许生成脚本、运营方案或发布内容？
+
+如果不能回答以上问题，不允许执行任何修改。
+
+## 5. 如果涉及账号采集模块
 
 如果任务涉及抖音账号采集、采集包、评论、OCR、抽帧、ZIP 输出、`douyin_auto_tool.ps1` 或 `account_ops`，还必须继续读取：
 
@@ -43,7 +59,7 @@ AI_MEMORY_SYSTEM/projects/douyin_operation_system/
 5. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/modules/account_ops/LOGS.md`
 6. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/modules/account_ops/CODE_EVOLUTION.md`
 
-## 5. 读取后必须先输出
+## 6. 读取后必须先输出
 
 新 AI 读取完上述文件后，必须先向用户输出：
 
@@ -56,19 +72,23 @@ AI_MEMORY_SYSTEM/projects/douyin_operation_system/
 
 在输出这些恢复信息前，不要直接执行修改。
 
-## 6. 当前禁止事项
+## 7. 当前禁止事项
 
 除非用户明确授权，否则禁止：
 
 - 不要直接修改代码。
+- 不要启动 `shop_account_analysis` 做真实账号深度分析。
+- 不要启动 `merchant_brain_factory` 创建真实商家大脑。
 - 不要启动 `data_analysis`。
 - 不要启动 `content_pipeline`。
+- 不要启动 `data_review`。
 - 不要做账号诊断、运营方案、脚本生成、自动发布或商家建档。
 - 不要绕过当前 `modules/account_ops` 的边界。
 - 不要修改 `AI_MEMORY_SYSTEM/00_GLOBAL_MEMORY`。
 - 不要把旧项目目录重新当成活跃项目。
+- 不要把采集包 ZIP 提交到 `AI_MEMORY_SYSTEM`。
 
-## 7. GitHub 无法读取时
+## 8. GitHub 无法读取时
 
 如果新 AI 无法读取 GitHub 链接，应要求用户粘贴以下文件内容：
 
@@ -77,11 +97,13 @@ AI_MEMORY_SYSTEM/projects/douyin_operation_system/
 3. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/TASKS.json`
 4. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/CORE.md`
 5. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/BOOT.md`
-6. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/modules/account_ops/STATE.json`
-7. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/modules/account_ops/TASKS.json`
-8. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/modules/account_ops/CORE.md`
+6. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/PROJECT_FRAMEWORK.md`
+7. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/MODULE_ROUTES.md`
+8. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/modules/account_ops/STATE.json`
+9. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/modules/account_ops/TASKS.json`
+10. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/modules/account_ops/CORE.md`
 
-## 8. 当前源码恢复路径
+## 9. 当前源码恢复路径
 
 当前 GitHub 可恢复源码路径是：
 

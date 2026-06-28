@@ -1,36 +1,53 @@
 {
     "project_name":  "douyin_operation_system",
-    "current_stage":  "account_ops 账号采集模块多账号样本验证阶段，代运营系统总框架正在固化。",
-    "current_task":  "先完善外部大脑项目框架，明确 account_ops、shop_account_analysis、merchant_brain_factory、content_pipeline、data_review 的模块边界和执行顺序；随后再进入 shop_account_analysis 模块建设。",
-    "progress":  "账号采集模块已能生成 5 条 / 10 条样本包，多个账号采集通过；当前正在把整个抖音代运营项目框架写入外部大脑，确保换 GPT / Codex 账号后能恢复项目状态，不从 0 开始。",
-    "blockers":  "暂无关键阻塞。当前禁止提前启动账号分析、商家建档、内容生成、自动发布和数据复盘。",
+    "current_stage":  "account_ops 账号采集模块多账号样本验证阶段，代运营系统总框架已固化，下一步准备建设 shop_account_analysis 模块。",
+    "current_task":  "保持 account_ops 采集模块稳定，继续使用 5-10 条样本包验证采集质量；下一步建设 shop_account_analysis 模块，但未授权前不执行真实店铺分析。",
+    "progress":  "账号采集模块已能生成 5 条 / 10 条样本包，多个账号采集通过；PROJECT_FRAMEWORK.md 与 MODULE_ROUTES.md 已纳入新 AI 强制读取链路，用于恢复总框架、当前阶段和模块路由。",
+    "blockers":  "暂无关键阻塞。当前禁止提前启动账号分析、商家建档、内容生成、自动发布和数据复盘；采集包 ZIP 不提交到 AI_MEMORY_SYSTEM。",
     "last_update":  "2026-06-28",
     "container_version":  "v2.0",
     "required_memory_files":  [
                                   "CHAT_LOGS.md",
-                                  "CODE_EVOLUTION.md",
-                                  "CODE_SNAPSHOTS/v1_latest",
-                                  "CODE_SNAPSHOTS/v2_previous",
-                                  "CODE_SNAPSHOTS/v3_previous_previous",
-                                  "BOOT.md",
                                   "STATE.json",
+                                  "PROJECT_FRAMEWORK.md",
+                                  "MODULE_ROUTES.md",
+                                  "CODE_SNAPSHOTS/v1_latest",
+                                  "BOOT.md",
                                   "TASKS.json",
                                   "CORE.md",
-                                  "LOGS.md"
+                                  "LOGS.md",
+                                  "CODE_EVOLUTION.md"
                               ],
     "modules":  {
                     "account_ops":  {
                                         "path":  "AI_MEMORY_SYSTEM/projects/douyin_operation_system/modules/account_ops",
-                                        "source_project":  "douyin_account_ops",
-                                        "status":  "active"
+                                        "status":  "active",
+                                        "note":  "当前正式运行模块"
                                     },
-                    "data_analysis":  {
-                                          "path":  "AI_MEMORY_SYSTEM/projects/douyin_operation_system/modules/data_analysis",
-                                          "status":  "reserved"
-                                      },
+                    "shop_account_analysis":  {
+                                                  "path":  "AI_MEMORY_SYSTEM/projects/douyin_operation_system/modules/shop_account_analysis",
+                                                  "status":  "planned_not_started",
+                                                  "note":  "下一阶段模块，未授权前不执行真实店铺分析"
+                                              },
+                    "merchant_brain_factory":  {
+                                                   "path":  "AI_MEMORY_SYSTEM/projects/douyin_operation_system/modules/merchant_brain_factory",
+                                                   "status":  "planning_not_started",
+                                                   "note":  "后续模块，未授权不得创建真实商家大脑"
+                                               },
+                    "merchants":  {
+                                      "path":  "AI_MEMORY_SYSTEM/projects/douyin_operation_system/merchants",
+                                      "status":  "template_only",
+                                      "note":  "只存在模板，不存在真实商家大脑"
+                                  },
                     "content_pipeline":  {
                                              "path":  "AI_MEMORY_SYSTEM/projects/douyin_operation_system/modules/content_pipeline",
-                                             "status":  "reserved"
-                                         }
+                                             "status":  "reserved",
+                                             "note":  "未授权不得启动"
+                                         },
+                    "data_review":  {
+                                        "path":  "AI_MEMORY_SYSTEM/projects/douyin_operation_system/modules/data_review",
+                                        "status":  "reserved",
+                                        "note":  "未授权不得启动"
+                                    }
                 }
 }

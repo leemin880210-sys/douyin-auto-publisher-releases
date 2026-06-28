@@ -145,3 +145,17 @@ The following entries were migrated from `AI_MEMORY_SYSTEM/projects/project_brai
 - action: Built the external-brain project framework for `douyin_operation_system`.
 - result: Added `PROJECT_FRAMEWORK.md`, `MODULE_ROUTES.md`, the planned `shop_account_analysis` module brain, the planned `merchant_brain_factory` module, and the `merchants/_TEMPLATE` structure; clarified that collection packages do not enter the external brain by default.
 - notes: No collection tool code was modified. Account analysis was not started. No real merchant profile was created. Content production and publishing review were not started.
+
+### 2026-06-28 - 新 AI 接手能力与模块路由一致性优化
+
+- 更新 `START_HERE_FOR_NEW_AI.md`，把 `PROJECT_FRAMEWORK.md` 与 `MODULE_ROUTES.md` 加入新 AI 强制读取顺序。
+- 更新 `BOOT.md` 读取顺序，明确系统总框架与模块路由的恢复作用。
+- 更新 `STATE.json`、`TASKS.json`、`CORE.md`，固化当前阶段、模块状态、外部大脑恢复原则和禁止跨模块执行规则。
+- 更新 `PROJECT_FRAMEWORK.md` 与 `MODULE_ROUTES.md`，强调当前不是单一采集工具，而是抖音代运营 AI 工作系统。
+- 补充 `merchants/README.md` 与 `_TEMPLATE/` 字段模板。
+- 未修改采集工具代码。
+- 未启动账号分析。
+- 未创建真实商家大脑。
+- 未启动内容生产。
+- 未启动数据复盘。
+- 未提交采集包 ZIP。

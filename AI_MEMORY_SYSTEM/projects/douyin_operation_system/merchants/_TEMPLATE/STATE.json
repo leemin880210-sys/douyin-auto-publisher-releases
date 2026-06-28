@@ -6,5 +6,23 @@
     "current_task":  "等待用户授权并提供商家基础资料",
     "progress":  "0%",
     "blockers":  "未授权创建真实商家大脑",
-    "last_update":  ""
+    "last_update":  "",
+    "required_files":  [
+                           "BOOT.md",
+                           "STATE.json",
+                           "PROFILE.md",
+                           "ACCOUNT_DIAGNOSIS.md",
+                           "STRATEGY.md",
+                           "MATERIALS_INDEX.md",
+                           "CONTENT_LOGS.md",
+                           "PUBLISH_LOGS.md",
+                           "DATA_REVIEW.md",
+                           "TASKS.json",
+                           "DECISIONS.md"
+                       ],
+    "boundaries":  [
+                       "本目录仅为模板",
+                       "不得填写真实商家内容",
+                       "不同商家之间不得复用状态、策略、发布记录、复盘和决策"
+                   ]
 }

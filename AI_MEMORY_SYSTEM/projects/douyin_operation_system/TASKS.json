@@ -4,6 +4,8 @@
     "task_rules":  [
                        "每次进入项目必须先读取 CHAT_LOGS.md。",
                        "每次进入项目必须读取 STATE.json。",
+                       "每次进入项目必须读取 PROJECT_FRAMEWORK.md。",
+                       "每次进入项目必须读取 MODULE_ROUTES.md。",
                        "每次进入项目必须读取 CODE_SNAPSHOTS/v1_latest/。",
                        "TASKS.json 只能写待做任务、下一步行动、模块路由和验收标准。",
                        "当前状态、进度和阻塞问题只能写入 STATE.json。",
@@ -11,6 +13,7 @@
                        "聊天记录只能追加到 CHAT_LOGS.md，不允许覆盖或折叠隐藏历史。",
                        "源码快照必须保存在 CODE_SNAPSHOTS/v1_latest、v2_previous、v3_previous_previous。",
                        "涉及账号采集模块时必须读取 modules/account_ops 下的 BOOT、STATE、TASKS、CORE、LOGS、CODE_EVOLUTION。",
+                       "任何跨模块请求必须先根据 MODULE_ROUTES.md 路由，不能自行扩展。",
                        "生成抖音项目输出前必须确认店铺名称、作品编号和时间戳。",
                        "同一商家输出必须连续编号，不同商家输出必须隔离命名。",
                        "写入输出文件前必须检查重名，禁止同名覆盖。"
@@ -18,63 +21,57 @@
     "codex_tasks":  [
                         {
                             "priority":  1,
-                            "task":  "进入统一项目后按 CHAT_LOGS → STATE → CODE_SNAPSHOTS/v1_latest → BOOT → TASKS → CORE → LOGS 顺序读取根项目记忆。"
+                            "task":  "保持 account_ops 采集模块稳定。"
                         },
                         {
                             "priority":  2,
-                            "task":  "每次修改结束前追加 CHAT_LOGS.md，记录用户、AI、Codex 对话。"
+                            "task":  "继续使用 5-10 条样本包验证采集质量。"
                         },
                         {
                             "priority":  3,
-                            "task":  "每次修改结束前更新 LOGS.md、STATE.json、CODE_EVOLUTION.md，并滚动 CODE_SNAPSHOTS 三版本快照。"
+                            "task":  "30 条正式包只作为阶段性验收。"
                         },
                         {
                             "priority":  4,
-                            "task":  "涉及账号采集、采集包、run_mode、评论状态、OCR、抽帧或 ZIP 输出时，进入 modules/account_ops 模块读取完整模块记忆。"
+                            "task":  "下一步建设 shop_account_analysis 模块，但未授权前不执行真实店铺分析。"
                         },
                         {
                             "priority":  5,
-                            "task":  "后续凡涉及采集代码修改，必须同步记录到 modules/account_ops/CODE_EVOLUTION.md，并维护最近3次完整代码版本快照。"
+                            "task":  "后续建设 merchant_brain_factory，但未授权前不创建真实商家大脑。"
                         },
                         {
                             "priority":  6,
-                            "task":  "当前阶段继续用 5-10 条样本包复测更多账号，重点观察评论、OCR、partial 类型；30 条正式包只作为阶段性验收，不作为每轮默认任务。"
+                            "task":  "content_pipeline 和 data_review 暂不启动。"
+                        },
+                        {
+                            "priority":  7,
+                            "task":  "每次新 AI 接手必须先读取 PROJECT_FRAMEWORK.md 和 MODULE_ROUTES.md。"
+                        },
+                        {
+                            "priority":  8,
+                            "task":  "任何跨模块请求必须先根据 MODULE_ROUTES.md 路由，不能自行扩展。"
+                        },
+                        {
+                            "priority":  9,
+                            "task":  "不做不影响使用的微优化。"
                         }
                     ],
     "module_routes":  {
-                          "account_ops":  "账号采集、采集包、公开数据、评论/OCR/抽帧、run_mode、douyin_analysis_package.zip、采集代码演进。",
-                          "data_analysis":  "数据复盘、指标分析、商家表现对比，当前为预留模块。",
-                          "content_pipeline":  "内容生成、脚本、图片/视频输出、交付命名，当前为预留模块。"
+                          "account_ops":  "账号采集、采集包、公开数据、评论/OCR/抽帧、run_mode、douyin_analysis_package.zip、采集代码演进。当前默认只允许执行此模块。",
+                          "shop_account_analysis":  "店铺账号深度分析、主页诊断、作品诊断、评论需求、接手方向。需要用户提供采集包并明确授权。",
+                          "merchant_brain_factory":  "创建商家独立大脑、电子运营官、长期商家档案。需要用户指定商家并明确授权。",
+                          "merchants":  "商家独立大脑实例目录。当前只有 _TEMPLATE，不存在真实商家大脑。",
+                          "content_pipeline":  "内容方向、脚本、标题、发布文案、素材组织。当前预留，未授权不得启动。",
+                          "data_review":  "发布后数据复盘、反馈分析、下一轮调整。当前预留，未授权不得启动。"
                       },
     "acceptance_criteria":  [
-                                "项目根目录存在 CHAT_LOGS.md。",
-                                "项目根目录存在 CODE_EVOLUTION.md。",
-                                "项目根目录存在 CODE_SNAPSHOTS/v1_latest/。",
-                                "项目根目录存在 CODE_SNAPSHOTS/v2_previous/。",
-                                "项目根目录存在 CODE_SNAPSHOTS/v3_previous_previous/。",
-                                "v1_latest 保存当前完整代码文件。",
-                                "v2_previous 保存上一版完整代码文件。",
-                                "v3_previous_previous 保存上上版完整代码文件或明确记录首次启用时无更早历史版本。",
-                                "registry 中只注册 douyin_operation_system 一个活跃项目。",
-                                "不删除任何历史 LOGS。",
-                                "不修改 GLOBAL_MEMORY。",
-                                "当前只运行 modules/account_ops 账号采集模块，data_analysis 和 content_pipeline 暂不启动。",
-                                "30 条正式包只作为阶段性验收，不作为每轮默认任务。",
-                                "PROJECT_FRAMEWORK.md 已说明 douyin_operation_system 总框架。",
-                                "MODULE_ROUTES.md 已说明用户意图到模块的路由规则。",
-                                "shop_account_analysis 模块已创建为规划状态，未启动账号分析。",
-                                "merchant_brain_factory 模块已创建为规划状态，未创建真实商家大脑。",
-                                "merchants/_TEMPLATE 已创建为未来商家独立大脑模板。",
-                                "采集包默认保存在本地，不进入 AI_MEMORY_SYSTEM。"
-                            ],
-    "current_phase_tasks":  [
-                                "完成外部大脑项目框架固化。",
-                                "建立 shop_account_analysis 模块大脑。",
-                                "建立 merchant_brain_factory 模块规划。",
-                                "建立 merchants 商家独立大脑模板。",
-                                "继续使用 account_ops 采集更多 5-10 条样本包。",
-                                "30 条正式包只作为阶段性验收。",
-                                "不做不影响使用的微优化。",
-                                "不启动 content_pipeline、data_review，除非用户明确授权。"
+                                "START_HERE_FOR_NEW_AI.md 已把 PROJECT_FRAMEWORK.md 和 MODULE_ROUTES.md 加入新 AI 强制读取顺序。",
+                                "BOOT.md 已把 PROJECT_FRAMEWORK.md 和 MODULE_ROUTES.md 加入根项目强制读取顺序。",
+                                "STATE.json modules 字段包含 account_ops、shop_account_analysis、merchant_brain_factory、merchants、content_pipeline、data_review。",
+                                "TASKS.json 明确当前阶段只稳定 account_ops，下一阶段才建设 shop_account_analysis。",
+                                "CORE.md 明确外部大脑恢复原则。",
+                                "merchants/_TEMPLATE 只包含字段模板，不包含真实商家内容。",
+                                "未修改 douyin_auto_tool.ps1。",
+                                "未提交采集包 ZIP。"
                             ]
 }

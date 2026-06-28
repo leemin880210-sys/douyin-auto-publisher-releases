@@ -138,3 +138,11 @@ Codex：
 ```text
 已读取外部大脑项目文件和 account_ops 模块记忆；新增 PROJECT_FRAMEWORK.md、MODULE_ROUTES.md、shop_account_analysis、merchant_brain_factory、merchants/_TEMPLATE，并更新 CORE/STATE/TASKS/LOGS。未修改采集工具代码，未启动账号分析，未创建真实商家档案。
 ```
+
+## [2026-06-28]
+
+用户：
+要求继续优化外部大脑，重点不是新增业务功能，而是让任何 AI 读取外部大脑后都知道项目总框架、当前阶段、模块路由、下一步任务，避免换 AI 后从 0 开始。
+
+Codex：
+更新新 AI 入口、根项目 BOOT/STATE/TASKS/CORE、PROJECT_FRAMEWORK、MODULE_ROUTES，并补充 merchants 模板字段；未修改采集工具代码，未启动账号分析，未创建真实商家大脑，未启动内容生产或数据复盘，未提交采集包 ZIP。
