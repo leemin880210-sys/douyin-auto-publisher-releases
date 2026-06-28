@@ -1,115 +1,217 @@
-# douyin_operation_system BOOT
+# 🧠 AI 外部大脑系统 BOOT FILE（v3.2 FINAL）
 
-project_id: `douyin_operation_system`
+## 一、系统定义
 
-本项目是由 `project_brain` 与 `douyin_account_ops` 合并后的统一抖音代运营业务项目。
+该系统是一个：
 
-AI_MEMORY_SYSTEM v2.0 下，本目录作为外部记忆容器中的项目实例，只保存项目恢复所需的聊天、状态、任务、核心规则、日志和最近 3 次完整源码快照。
+🧠 可接管 + 可执行 + 可持续演化的 AI 运营操作系统（AI OPS SYSTEM）
 
-## v2.0 强制读取顺序
+用于抖音代运营多客户场景。
 
-任何 AI / Codex 进入本项目必须先读取 `SYSTEM_CONSTITUTION.md`。
+目标：
+- AI可接管运营
+- AI可持续执行任务
+- AI可记录并优化策略
+- AI可跨实例恢复状态
 
-系统宪法要求：本系统是流程系统，不是单一工具；任何 AI 不得跳阶段、不得跨模块、不得合并状态源。
+---
 
-宪法固定读取顺序：
+## 二、系统分层结构
 
-1. `MASTER_CONTROL.md`
-2. `STATE.json`
-3. `TASKS.json`
-4. `PROJECT_FRAMEWORK.md`
-5. `MODULE_ROUTES.md`
+```text
+SYSTEM BRAIN（总脑）
+│
+├── PROJECT BRAIN（副脑：项目级运营系统）
+│     ├── CLIENT BRAIN（子脑：客户AI运营官）
+│     ├── STATE ENGINE（状态系统）
+│     ├── EXECUTION ENGINE（执行系统）
+│     ├── MEMORY ENGINE（记忆系统）
+│     └── EVOLUTION ENGINE（演化系统）
+│
+└── BOOTLOADER（启动恢复系统）
+```
 
-一致性保护文件继续读取：
+---
 
-6. `STATE_CONSISTENCY_LOCK.md`
-7. `SEMANTIC_LAYERS.md`
-8. `STATE_CONSOLIDATION_RULES.md`
-9. `ENTRY_PROTOCOL.md`
+## 三、运行模式（MODE SYSTEM）
 
-恢复辅助文件继续读取：
+系统必须始终处于以下模式之一：
 
-10. `CHAT_LOGS.md`
-11. `CODE_SNAPSHOTS/v1_latest/`
-12. `BOOT.md`
-13. `CORE.md`
-14. `LOGS.md`
-15. `CODE_EVOLUTION.md`
+### 1. account_ops（采集阶段 - 当前默认）
 
-如果用户请求不明确，AI 必须先询问，不得自行跨模块执行。
+允许：
+- 客户信息采集
+- 项目结构建立
+- 数据整理
 
-涉及账号采集模块时，必须继续读取：
+禁止：
+- 内容生成
+- 运营执行
+- 策略优化
 
-1. `modules/account_ops/BOOT.md`
-2. `modules/account_ops/STATE.json`
-3. `modules/account_ops/TASKS.json`
-4. `modules/account_ops/CORE.md`
-5. `modules/account_ops/LOGS.md`
-6. `modules/account_ops/CODE_EVOLUTION.md`
+---
 
-## 项目结构来源
+### 2. operation_ops（运营执行阶段）
 
-- `project_brain` 已迁移为本项目根部的 core system。
-- `douyin_account_ops` 已迁移为 `modules/account_ops/` 模块。
-- `modules/shop_account_analysis/` 是下一阶段店铺账号深度分析模块。
-- `modules/merchant_brain_factory/` 是后续商家独立大脑创建模块。
-- `modules/data_analysis/`、`modules/content_pipeline/`、`modules/data_review/` 为预留或后续模块，未授权不得启动。
+允许：
+- 内容生成（脚本/视频结构）
+- 客户运营执行
+- 策略调整（局部）
 
-## 项目边界
+---
 
-- 本项目是 registry 中唯一活跃业务项目。
-- AI_MEMORY_SYSTEM 只作为外部记忆容器，不直接参与业务逻辑。
-- 本项目不修改 `AI_MEMORY_SYSTEM/00_GLOBAL_MEMORY`。
-- 本项目内部模块不得写入其他项目状态。
-- root `STATE.json` 只记录统一业务项目状态。
-- 模块状态保留在各自模块目录内，不覆盖 root 状态。
-- 采集包 ZIP 默认保存在本地，不提交到 `AI_MEMORY_SYSTEM`。
+### 3. evolution_ops（演化阶段）
 
-## 执行规则
+允许：
+- 策略优化
+- 模型调整
+- 系统自我优化
 
-- `CHAT_LOGS.md` 记录用户、AI、Codex 对话，必须按时间追加。
-- root `STATE.json` 是统一项目当前状态源。
-- `STATE.json` 是阶段和状态的唯一事实源。
-- `ENTRY_PROTOCOL.md` 是系统启动协议。
-- `STATE_CONSOLIDATION_RULES.md` 是状态收敛规则。
-- `MASTER_CONTROL.md` 是执行权限控制源。
-- `PROJECT_FRAMEWORK.md` 是系统总框架源。
-- `MODULE_ROUTES.md` 是模块入口判断源。
-- `CODE_SNAPSHOTS/v1_latest/` 是当前最新完整代码快照。
-- root `TASKS.json` 只记录统一项目待执行任务和模块路由任务。
-- root `CORE.md` 记录长期业务边界、输出规则和模块职责。
-- root `LOGS.md` 只记录已发生事实。
-- 任务结束前必须回写 root `CHAT_LOGS.md`、`STATE.json` 和 `LOGS.md`。
-- 涉及采集工具代码变化时，必须同步 `CODE_EVOLUTION.md` 和 `CODE_SNAPSHOTS/`。
+---
 
-## CODE_SNAPSHOTS 滚动规则
+## 四、状态系统（STATE ENGINE）
 
-每次源码或项目核心文件修改时：
+必须使用结构化状态：
 
-1. 新版本写入 `CODE_SNAPSHOTS/v1_latest/`。
-2. 修改前的 `v1_latest/` 下移为 `v2_previous/`。
-3. 修改前的 `v2_previous/` 下移为 `v3_previous_previous/`。
-4. 不允许删除历史聊天或已有代码版本。
+```text
+PROJECT_STATE.json
+CLIENT_STATE.json
+TASK_STATE.json
+```
 
-## 强制回写顺序
+规则：
+- 必须可更新
+- 必须可恢复
+- 禁止纯文本状态
+- 所有变化必须记录
 
-1. 更新 root `CHAT_LOGS.md`。
-2. 更新 root `STATE.json`。
-3. 写入 root `LOGS.md`。
-4. 如任务变化，同步 root `TASKS.json`。
-5. 如修改代码或核心文件，同步 `CODE_SNAPSHOTS/`。
-6. 只有采集工具代码变化时，才同步 `CODE_EVOLUTION.md`。
-7. 如修改模块规则或代码，同步对应模块日志与必要记录。
+---
 
-## 禁止行为
+## 五、执行控制（EXECUTION GATE）
 
-- 不允许把 registry 当 memory 使用。
-- 不允许把 global memory 写入项目层。
-- 不允许跨项目读取未授权项目数据。
-- 不允许共享不同项目的 STATE。
-- 不允许删除历史聊天。
-- 不允许删除历史 LOGS。
-- 不允许删除代码版本。
-- 不允许覆盖既有输出文件。
-- 不允许修改抖音采集代码，除非用户明确要求。
-- 不允许未授权启动账号深度分析、商家建档、内容生产、自动发布或数据复盘。
+所有行为必须经过执行闸门：
+
+规则：
+
+- 未授权行为禁止执行
+- 当前模式决定允许动作
+- 禁止跳过权限检查
+
+执行逻辑：
+
+```text
+IF action ∉ allowed_actions:
+    DENY EXECUTION
+```
+
+---
+
+## 六、事件记录系统（EVENT STREAM）
+
+所有执行必须记录：
+
+结构：
+
+```json
+{
+  "event_type": "",
+  "client_id": "",
+  "input": {},
+  "output": {},
+  "timestamp": ""
+}
+```
+
+规则：
+- 只允许追加
+- 不允许修改历史
+- 用于系统演化依据
+
+---
+
+## 七、执行循环（核心机制）
+
+每次AI运行必须执行：
+
+1. 读取 STATE ENGINE
+2. 检查 MODE CONTROLLER
+3. 检查 EXECUTION GATE
+4. 执行允许任务
+5. 写入 EVENT STREAM
+6. 更新 CLIENT STATE
+7. EVOLUTION ENGINE 分析
+8. 判断是否可升级 MODE
+9. 更新系统状态
+
+---
+
+## 八、状态流转规则
+
+STATE_TRANSITIONS：
+
+```text
+account_ops → operation_ops
+operation_ops → evolution_ops
+```
+
+条件示例：
+
+account_ops → operation_ops:
+- 至少1个客户完成建档
+- 数据采集完成
+
+禁止跳级
+
+---
+
+## 九、演化系统（EVOLUTION ENGINE）
+
+功能：
+
+- 分析 EVENT_STREAM
+- 识别执行效果
+- 生成优化建议
+- 调整未来策略（局部）
+
+禁止：
+- 修改系统规则
+- 改变MODE逻辑
+
+---
+
+## 十、系统强制约束
+
+禁止：
+- 跳过EXECUTION GATE
+- 删除EVENT历史
+- 无状态执行
+- 非结构化数据更新
+- 跨模式非法执行
+
+必须：
+- 所有行为记录
+- 所有任务状态化
+- 所有客户独立子脑
+- 所有执行可追踪
+
+---
+
+## 十一、系统最终目标
+
+该系统必须实现：
+
+1. 新AI进入副脑 = 可直接接管
+2. 系统可以持续运行不中断
+3. 客户状态不会丢失
+4. AI可持续优化运营策略
+5. 支持多客户并行运营
+
+---
+
+## 十二、最终定义
+
+该系统 =
+
+🧠 “可接管 + 可执行 + 可持续演化的AI运营操作系统”
+
+END

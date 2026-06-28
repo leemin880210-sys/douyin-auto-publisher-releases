@@ -26,3 +26,21 @@
 - `START_HERE_FOR_NEW_AI.md` 新 AI 接入顺序。
 - 不影响 `account_ops` 采集工具逻辑。
 - 不影响业务模块，不新增分析、建档、内容生成或复盘功能。
+### [2026-06-28]
+
+#### 修改内容
+- 将 `BOOT.md` 升级为 AI 外部大脑系统 BOOT FILE（v3.2 FINAL）。
+- 更新 `COGNITIVE_ENTRY.md`，补充 BOOT v3.2 FINAL 理解。
+- 更新 `STATE.json`，记录 `boot_version = v3.2_final` 和 `boot_mode = account_ops`。
+
+#### 修改原因
+- 将外部大脑从记忆系统进一步规范为可接管、可执行、可持续演化的 AI OPS SYSTEM 启动定义。
+- 明确 MODE SYSTEM、EXECUTION GATE、EVENT STREAM、STATE ENGINE、EVOLUTION ENGINE 的启动规则。
+- 保持当前运行仍受 account_ops 限制，避免把 v3.2 设计误读为已经启动运营或演化阶段。
+
+#### 影响范围
+- `BOOT.md`
+- `COGNITIVE_ENTRY.md`
+- `STATE.json`
+- 外部大脑启动恢复层
+- 不影响采集工具代码，不新增业务功能。

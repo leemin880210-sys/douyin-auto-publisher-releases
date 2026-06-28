@@ -9,5 +9,7 @@
     "last_update":  "2026-06-28",
     "memory_version":  "v3_evolution_system",
     "change_tracking":  "enabled",
-    "decision_tracking":  "enabled"
+    "decision_tracking":  "enabled",
+    "boot_version":  "v3.2_final",
+    "boot_mode":  "account_ops"
 }

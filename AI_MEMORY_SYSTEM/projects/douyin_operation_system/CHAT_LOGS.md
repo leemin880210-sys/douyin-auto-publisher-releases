@@ -234,3 +234,11 @@ Codex：
 
 Codex：
 新增 `CHANGE_LOG.md`、`DECISION_LOG.md`、`MEMORY_CONTINUITY.md`，更新 `COGNITIVE_ENTRY.md`、`START_HERE_FOR_NEW_AI.md`、`STATE.json`、`LOGS.md` 和 `CHAT_LOGS.md`，并同步最新恢复快照。未修改采集工具代码，未新增业务模块，未修改实际 `CODE_EVOLUTION.md`，未提交采集包 ZIP。
+
+## [2026-06-28]
+
+用户：
+提供 `AI 外部大脑系统 BOOT FILE（v3.2 FINAL）`，要求定义可接管、可执行、可持续演化的 AI OPS SYSTEM，用于抖音代运营多客户场景，并包含系统分层、运行模式、状态系统、执行闸门、事件流、执行循环、状态流转、演化系统和强制约束。
+
+Codex：
+将 `BOOT.md` 升级为 v3.2 FINAL 启动定义，更新 `COGNITIVE_ENTRY.md`、`STATE.json`、`CHANGE_LOG.md`、`DECISION_LOG.md`、`LOGS.md` 和 `CHAT_LOGS.md`，并同步最新恢复快照。未修改采集工具代码，未新增业务功能，未做账号分析、商家建档或内容生成。

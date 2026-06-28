@@ -290,3 +290,14 @@ The following entries were migrated from `AI_MEMORY_SYSTEM/projects/project_brai
 - 未修改采集工具代码。
 - 未新增业务模块。
 - 未做账号分析、商家建档或内容生成。
+
+### 2026-06-28 - BOOT v3.2 FINAL 启动定义升级
+
+- 更新 `BOOT.md` 为 AI 外部大脑系统 BOOT FILE（v3.2 FINAL）。
+- 定义 AI OPS SYSTEM、MODE SYSTEM、STATE ENGINE、EXECUTION GATE、EVENT STREAM、执行循环、状态流转和 EVOLUTION ENGINE。
+- 更新 `COGNITIVE_ENTRY.md`，说明 BOOT v3.2 是启动恢复与运行机制定义，不代表当前已启动运营或演化阶段。
+- 更新 `STATE.json`，记录 `boot_version = v3.2_final` 与 `boot_mode = account_ops`。
+- 更新 `CHANGE_LOG.md` 与 `DECISION_LOG.md`，记录本次启动定义升级和设计原因。
+- 未修改采集工具代码。
+- 未新增业务功能。
+- 未做账号分析、商家建档或内容生成。

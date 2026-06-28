@@ -153,3 +153,16 @@ STATE_SEMANTIC_POLLUTION_FIX: true
 2. `DECISION_LOG.md`
 
 只有知道“改过什么”和“为什么这样设计”，才能避免重复判断和版本分裂。
+---
+
+## BOOT v3.2 FINAL 理解
+
+`BOOT.md` 已升级为 AI 外部大脑系统 BOOT FILE（v3.2 FINAL）。
+
+新 AI 必须理解：
+
+- 系统定义为可接管 + 可执行 + 可持续演化的 AI OPS SYSTEM。
+- 当前默认模式仍是 `account_ops`。
+- 运行模式可以设计为 `account_ops → operation_ops → evolution_ops`，但禁止跳级。
+- 当前未授权进入 `operation_ops` 或 `evolution_ops`。
+- BOOT v3.2 是启动恢复与运行机制定义，不等于当前已经启动运营执行或系统演化。

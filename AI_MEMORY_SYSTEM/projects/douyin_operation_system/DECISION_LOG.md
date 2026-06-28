@@ -79,3 +79,18 @@
 
 #### 最终原因
 单入口能让新 AI 先统一认知，再读取状态、结构、任务和权限文件，减少误判。
+---
+
+### 决策：采用 BOOT v3.2 FINAL 作为 AI OPS SYSTEM 启动定义
+
+#### 背景问题
+外部大脑已经具备认知入口、状态源、变更追踪和决策追踪，但仍需要一个更高层的启动文件，把接管、执行、持续演化、权限检查和事件记录统一成运行机制。
+
+#### 决策内容
+将 `BOOT.md` 升级为 AI 外部大脑系统 BOOT FILE（v3.2 FINAL），定义 SYSTEM BRAIN、PROJECT BRAIN、CLIENT BRAIN、STATE ENGINE、EXECUTION ENGINE、MEMORY ENGINE、EVOLUTION ENGINE 和 BOOTLOADER。
+
+#### 替代方案
+继续使用旧 BOOT 文件，只列读取顺序和禁止项。
+
+#### 最终原因
+v3.2 BOOT 能解释系统如何从静态记忆升级为可接管、可执行、可持续演化的 AI OPS SYSTEM，同时通过 account_ops 默认模式和 EXECUTION GATE 保持当前阶段不被跳过。
