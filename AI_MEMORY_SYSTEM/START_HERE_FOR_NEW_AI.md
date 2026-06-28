@@ -20,7 +20,7 @@ AI_MEMORY_SYSTEM/projects/douyin_operation_system/
 
 ## 3. 新 AI 必须读取的顺序
 
-任何新的 GPT / Codex / AI 进入后，必须先读取系统宪法，再按宪法固定顺序读取；其中 `UNIFIED_MEMORY_BRAIN.md` 必须在 `STATE.json` 之后优先读取：
+任何新的 GPT / Codex / AI 进入后，必须先读取系统宪法，再按宪法固定顺序读取；统一记忆入口必须放在 `STATE.json` 之后优先读取：
 
 0. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/SYSTEM_CONSTITUTION.md`
 1. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/MASTER_CONTROL.md`
@@ -114,18 +114,20 @@ AI_MEMORY_SYSTEM/projects/douyin_operation_system/
 如果新 AI 无法读取 GitHub 链接，应要求用户粘贴以下文件内容：
 
 1. `AI_MEMORY_SYSTEM/README.md`
-2. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/UNIFIED_MEMORY_BRAIN.md`
-3. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/ENTRY_PROTOCOL.md`
+2. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/SYSTEM_CONSTITUTION.md`
 3. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/MASTER_CONTROL.md`
-3. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/PROJECT_FRAMEWORK.md`
-4. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/MODULE_ROUTES.md`
-5. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/STATE.json`
+4. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/STATE.json`
+5. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/UNIFIED_MEMORY_BRAIN.md`
 6. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/TASKS.json`
-7. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/CORE.md`
-8. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/BOOT.md`
-8. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/modules/account_ops/STATE.json`
-9. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/modules/account_ops/TASKS.json`
-10. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/modules/account_ops/CORE.md`
+7. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/PROJECT_FRAMEWORK.md`
+8. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/MODULE_ROUTES.md`
+9. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/ENTRY_PROTOCOL.md`
+10. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/STATE_CONSISTENCY_LOCK.md`
+11. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/SEMANTIC_LAYERS.md`
+12. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/STATE_CONSOLIDATION_RULES.md`
+13. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/modules/account_ops/STATE.json`
+14. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/modules/account_ops/TASKS.json`
+15. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/modules/account_ops/CORE.md`
 
 ## 9. 当前源码恢复路径
 
