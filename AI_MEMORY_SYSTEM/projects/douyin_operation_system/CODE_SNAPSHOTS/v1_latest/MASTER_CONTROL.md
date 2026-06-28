@@ -56,3 +56,11 @@
 3. MODULE_ROUTES.md
 4. STATE.json
 5. TASKS.json
+
+## 七、系统启动协议
+
+进入本系统必须先读取 `ENTRY_PROTOCOL.md`。启动协议要求：
+
+1. 按固定顺序读取 `MASTER_CONTROL.md`、`PROJECT_FRAMEWORK.md`、`MODULE_ROUTES.md`、`STATE.json`、`TASKS.json`。
+2. 输出当前系统目标、当前运行模块、当前阶段、下一步任务、是否允许跨模块、当前禁止模块。
+3. 没有用户明确指令前，只允许读取，不允许执行。

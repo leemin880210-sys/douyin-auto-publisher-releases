@@ -154,3 +154,11 @@ Codex：
 
 Codex：
 新增 `MASTER_CONTROL.md`，同步更新新 AI 入口、项目 BOOT、STATE、TASKS、CORE 和 LOGS；未修改采集工具代码，未启动其他业务模块，未提交采集包 ZIP。
+
+## [2026-06-28]
+
+用户：
+提供 `ENTRY_PROTOCOL（系统启动协议）`，要求任何 AI / Codex / GPT 进入系统必须按固定顺序读取 MASTER_CONTROL、PROJECT_FRAMEWORK、MODULE_ROUTES、STATE、TASKS，输出 6 项恢复信息，并在没有明确指令前只允许读取、不允许执行。
+
+Codex：
+新增 `ENTRY_PROTOCOL.md`，同步更新新 AI 入口、项目 BOOT、MASTER_CONTROL、STATE、TASKS、CORE 和 LOGS；未修改采集工具代码，未启动其他业务模块，未提交采集包 ZIP。

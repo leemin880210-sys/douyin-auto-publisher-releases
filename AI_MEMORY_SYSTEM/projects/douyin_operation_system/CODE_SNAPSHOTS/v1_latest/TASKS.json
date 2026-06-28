@@ -2,6 +2,9 @@
     "project_id":  "douyin_operation_system",
     "container_version":  "v2.0",
     "task_rules":  [
+                       "ENTRY_PROTOCOL.md 要求新 AI 输出 6 项恢复信息后才可继续判断任务。",
+                       "没有用户明确指令前，只允许读取，不允许执行。",
+                       "每次进入项目必须先读取 ENTRY_PROTOCOL.md。",
                        "MASTER_CONTROL.md 是当前阶段最高优先级控制器；未解除限制前只允许读取采集包 / 生成采集包 / 检查采集包。",
                        "每次进入项目必须优先读取 MASTER_CONTROL.md。",
                        "每次进入项目必须先读取 CHAT_LOGS.md。",
@@ -23,27 +26,27 @@
     "codex_tasks":  [
                         {
                             "priority":  1,
-                            "task":  "进入项目后先读取 MASTER_CONTROL.md，确认当前唯一合法动作。"
+                            "task":  "进入项目后先读取 ENTRY_PROTOCOL.md。"
                         },
                         {
                             "priority":  2,
-                            "task":  "当前只允许 account_ops：读取采集包 / 生成采集包 / 检查采集包。"
+                            "task":  "按固定顺序读取 MASTER_CONTROL.md、PROJECT_FRAMEWORK.md、MODULE_ROUTES.md、STATE.json、TASKS.json。"
                         },
                         {
                             "priority":  3,
-                            "task":  "继续使用 5-10 条样本包验证采集质量。"
+                            "task":  "输出 6 项恢复信息：当前系统目标、当前运行模块、当前阶段、下一步任务、是否允许跨模块、当前禁止模块。"
                         },
                         {
                             "priority":  4,
-                            "task":  "30 条正式包只作为阶段性验收。"
+                            "task":  "没有用户明确指令前，只允许读取，不允许执行。"
                         },
                         {
                             "priority":  5,
-                            "task":  "shop_account_analysis、merchant_brain_factory、merchants、content_pipeline、data_review 全部禁止启动，除非用户后续明确授权解除阶段限制。"
+                            "task":  "当前只允许 account_ops：读取采集包 / 生成采集包 / 检查采集包。"
                         },
                         {
                             "priority":  6,
-                            "task":  "任何跨模块请求必须先根据 MASTER_CONTROL.md 和 MODULE_ROUTES.md 判断，不能自行扩展。"
+                            "task":  "禁止直接执行 shop_account_analysis、创建 merchant_brain、跳过 account_ops 或跨模块执行。"
                         }
                     ],
     "module_routes":  {
@@ -55,6 +58,9 @@
                           "data_review":  "发布后数据复盘、反馈分析、下一轮调整。当前预留，未授权不得启动。"
                       },
     "acceptance_criteria":  [
+                                "BOOT.md 已要求先读取 ENTRY_PROTOCOL.md。",
+                                "START_HERE_FOR_NEW_AI.md 已把 ENTRY_PROTOCOL.md 加入新 AI 启动入口。",
+                                "项目根目录存在 ENTRY_PROTOCOL.md。",
                                 "BOOT.md 已把 MASTER_CONTROL.md 设置为项目内第一读取文件。",
                                 "START_HERE_FOR_NEW_AI.md 已把 MASTER_CONTROL.md 加入新 AI 强制读取顺序。",
                                 "项目根目录存在 MASTER_CONTROL.md。",

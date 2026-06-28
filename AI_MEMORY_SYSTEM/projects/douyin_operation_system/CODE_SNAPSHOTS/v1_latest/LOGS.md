@@ -169,3 +169,13 @@ The following entries were migrated from `AI_MEMORY_SYSTEM/projects/project_brai
 - 未修改 `douyin_auto_tool.ps1`。
 - 未启动账号深度分析、商家建档、内容生产、自动发布或数据复盘。
 - 未提交采集包 ZIP。
+
+### 2026-06-28 - 新增 ENTRY_PROTOCOL 系统启动协议
+
+- 新增 `ENTRY_PROTOCOL.md`，固定系统启动读取顺序：`MASTER_CONTROL.md` → `PROJECT_FRAMEWORK.md` → `MODULE_ROUTES.md` → `STATE.json` → `TASKS.json`。
+- 更新 `START_HERE_FOR_NEW_AI.md` 与 `BOOT.md`，要求新 AI 先读取启动协议，并输出 6 项恢复信息。
+- 更新 `MASTER_CONTROL.md`、`STATE.json`、`TASKS.json`、`CORE.md`，同步“没有用户明确指令前只允许读取，不允许执行”。
+- 未修改采集工具代码。
+- 未修改 `douyin_auto_tool.ps1`。
+- 未启动账号深度分析、商家建档、内容生产、自动发布或数据复盘。
+- 未提交采集包 ZIP。
