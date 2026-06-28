@@ -120,3 +120,21 @@ Codex：
 ```text
 已读取根项目和 account_ops 模块记忆文件，确认 CODE_SNAPSHOTS/v1_latest/douyin_auto_tool.ps1 存在；已更新 CORE/TASKS/STATE/LOGS/CODE_EVOLUTION/CHAT_LOGS，清理控制字符缺字，并滚动 CODE_SNAPSHOTS。未修改采集工具代码，未修改 GLOBAL_MEMORY，未启动 data_analysis 或 content_pipeline。
 ```
+## [2026-06-28]
+
+用户：
+```text
+用户希望把代运营项目框架写入外部大脑，让任何 AI 读取后都知道当前在做账号采集模块，下一步是账号深度分析模块，再下一步是商家独立大脑，每个商家大脑相当于一个电子运营官；同时要求不能一换 AI 就从 0 开始。
+
+本次只优化外部大脑项目框架，不修改采集工具代码，不启动账号分析，不生成运营方案，不生成脚本，不自动发布，不创建真实商家档案。
+```
+
+AI：
+```text
+收到。将新增项目总框架、模块路由、shop_account_analysis 规划模块、merchant_brain_factory 规划模块和 merchants 商家模板；只更新外部大脑文件。
+```
+
+Codex：
+```text
+已读取外部大脑项目文件和 account_ops 模块记忆；新增 PROJECT_FRAMEWORK.md、MODULE_ROUTES.md、shop_account_analysis、merchant_brain_factory、merchants/_TEMPLATE，并更新 CORE/STATE/TASKS/LOGS。未修改采集工具代码，未启动账号分析，未创建真实商家档案。
+```

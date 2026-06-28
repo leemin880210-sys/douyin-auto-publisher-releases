@@ -527,3 +527,19 @@ zip 命名规则：
 - GPT 检查评论数量时必须同时看主评论、回复、总提取数和缺口数，不得只看 `comments.items.length`。
 
 为什么这样定：回复和主评论分层保存，单看 `comments.items` 会低估实际采集评论数量。
+
+## 采集包存储边界
+
+1. 采集包 ZIP 默认保存在本地，不提交到 `AI_MEMORY_SYSTEM`。
+2. `output_zip/` 保存 ZIP 包。
+3. `output/packages/{package_base_name}/` 保存解压后的采集包目录。
+4. `AI_MEMORY_SYSTEM` 不保存每个采集包本体。
+5. `AI_MEMORY_SYSTEM` 只保存：
+   - 采集包命名规则。
+   - 输出路径规则。
+   - `package_metadata` 字段要求。
+   - 采集包检查标准。
+   - 分析模块如何读取用户上传的 ZIP。
+6. 如果需要 GPT 分析某个店铺，用户需要上传对应 ZIP 包，或者让 Codex 在本地读取该 ZIP 路径。
+7. 如果需要长期追踪采集包，只记录 `package_metadata` 或 `package_index`，不保存大文件。
+8. 不要把商家隐私数据、评论截图、视频关键帧批量提交到 GitHub 外部大脑。

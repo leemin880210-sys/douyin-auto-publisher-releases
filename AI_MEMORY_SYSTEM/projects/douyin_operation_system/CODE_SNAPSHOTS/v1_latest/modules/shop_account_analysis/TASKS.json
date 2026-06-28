@@ -1,0 +1,19 @@
+{
+  "module_name": "shop_account_analysis",
+  "task_rules": [
+    "未获得用户明确授权前不得启动账号分析。",
+    "只能读取用户上传的 ZIP、本地 output_zip 路径、output/packages/{package_base_name}/ 目录或 package_metadata.json。",
+    "不得采集账号，不得修改采集工具代码。",
+    "不得创建商家长期大脑，不得生成视频脚本，不得自动发布。"
+  ],
+  "next_actions": [
+    "完善账号深度分析检查清单。",
+    "完善报告模板。",
+    "等待用户提供具体采集包或本地路径后再开始分析。"
+  ],
+  "acceptance_criteria": [
+    "分析前确认采集包来源。",
+    "分析报告只输出账号诊断和接手方向。",
+    "不把采集包本体提交到 AI_MEMORY_SYSTEM。"
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "module_name": "merchant_brain_factory",
+  "status": "planning_not_started",
+  "current_stage": "模块规划和模板已创建，未创建真实商家大脑。",
+  "current_task": "定义独立商家大脑模板和创建边界。",
+  "progress": "仅建立规划文件和模板。",
+  "blockers": "等待用户明确指定商家并授权创建真实商家大脑。",
+  "last_update": "2026-06-28"
+}

@@ -1,0 +1,10 @@
+{
+    "merchant_id":  "",
+    "merchant_name":  "",
+    "status":  "template",
+    "current_stage":  "未创建真实商家大脑",
+    "current_task":  "等待用户授权并提供商家基础资料",
+    "progress":  "0%",
+    "blockers":  "未授权创建真实商家大脑",
+    "last_update":  ""
+}

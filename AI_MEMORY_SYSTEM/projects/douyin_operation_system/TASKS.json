@@ -59,6 +59,22 @@
                                 "不删除任何历史 LOGS。",
                                 "不修改 GLOBAL_MEMORY。",
                                 "当前只运行 modules/account_ops 账号采集模块，data_analysis 和 content_pipeline 暂不启动。",
-                                "30 条正式包只作为阶段性验收，不作为每轮默认任务。"
+                                "30 条正式包只作为阶段性验收，不作为每轮默认任务。",
+                                "PROJECT_FRAMEWORK.md 已说明 douyin_operation_system 总框架。",
+                                "MODULE_ROUTES.md 已说明用户意图到模块的路由规则。",
+                                "shop_account_analysis 模块已创建为规划状态，未启动账号分析。",
+                                "merchant_brain_factory 模块已创建为规划状态，未创建真实商家大脑。",
+                                "merchants/_TEMPLATE 已创建为未来商家独立大脑模板。",
+                                "采集包默认保存在本地，不进入 AI_MEMORY_SYSTEM。"
+                            ],
+    "current_phase_tasks":  [
+                                "完成外部大脑项目框架固化。",
+                                "建立 shop_account_analysis 模块大脑。",
+                                "建立 merchant_brain_factory 模块规划。",
+                                "建立 merchants 商家独立大脑模板。",
+                                "继续使用 account_ops 采集更多 5-10 条样本包。",
+                                "30 条正式包只作为阶段性验收。",
+                                "不做不影响使用的微优化。",
+                                "不启动 content_pipeline、data_review，除非用户明确授权。"
                             ]
 }

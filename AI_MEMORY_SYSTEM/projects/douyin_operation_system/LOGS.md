@@ -140,3 +140,8 @@ The following entries were migrated from `AI_MEMORY_SYSTEM/projects/project_brai
 - action: Added `AI_MEMORY_SYSTEM/START_HERE_FOR_NEW_AI.md` as the first-read entry for new GPT / Codex / AI accounts and added a README top notice.
 - result: New AI accounts can identify AI_MEMORY_SYSTEM as an external memory container, enter `douyin_operation_system`, follow the required read order, and recover the current state and source snapshot path.
 - notes: Only external brain entry files were updated. No collection tool code was modified. No business module was modified.
+- timestamp: 2026-06-28
+- actor: Codex
+- action: Built the external-brain project framework for `douyin_operation_system`.
+- result: Added `PROJECT_FRAMEWORK.md`, `MODULE_ROUTES.md`, the planned `shop_account_analysis` module brain, the planned `merchant_brain_factory` module, and the `merchants/_TEMPLATE` structure; clarified that collection packages do not enter the external brain by default.
+- notes: No collection tool code was modified. Account analysis was not started. No real merchant profile was created. Content production and publishing review were not started.

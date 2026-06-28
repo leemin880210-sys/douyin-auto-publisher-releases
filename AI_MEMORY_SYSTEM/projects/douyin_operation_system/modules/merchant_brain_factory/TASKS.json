@@ -1,0 +1,18 @@
+{
+  "module_name": "merchant_brain_factory",
+  "task_rules": [
+    "当前只做规划和模板。",
+    "未获得用户明确授权前不得创建真实商家大脑。",
+    "创建真实商家大脑前必须确认商家名称、基础资料和账号诊断报告。"
+  ],
+  "next_actions": [
+    "维护 MERCHANT_BRAIN_TEMPLATE.md。",
+    "等待 shop_account_analysis 输出账号诊断报告。",
+    "等待用户授权后创建 merchants/{merchant_id}/。"
+  ],
+  "acceptance_criteria": [
+    "每个商家一个独立目录。",
+    "每个商家大脑只保存该商家的资料、策略、素材、日志和复盘。",
+    "不同商家之间不得混用记忆。"
+  ]
+}

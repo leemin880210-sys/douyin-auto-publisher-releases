@@ -1,9 +1,9 @@
 {
     "project_name":  "douyin_operation_system",
-    "current_stage":  "account_ops 账号采集模块多账号样本验证阶段",
-    "current_task":  "继续采更多账号样本，不做不影响使用的微优化。",
-    "progress":  "当前 output/packages 与 output_zip 命名规则已通过多账号样本包验证；5 条/10 条样本包已多账号通过，继续观察评论、OCR、partial 类型。",
-    "blockers":  "无关键阻塞；30 条正式包仅作为阶段性验收；data_analysis 与 content_pipeline 暂不启动。",
+    "current_stage":  "account_ops 账号采集模块多账号样本验证阶段，代运营系统总框架正在固化。",
+    "current_task":  "先完善外部大脑项目框架，明确 account_ops、shop_account_analysis、merchant_brain_factory、content_pipeline、data_review 的模块边界和执行顺序；随后再进入 shop_account_analysis 模块建设。",
+    "progress":  "账号采集模块已能生成 5 条 / 10 条样本包，多个账号采集通过；当前正在把整个抖音代运营项目框架写入外部大脑，确保换 GPT / Codex 账号后能恢复项目状态，不从 0 开始。",
+    "blockers":  "暂无关键阻塞。当前禁止提前启动账号分析、商家建档、内容生成、自动发布和数据复盘。",
     "last_update":  "2026-06-28",
     "container_version":  "v2.0",
     "required_memory_files":  [

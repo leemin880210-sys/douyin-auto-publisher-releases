@@ -139,13 +139,24 @@ zip 命名规则：
 
 ## 当前阶段锁定
 
-- 当前只运行 `modules/account_ops` 账号采集模块。
-- `modules/data_analysis` 暂不启动。
-- `modules/content_pipeline` 暂不启动。
-- 当前 `output/packages` 与 `output_zip` 命名规则已通过多账号样本包验证。
-- 5 条/10 条样本包已多账号通过，继续观察评论、OCR、partial 类型。
-- 30 条正式包不作为每轮默认任务，只作为阶段性验收。
+当前阶段只正式运行 `account_ops` 账号采集模块。
 
+当前已确认：
+
+- `account_ops` 可以生成本地采集包 ZIP。
+- 5 条 / 10 条样本包已多账号通过。
+- `output/packages` 与 `output_zip` 命名规则已通过多账号样本包验证。
+- 采集包默认保存在本地，不默认提交到 `AI_MEMORY_SYSTEM`。
+- 采集包是业务数据，外部大脑只记录规则、状态、任务、日志、源码和模板。
+
+当前不启动：
+
+- `shop_account_analysis` 深度分析模块。
+- `merchant_brain_factory` 商家大脑创建模块。
+- `content_pipeline` 内容生产模块。
+- `data_review` 发布复盘模块。
+
+这些模块必须等用户明确授权后才能启动。
 ## 当前限制
 
 - 未实现自动上传/同步机制。
@@ -166,3 +177,19 @@ zip 命名规则：
 - 不混用不同商家的作品编号。
 - 不修改 `AI_MEMORY_SYSTEM/00_GLOBAL_MEMORY`。
 - 不把旧 `project_brain` 或 `douyin_account_ops` 作为独立注册项目继续运行。
+
+## 采集包存储边界
+
+1. 采集包 ZIP 默认保存在本地，不提交到 `AI_MEMORY_SYSTEM`。
+2. `output_zip/` 保存 ZIP 包。
+3. `output/packages/{package_base_name}/` 保存解压后的采集包目录。
+4. `AI_MEMORY_SYSTEM` 不保存每个采集包本体。
+5. `AI_MEMORY_SYSTEM` 只保存：
+   - 采集包命名规则。
+   - 输出路径规则。
+   - `package_metadata` 字段要求。
+   - 采集包检查标准。
+   - 分析模块如何读取用户上传的 ZIP。
+6. 如果需要 GPT 分析某个店铺，用户需要上传对应 ZIP 包，或者让 Codex 在本地读取该 ZIP 路径。
+7. 如果需要长期追踪采集包，只记录 `package_metadata` 或 `package_index`，不保存大文件。
+8. 不要把商家隐私数据、评论截图、视频关键帧批量提交到 GitHub 外部大脑。
