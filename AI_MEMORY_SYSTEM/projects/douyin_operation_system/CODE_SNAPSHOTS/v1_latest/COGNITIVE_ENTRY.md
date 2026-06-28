@@ -166,3 +166,22 @@ STATE_SEMANTIC_POLLUTION_FIX: true
 - 运行模式可以设计为 `account_ops → operation_ops → evolution_ops`，但禁止跳级。
 - 当前未授权进入 `operation_ops` 或 `evolution_ops`。
 - BOOT v3.2 是启动恢复与运行机制定义，不等于当前已经启动运营执行或系统演化。
+---
+
+## Runtime v3.2 执行器规则
+
+外部大脑 v3.2 进入运行态后，必须读取：
+
+- `RUNTIME_INSTRUCTION.md`
+- `PROJECT_STATE.json`
+- `CLIENT_STATE.json`
+- `MODE_CONTROLLER.json`
+- `TASK_QUEUE.json`
+- `EVENT_STREAM.json`
+- `STATE_TRANSITIONS.json`
+
+当前 runtime mode 是 `account_ops`。
+
+所有执行必须来自 `TASK_QUEUE.json`，所有结果必须写入 `EVENT_STREAM.json`，所有状态必须写回结构化状态文件。
+
+如果没有客户信息，`collect_client_info` 任务必须保持 blocked，等待用户提供客户资料。

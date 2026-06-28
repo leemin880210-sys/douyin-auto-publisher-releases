@@ -73,3 +73,16 @@ AI_MEMORY_SYSTEM/projects/douyin_operation_system/COGNITIVE_ENTRY.md
 Codex 必须先从本文件进入外部大脑，再根据 COGNITIVE_ENTRY.md 和 STATE.json 判断当前系统状态。
 
 END
+## 7. Runtime State Engine
+
+External brain v3.2 runtime must additionally read:
+
+1. AI_MEMORY_SYSTEM/projects/douyin_operation_system/RUNTIME_INSTRUCTION.md
+2. AI_MEMORY_SYSTEM/projects/douyin_operation_system/PROJECT_STATE.json
+3. AI_MEMORY_SYSTEM/projects/douyin_operation_system/CLIENT_STATE.json
+4. AI_MEMORY_SYSTEM/projects/douyin_operation_system/MODE_CONTROLLER.json
+5. AI_MEMORY_SYSTEM/projects/douyin_operation_system/TASK_QUEUE.json
+6. AI_MEMORY_SYSTEM/projects/douyin_operation_system/EVENT_STREAM.json
+7. AI_MEMORY_SYSTEM/projects/douyin_operation_system/STATE_TRANSITIONS.json
+
+Runtime execution must come from TASK_QUEUE.json and must write EVENT_STREAM.json.

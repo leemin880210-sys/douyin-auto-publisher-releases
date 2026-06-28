@@ -1,0 +1,50 @@
+{
+    "current_mode":  "account_ops",
+    "mode_source":  "MODE_CONTROLLER.json",
+    "modes":  {
+                  "account_ops":  {
+                                      "description":  "采集阶段 - 当前默认",
+                                      "allowed_actions":  [
+                                                              "collect_client_info",
+                                                              "create_client_profile",
+                                                              "establish_project_structure",
+                                                              "organize_data",
+                                                              "read_collection_package",
+                                                              "generate_collection_package",
+                                                              "check_collection_package"
+                                                          ],
+                                      "forbidden_actions":  [
+                                                                "content_generation",
+                                                                "operation_strategy_adjustment",
+                                                                "publish_content",
+                                                                "optimization_decision",
+                                                                "account_analysis",
+                                                                "merchant_brain_creation",
+                                                                "data_review"
+                                                            ]
+                                  },
+                  "operation_ops":  {
+                                        "description":  "运营执行阶段",
+                                        "allowed_actions":  [
+                                                                "content_generation",
+                                                                "client_operation_execution",
+                                                                "local_strategy_adjustment"
+                                                            ],
+                                        "status":  "locked_until_transition_conditions_met"
+                                    },
+                  "evolution_ops":  {
+                                        "description":  "演化阶段",
+                                        "allowed_actions":  [
+                                                                "strategy_optimization",
+                                                                "model_adjustment",
+                                                                "system_self_optimization"
+                                                            ],
+                                        "status":  "locked_until_transition_conditions_met"
+                                    }
+              },
+    "execution_gate":  {
+                           "rule":  "IF action not in allowed_actions: DENY EXECUTION",
+                           "require_task_queue":  true,
+                           "require_event_stream_write":  true
+                       }
+}

@@ -1,0 +1,17 @@
+{
+    "state_source":  "CLIENT_STATE.json",
+    "active_client_id":  "",
+    "clients":  {
+
+                },
+    "client_count":  0,
+    "required_client_fields":  [
+                                   "client_id",
+                                   "client_name",
+                                   "douyin_account_url",
+                                   "business_type",
+                                   "contact_channel",
+                                   "collection_scope"
+                               ],
+    "last_update":  "2026-06-28"
+}

@@ -242,3 +242,10 @@ Codex：
 
 Codex：
 将 `BOOT.md` 升级为 v3.2 FINAL 启动定义，更新 `COGNITIVE_ENTRY.md`、`STATE.json`、`CHANGE_LOG.md`、`DECISION_LOG.md`、`LOGS.md` 和 `CHAT_LOGS.md`，并同步最新恢复快照。未修改采集工具代码，未新增业务功能，未做账号分析、商家建档或内容生成。
+## [2026-06-28]
+
+用户：
+提供 `外部大脑 3.2 - 系统启动任务指令（RUNTIME INSTRUCTION）`，要求 Codex 作为外部大脑运营系统执行器进入运行态，从 TASK_QUEUE 获取任务，检查 MODE_CONTROLLER，写入 EVENT_STREAM，并更新 PROJECT_STATE / CLIENT_STATE / TASK_QUEUE。
+
+Codex：
+初始化 Runtime v3.2 状态引擎文件，创建一个 `collect_client_info` 任务；因用户未提供客户资料，该任务记录为 blocked，并写入 EVENT_STREAM。当前模式保持 account_ops，未修改采集工具代码，未新增业务功能，未执行分析、建档、内容生成、发布或复盘。

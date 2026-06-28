@@ -1,0 +1,35 @@
+{
+    "transitions":  [
+                        {
+                            "from":  "account_ops",
+                            "to":  "operation_ops",
+                            "conditions":  [
+                                               "at_least_one_client_profile_completed",
+                                               "data_collection_completed"
+                                           ],
+                            "status":  "not_met",
+                            "jump_allowed":  false
+                        },
+                        {
+                            "from":  "operation_ops",
+                            "to":  "evolution_ops",
+                            "conditions":  [
+                                               "operation_execution_records_exist",
+                                               "event_stream_has_performance_data"
+                                           ],
+                            "status":  "not_met",
+                            "jump_allowed":  false
+                        }
+                    ],
+    "rules":  [
+                  "No mode skipping",
+                  "Mode change requires transition conditions",
+                  "MODE logic cannot be changed by EVOLUTION ENGINE"
+              ],
+    "last_check":  {
+                       "timestamp":  "2026-06-28T00:00:00+08:00",
+                       "current_mode":  "account_ops",
+                       "result":  "stay_account_ops",
+                       "reason":  "No client profile completed and no collection data supplied."
+                   }
+}

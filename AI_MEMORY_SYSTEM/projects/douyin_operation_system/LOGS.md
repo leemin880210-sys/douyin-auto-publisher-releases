@@ -301,3 +301,13 @@ The following entries were migrated from `AI_MEMORY_SYSTEM/projects/project_brai
 - 未修改采集工具代码。
 - 未新增业务功能。
 - 未做账号分析、商家建档或内容生成。
+### 2026-06-28 - Runtime v3.2 状态引擎初始化
+
+- 新增 `RUNTIME_INSTRUCTION.md`，记录外部大脑 3.2 系统启动任务指令。
+- 新增 `PROJECT_STATE.json`、`CLIENT_STATE.json`、`MODE_CONTROLLER.json`、`TASK_QUEUE.json`、`EVENT_STREAM.json`、`STATE_TRANSITIONS.json`。
+- 根据 TASK_QUEUE 规则初始化一个 `collect_client_info` 任务；由于用户未提供客户信息，该任务标记为 `blocked`。
+- 写入 `EVENT_STREAM.json`，记录本次 blocked 任务执行事件。
+- 当前模式保持 `account_ops`，未进入运营执行或演化阶段。
+- 未修改采集工具代码。
+- 未新增业务功能。
+- 未做账号分析、商家建档、内容生成、发布或复盘。

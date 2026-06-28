@@ -1,0 +1,26 @@
+{
+    "events":  [
+                   {
+                       "event_type":  "task_execution",
+                       "task_id":  "task_20260628_collect_client_info_001",
+                       "client_id":  "",
+                       "action":  "collect_client_info",
+                       "input":  {
+
+                                 },
+                       "output":  {
+                                      "status":  "blocked",
+                                      "reason":  "No client information was provided in the user instruction.",
+                                      "next_required_input":  [
+                                                                  "client_name",
+                                                                  "douyin_account_url",
+                                                                  "business_type",
+                                                                  "collection_scope"
+                                                              ]
+                                  },
+                       "result":  "blocked",
+                       "timestamp":  "2026-06-28T00:00:00+08:00"
+                   }
+               ],
+    "append_only":  true
+}

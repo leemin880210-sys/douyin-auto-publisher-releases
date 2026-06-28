@@ -1,0 +1,31 @@
+{
+    "project_id":  "douyin_operation_system",
+    "runtime_version":  "v3.2",
+    "project_state_source":  "PROJECT_STATE.json",
+    "current_mode":  "account_ops",
+    "current_mode_status":  "active",
+    "current_stage":  "account_ops collection stage",
+    "allowed_actions":  [
+                            "collect_client_info",
+                            "create_client_profile",
+                            "establish_project_structure",
+                            "organize_data",
+                            "read_collection_package",
+                            "generate_collection_package",
+                            "check_collection_package"
+                        ],
+    "forbidden_actions":  [
+                              "content_generation",
+                              "operation_strategy_adjustment",
+                              "publish_content",
+                              "optimization_decision",
+                              "account_analysis",
+                              "merchant_brain_creation",
+                              "data_review"
+                          ],
+    "active_client_id":  "",
+    "client_count":  0,
+    "task_queue_status":  "waiting_for_client_info",
+    "last_event_id":  "event_20260628_runtime_init_001",
+    "last_update":  "2026-06-28"
+}

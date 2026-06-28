@@ -1,0 +1,27 @@
+{
+    "queue":  [
+                  {
+                      "task_id":  "task_20260628_collect_client_info_001",
+                      "client_id":  "",
+                      "action":  "collect_client_info",
+                      "mode":  "account_ops",
+                      "status":  "blocked",
+                      "blocker":  "waiting_for_user_to_provide_client_info",
+                      "input_required":  [
+                                             "client_name",
+                                             "douyin_account_url",
+                                             "business_type",
+                                             "collection_scope"
+                                         ],
+                      "created_at":  "2026-06-28T00:00:00+08:00",
+                      "updated_at":  "2026-06-28T00:00:00+08:00",
+                      "note":  "TASK_QUEUE was initialized from runtime instruction. No real client data was provided, so the collection task is blocked pending user input."
+                  }
+              ],
+    "rules":  [
+                  "All execution must originate from TASK_QUEUE.json",
+                  "Do not invent operation strategy tasks",
+                  "If queue is empty, only data collection tasks are allowed"
+              ],
+    "last_update":  "2026-06-28"
+}

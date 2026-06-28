@@ -44,3 +44,18 @@
 - `STATE.json`
 - 外部大脑启动恢复层
 - 不影响采集工具代码，不新增业务功能。
+### [2026-06-28]
+
+#### 修改内容
+- 新增 Runtime v3.2 必需状态引擎文件：`PROJECT_STATE.json`、`CLIENT_STATE.json`、`MODE_CONTROLLER.json`、`TASK_QUEUE.json`、`EVENT_STREAM.json`、`STATE_TRANSITIONS.json`。
+- 新增 `RUNTIME_INSTRUCTION.md`。
+- 更新根启动文件 `AI_MEMORY_SYSTEM_BOOT.txt` 与 `COGNITIVE_ENTRY.md`，接入 runtime 状态引擎读取规则。
+
+#### 修改原因
+- 用户要求 Codex 作为外部大脑运营系统执行器进入运行态。
+- Runtime 需要结构化状态、任务队列、事件流和模式控制，避免无状态执行。
+
+#### 影响范围
+- 外部大脑 runtime 记忆层。
+- 不影响采集工具代码。
+- 不新增业务模块或运营功能。
