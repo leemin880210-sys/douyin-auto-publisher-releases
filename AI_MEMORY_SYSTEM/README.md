@@ -1,3 +1,5 @@
+> 新 GPT / Codex / AI 请先读取 START_HERE_FOR_NEW_AI.md。
+
 # AI_MEMORY_SYSTEM
 
 AI_MEMORY_SYSTEM v2.0 是外部记忆容器，只负责保存项目记忆、聊天记录、源码历史版本和恢复信息。
