@@ -1,12 +1,13 @@
 {
     "project_name":  "douyin_operation_system",
-    "current_stage":  "account_ops 账号采集模块多账号样本验证阶段，代运营系统总框架已固化，下一步准备建设 shop_account_analysis 模块。",
-    "current_task":  "保持 account_ops 采集模块稳定，继续使用 5-10 条样本包验证采集质量；下一步建设 shop_account_analysis 模块，但未授权前不执行真实店铺分析。",
-    "progress":  "账号采集模块已能生成 5 条 / 10 条样本包，多个账号采集通过；PROJECT_FRAMEWORK.md 与 MODULE_ROUTES.md 已纳入新 AI 强制读取链路，用于恢复总框架、当前阶段和模块路由。",
-    "blockers":  "暂无关键阻塞。当前禁止提前启动账号分析、商家建档、内容生成、自动发布和数据复盘；采集包 ZIP 不提交到 AI_MEMORY_SYSTEM。",
+    "current_stage":  "account_ops 账号采集模块多账号样本验证阶段；MASTER_CONTROL 已建立为最高优先级控制器，当前只允许读取采集包 / 生成采集包 / 检查采集包。",
+    "current_task":  "按 MASTER_CONTROL 限制继续稳定 account_ops；禁止跳过阶段进入分析、建档、内容生成、自动发布或复盘。",
+    "progress":  "MASTER_CONTROL.md 已加入外部大脑控制链路；新 AI 必须先读取 MASTER_CONTROL，再读取 PROJECT_FRAMEWORK、MODULE_ROUTES、STATE、TASKS。",
+    "blockers":  "暂无关键阻塞。当前除读取采集包 / 生成采集包 / 检查采集包外，其他模块动作全部禁止，除非用户后续明确授权并解除阶段限制。",
     "last_update":  "2026-06-28",
     "container_version":  "v2.0",
     "required_memory_files":  [
+                                  "MASTER_CONTROL.md",
                                   "CHAT_LOGS.md",
                                   "STATE.json",
                                   "PROJECT_FRAMEWORK.md",

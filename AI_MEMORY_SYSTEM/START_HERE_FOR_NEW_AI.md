@@ -23,16 +23,19 @@ AI_MEMORY_SYSTEM/projects/douyin_operation_system/
 任何新的 GPT / Codex / AI 进入后，必须按顺序读取：
 
 1. `AI_MEMORY_SYSTEM/README.md`
-2. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/CHAT_LOGS.md`
-3. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/STATE.json`
-4. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/PROJECT_FRAMEWORK.md`
-5. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/MODULE_ROUTES.md`
-6. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/v1_latest/`
-7. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/BOOT.md`
-8. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/TASKS.json`
-9. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/CORE.md`
-10. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/LOGS.md`
-11. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_EVOLUTION.md`
+2. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/MASTER_CONTROL.md`
+3. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/PROJECT_FRAMEWORK.md`
+4. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/MODULE_ROUTES.md`
+5. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/STATE.json`
+6. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/TASKS.json`
+7. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/CHAT_LOGS.md`
+8. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/v1_latest/`
+9. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/BOOT.md`
+10. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/CORE.md`
+11. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/LOGS.md`
+12. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_EVOLUTION.md`
+
+`MASTER_CONTROL.md` 是最高优先级项目控制器。新 AI 必须先用它判断当前允许执行的模块与动作，再继续读取项目框架和任务。
 
 ## 4. 新 AI 接手判断规则
 
@@ -93,12 +96,13 @@ AI_MEMORY_SYSTEM/projects/douyin_operation_system/
 如果新 AI 无法读取 GitHub 链接，应要求用户粘贴以下文件内容：
 
 1. `AI_MEMORY_SYSTEM/README.md`
-2. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/STATE.json`
-3. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/TASKS.json`
-4. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/CORE.md`
-5. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/BOOT.md`
-6. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/PROJECT_FRAMEWORK.md`
-7. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/MODULE_ROUTES.md`
+2. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/MASTER_CONTROL.md`
+3. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/PROJECT_FRAMEWORK.md`
+4. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/MODULE_ROUTES.md`
+5. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/STATE.json`
+6. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/TASKS.json`
+7. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/CORE.md`
+8. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/BOOT.md`
 8. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/modules/account_ops/STATE.json`
 9. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/modules/account_ops/TASKS.json`
 10. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/modules/account_ops/CORE.md`

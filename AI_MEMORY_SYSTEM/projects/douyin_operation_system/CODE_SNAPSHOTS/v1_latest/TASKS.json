@@ -2,6 +2,8 @@
     "project_id":  "douyin_operation_system",
     "container_version":  "v2.0",
     "task_rules":  [
+                       "MASTER_CONTROL.md 是当前阶段最高优先级控制器；未解除限制前只允许读取采集包 / 生成采集包 / 检查采集包。",
+                       "每次进入项目必须优先读取 MASTER_CONTROL.md。",
                        "每次进入项目必须先读取 CHAT_LOGS.md。",
                        "每次进入项目必须读取 STATE.json。",
                        "每次进入项目必须读取 PROJECT_FRAMEWORK.md。",
@@ -21,39 +23,27 @@
     "codex_tasks":  [
                         {
                             "priority":  1,
-                            "task":  "保持 account_ops 采集模块稳定。"
+                            "task":  "进入项目后先读取 MASTER_CONTROL.md，确认当前唯一合法动作。"
                         },
                         {
                             "priority":  2,
-                            "task":  "继续使用 5-10 条样本包验证采集质量。"
+                            "task":  "当前只允许 account_ops：读取采集包 / 生成采集包 / 检查采集包。"
                         },
                         {
                             "priority":  3,
-                            "task":  "30 条正式包只作为阶段性验收。"
+                            "task":  "继续使用 5-10 条样本包验证采集质量。"
                         },
                         {
                             "priority":  4,
-                            "task":  "下一步建设 shop_account_analysis 模块，但未授权前不执行真实店铺分析。"
+                            "task":  "30 条正式包只作为阶段性验收。"
                         },
                         {
                             "priority":  5,
-                            "task":  "后续建设 merchant_brain_factory，但未授权前不创建真实商家大脑。"
+                            "task":  "shop_account_analysis、merchant_brain_factory、merchants、content_pipeline、data_review 全部禁止启动，除非用户后续明确授权解除阶段限制。"
                         },
                         {
                             "priority":  6,
-                            "task":  "content_pipeline 和 data_review 暂不启动。"
-                        },
-                        {
-                            "priority":  7,
-                            "task":  "每次新 AI 接手必须先读取 PROJECT_FRAMEWORK.md 和 MODULE_ROUTES.md。"
-                        },
-                        {
-                            "priority":  8,
-                            "task":  "任何跨模块请求必须先根据 MODULE_ROUTES.md 路由，不能自行扩展。"
-                        },
-                        {
-                            "priority":  9,
-                            "task":  "不做不影响使用的微优化。"
+                            "task":  "任何跨模块请求必须先根据 MASTER_CONTROL.md 和 MODULE_ROUTES.md 判断，不能自行扩展。"
                         }
                     ],
     "module_routes":  {
@@ -65,6 +55,9 @@
                           "data_review":  "发布后数据复盘、反馈分析、下一轮调整。当前预留，未授权不得启动。"
                       },
     "acceptance_criteria":  [
+                                "BOOT.md 已把 MASTER_CONTROL.md 设置为项目内第一读取文件。",
+                                "START_HERE_FOR_NEW_AI.md 已把 MASTER_CONTROL.md 加入新 AI 强制读取顺序。",
+                                "项目根目录存在 MASTER_CONTROL.md。",
                                 "START_HERE_FOR_NEW_AI.md 已把 PROJECT_FRAMEWORK.md 和 MODULE_ROUTES.md 加入新 AI 强制读取顺序。",
                                 "BOOT.md 已把 PROJECT_FRAMEWORK.md 和 MODULE_ROUTES.md 加入根项目强制读取顺序。",
                                 "STATE.json modules 字段包含 account_ops、shop_account_analysis、merchant_brain_factory、merchants、content_pipeline、data_review。",

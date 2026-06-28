@@ -197,12 +197,22 @@ zip 命名规则：
 ## 外部大脑恢复原则
 
 1. 外部大脑的首要目标是防止换 AI 后从 0 开始。
-2. 新 AI 必须先恢复项目总框架，再恢复当前阶段，再判断模块路由。
-3. `PROJECT_FRAMEWORK.md` 是系统总框架。
-4. `MODULE_ROUTES.md` 是模块入口判断规则。
-5. `STATE.json` 是当前状态。
-6. `TASKS.json` 是下一步任务。
-7. `LOGS.md` 是已发生事实。
-8. `CHAT_LOGS.md` 是用户与 AI/Codex 的关键对话记录。
-9. `CODE_EVOLUTION.md` 只记录采集工具代码演进。
-10. 采集包 ZIP 是本地业务数据，不进入外部大脑。
+2. 新 AI 必须先读取 MASTER_CONTROL，再恢复项目总框架、当前阶段和模块路由。
+3. `MASTER_CONTROL.md` 是系统总控制器。
+4. `PROJECT_FRAMEWORK.md` 是系统总框架。
+5. `MODULE_ROUTES.md` 是模块入口判断规则。
+6. `STATE.json` 是当前状态。
+7. `TASKS.json` 是下一步任务。
+8. `LOGS.md` 是已发生事实。
+9. `CHAT_LOGS.md` 是用户与 AI/Codex 的关键对话记录。
+10. `CODE_EVOLUTION.md` 只记录采集工具代码演进。
+11. 采集包 ZIP 是本地业务数据，不进入外部大脑。
+
+## MASTER_CONTROL 优先原则
+
+1. `MASTER_CONTROL.md` 是当前项目最高优先级控制器。
+2. 新 AI 必须先读取 `MASTER_CONTROL.md`，再读取 `PROJECT_FRAMEWORK.md`、`MODULE_ROUTES.md`、`STATE.json` 和 `TASKS.json`。
+3. 当前唯一允许执行模块是 `account_ops`。
+4. 当前唯一合法动作是读取采集包 / 生成采集包 / 检查采集包。
+5. 未经用户后续明确授权，不得启动账号深度分析、商家建档、商家大脑、内容生成、自动发布或数据复盘。
+6. 如果其他文件与 `MASTER_CONTROL.md` 冲突，以 `MASTER_CONTROL.md` 的当前阶段限制为准。

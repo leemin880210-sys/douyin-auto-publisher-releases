@@ -146,3 +146,11 @@ Codex：
 
 Codex：
 更新新 AI 入口、根项目 BOOT/STATE/TASKS/CORE、PROJECT_FRAMEWORK、MODULE_ROUTES，并补充 merchants 模板字段；未修改采集工具代码，未启动账号分析，未创建真实商家大脑，未启动内容生产或数据复盘，未提交采集包 ZIP。
+
+## [2026-06-28]
+
+用户：
+提供 `MASTER_CONTROL（系统总控制器）` 内容，要求明确抖音代运营 AI 系统的唯一目标、当前只允许执行 account_ops、模块顺序不可跳过、当前唯一合法动作是读取采集包 / 生成采集包 / 检查采集包，并要求进入系统必须优先读取 MASTER_CONTROL、PROJECT_FRAMEWORK、MODULE_ROUTES、STATE、TASKS。
+
+Codex：
+新增 `MASTER_CONTROL.md`，同步更新新 AI 入口、项目 BOOT、STATE、TASKS、CORE 和 LOGS；未修改采集工具代码，未启动其他业务模块，未提交采集包 ZIP。

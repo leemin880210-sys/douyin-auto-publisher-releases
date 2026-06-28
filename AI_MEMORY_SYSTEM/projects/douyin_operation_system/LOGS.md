@@ -159,3 +159,13 @@ The following entries were migrated from `AI_MEMORY_SYSTEM/projects/project_brai
 - 未启动内容生产。
 - 未启动数据复盘。
 - 未提交采集包 ZIP。
+
+### 2026-06-28 - 新增 MASTER_CONTROL 系统总控制器
+
+- 新增 `MASTER_CONTROL.md`，明确系统唯一目标、当前阶段、模块执行顺序和当前唯一合法动作。
+- 更新 `START_HERE_FOR_NEW_AI.md` 与 `BOOT.md`，把 `MASTER_CONTROL.md` 加入最高优先级读取顺序。
+- 更新 `STATE.json`、`TASKS.json`、`CORE.md`，同步 account_ops 阶段限制：当前只允许读取采集包 / 生成采集包 / 检查采集包。
+- 未修改采集工具代码。
+- 未修改 `douyin_auto_tool.ps1`。
+- 未启动账号深度分析、商家建档、内容生产、自动发布或数据复盘。
+- 未提交采集包 ZIP。
