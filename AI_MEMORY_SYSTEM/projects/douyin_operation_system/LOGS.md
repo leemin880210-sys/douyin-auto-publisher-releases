@@ -252,3 +252,15 @@ The following entries were migrated from `AI_MEMORY_SYSTEM/projects/project_brai
 - 未启动分析、商家建档或内容生成。
 - 未修改实际 `CODE_EVOLUTION.md`。
 - 未提交采集包 ZIP。
+
+### 2026-06-28 - 认知层统一优化与 STATE 语义收敛
+
+- 更新 `COGNITIVE_ENTRY.md`，作为单入口认知系统，解决新 AI 接入时的认知不一致问题。
+- 更新 `START_HERE_FOR_NEW_AI.md`，将读取顺序收敛为：`START_HERE_FOR_NEW_AI.md` → `STATE.json` → `COGNITIVE_ENTRY.md` → `PROJECT_FRAMEWORK.md` → `MODULE_ROUTES.md` → `BOOT/TASKS/CORE/LOGS`。
+- 更新 `STATE.json`，修复语义污染，移除具体未来阶段描述，增加 `current_stage_next = pending_user_instruction`。
+- 更新 `TASKS.json`，只保留当前可执行任务，不描述系统结构或未来模块规划。
+- 更新 `MASTER_CONTROL.md`，明确必须配合 `COGNITIVE_ENTRY.md` 使用，并且只控制执行权限，不定义系统认知。
+- 系统从“多视角认知”升级为“统一认知入口系统”。
+- 未修改采集工具代码。
+- 未新增业务模块。
+- 未做分析、商家建档或内容生成。

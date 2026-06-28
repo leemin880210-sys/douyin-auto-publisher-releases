@@ -1,8 +1,7 @@
 # MASTER_CONTROL（系统总控制器）
 
-本文件受 `COGNITIVE_ENTRY.md` 约束，只负责回答“能不能做”。
-
-本文件必须配合 UNIFIED_MEMORY_BRAIN.md 使用。
+本文件必须配合 `COGNITIVE_ENTRY.md` 使用。  
+MASTER_CONTROL 只控制执行权限，不定义系统认知。
 
 ## 语义层职责
 

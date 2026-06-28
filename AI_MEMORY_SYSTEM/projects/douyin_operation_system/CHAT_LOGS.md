@@ -210,3 +210,11 @@ Codex：
 
 Codex：
 新增 `COGNITIVE_ENTRY.md`，同步更新新 AI 入口、启动协议、统一记忆入口、MASTER_CONTROL、系统宪法、LOGS 和 CHAT_LOGS；未修改 `STATE.json` 和 `TASKS.json`，未修改采集工具代码，未新增业务功能，未修改实际 `CODE_EVOLUTION.md`，未提交采集包 ZIP。
+
+## [2026-06-28]
+
+用户：
+要求只做外部大脑认知层统一优化，解决新 AI 接入时的认知不一致问题，避免版本分裂与 STATE 语义污染，实现单入口认知系统；不得修改采集工具代码，不新增业务模块，不做分析、建档或内容生成。
+
+Codex：
+更新 `COGNITIVE_ENTRY.md`、`START_HERE_FOR_NEW_AI.md`、`STATE.json`、`TASKS.json`、`MASTER_CONTROL.md`、`LOGS.md` 和 `CHAT_LOGS.md`；将 `STATE.json` 收敛为当前状态源，加入 `current_stage_next = pending_user_instruction`，将 `TASKS.json` 收敛为当前可执行任务。未修改采集工具代码，未新增业务模块，未修改实际 `CODE_EVOLUTION.md`，未提交采集包 ZIP。

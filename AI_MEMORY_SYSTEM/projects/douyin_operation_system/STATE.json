@@ -1,9 +1,10 @@
 {
     "project_name":  "douyin_operation_system",
-    "current_stage":  "account_ops 账号采集模块多账号样本验证阶段",
-    "current_task":  "读取采集包 / 生成采集包 / 检查采集包；继续使用 5-10 条样本包验证采集质量。",
+    "current_stage":  "account_ops 账号采集阶段",
+    "current_task":  "读取采集包 / 生成采集包 / 检查采集包",
     "progress":  "5 条 / 10 条样本包已多账号通过，继续观察评论、OCR、partial 类型。",
-    "blockers":  "禁止跨模块执行；shop_account_analysis、merchant_brain_factory、merchants、content_pipeline、data_review 未授权不得启动。",
-    "last_update":  "2026-06-28",
-    "memory_brain_status":  "unified_memory_enabled"
+    "blockers":  "禁止跨模块执行；未授权不得进入分析、建档、内容生成或复盘。",
+    "current_stage_next":  "pending_user_instruction",
+    "memory_brain_status":  "unified_memory_enabled",
+    "last_update":  "2026-06-28"
 }
