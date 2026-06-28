@@ -198,3 +198,22 @@ STATE_SEMANTIC_POLLUTION_FIX: true
 - 对话中出现下一步动作时，写入 `TASK_QUEUE.json`。
 - 所有输出都必须写入 `EVENT_STREAM.json`。
 - 没有真实客户信息时，不允许伪造客户状态。
+
+## 外脑（B）API 化边界
+
+外脑（B）现在必须被理解为 AI 决策执行 API 服务层。
+
+新 AI 除读取本认知入口外，还必须读取：
+
+- `EXTERNAL_BRAIN_API.md`
+
+该文件只定义外脑 API 合约：状态读取、任务队列、任务执行、状态写回、事件记录。
+
+重要边界：Web 线上页面、域名、Vercel 部署、前端调用实现属于 Web（A）窗口，不由当前外脑窗口处理。
+
+外脑（B）必须遵守：
+
+- 所有状态来自 Supabase。
+- 所有任务必须可追踪。
+- 所有执行必须写 EVENT。
+- 运行闭环固定为 READ -> EXECUTE -> WRITE -> UPDATE -> LOOP。

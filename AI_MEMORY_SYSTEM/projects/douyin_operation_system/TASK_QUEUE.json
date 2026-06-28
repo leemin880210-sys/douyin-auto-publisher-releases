@@ -40,6 +40,44 @@
                       "created_at":  "2026-06-29T00:00:00+08:00",
                       "updated_at":  "2026-06-29T00:00:00+08:00",
                       "note":  "System runtime task generated from user instruction. No client business task was created."
+                  },
+                  {
+                      "task_id":  "task_20260629_define_external_brain_api_001",
+                      "client_id":  "",
+                      "action":  "define_external_brain_b_api_contract",
+                      "task_type":  "system_runtime_task",
+                      "mode":  "account_ops",
+                      "status":  "completed",
+                      "input":  {
+                                    "user_instruction":  "外脑（B）API化改造；Web 线上部分由其他窗口处理。"
+                                },
+                      "output":  {
+                                     "created_files":  [
+                                                           "EXTERNAL_BRAIN_API.md"
+                                                       ],
+                                     "updated_files":  [
+                                                           "PROJECT_STATE.json",
+                                                           "MODE_CONTROLLER.json",
+                                                           "TASK_QUEUE.json",
+                                                           "EVENT_STREAM.json",
+                                                           "COGNITIVE_ENTRY.md",
+                                                           "RUNTIME_INSTRUCTION.md",
+                                                           "LOGS.md",
+                                                           "CHANGE_LOG.md",
+                                                           "CHAT_LOGS.md"
+                                                       ],
+                                     "required_endpoints":  [
+                                                                "/api/client/:client_id",
+                                                                "/api/tasks?client_id=xxx",
+                                                                "/api/execute",
+                                                                "/api/update_state",
+                                                                "/api/events"
+                                                            ],
+                                     "web_scope":  "not_modified_by_this_external_brain_task"
+                                 },
+                      "created_at":  "2026-06-29T02:40:00+08:00",
+                      "updated_at":  "2026-06-29T02:40:00+08:00",
+                      "note":  "This task defines the external brain B API contract only. Web online deployment and UI work are out of scope for this window."
                   }
               ],
     "rules":  [

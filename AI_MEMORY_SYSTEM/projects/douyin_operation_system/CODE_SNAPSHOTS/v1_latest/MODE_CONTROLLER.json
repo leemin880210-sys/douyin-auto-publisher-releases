@@ -46,7 +46,10 @@
                            "rule":  "IF action not in allowed_actions: DENY EXECUTION",
                            "require_task_queue":  true,
                            "require_event_stream_write":  true,
-                           "require_auto_write_back":  true
+                           "require_auto_write_back":  true,
+                           "require_supabase_state_source":  true,
+                           "require_api_event_write":  true,
+                           "api_runtime_loop":  "READ -\u003e EXECUTE -\u003e WRITE -\u003e UPDATE -\u003e LOOP"
                        },
     "auto_write_back_engine":  {
                                    "enabled":  true,
@@ -57,5 +60,18 @@
                                                             "TASK_QUEUE.json when next actions exist",
                                                             "EVENT_STREAM.json always"
                                                         ]
-                               }
+                               },
+    "external_brain_api":  {
+                               "enabled":  true,
+                               "contract_file":  "EXTERNAL_BRAIN_API.md",
+                               "source_of_truth":  "supabase",
+                               "endpoints":  [
+                                                 "/api/client/:client_id",
+                                                 "/api/tasks?client_id=xxx",
+                                                 "/api/execute",
+                                                 "/api/update_state",
+                                                 "/api/events"
+                                             ],
+                               "web_scope":  "handled_by_separate_window"
+                           }
 }

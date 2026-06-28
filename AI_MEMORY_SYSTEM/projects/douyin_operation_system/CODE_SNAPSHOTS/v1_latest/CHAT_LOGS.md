@@ -256,3 +256,20 @@ Codex：
 
 Codex：
 新增 `AUTO_WRITE_BACK_ENGINE.md`，更新 runtime 状态文件，并将本次对话作为 `chat_to_state` 事件写入 `EVENT_STREAM.json`。由于没有真实客户资料，未伪造客户状态；未修改采集工具代码，未新增业务模块。
+
+## [2026-06-29] 外脑（B）API 化边界确认
+
+用户：
+```text
+你只需要做外脑这部分，web线上的部分我会交给其他窗口做
+```
+
+AI：
+```text
+确认范围：当前窗口只处理外脑 AI_MEMORY_SYSTEM，不再处理 Web 线上部署或前端实现。
+```
+
+Codex：
+```text
+新增 EXTERNAL_BRAIN_API.md，定义外脑（B）API 服务合约；同步 PROJECT_STATE、MODE_CONTROLLER、TASK_QUEUE、EVENT_STREAM、COGNITIVE_ENTRY、RUNTIME_INSTRUCTION、LOGS、CHANGE_LOG；明确 Web（A）线上实现由其他窗口处理。本次未修改采集工具代码，未启动业务模块。
+```

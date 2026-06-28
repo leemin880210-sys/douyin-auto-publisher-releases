@@ -35,6 +35,25 @@
                                   },
                        "result":  "state_updated",
                        "timestamp":  "2026-06-29T00:00:00+08:00"
+                   },
+                   {
+                       "event_id":  "event_20260629_external_brain_api_contract_001",
+                       "event_type":  "task_execution",
+                       "task_id":  "task_20260629_define_external_brain_api_001",
+                       "client_id":  "",
+                       "action":  "define_external_brain_b_api_contract",
+                       "input":  {
+                                     "user_message":  "Only handle the external brain part; Web online work will be handled in another window."
+                                 },
+                       "output":  {
+                                      "result":  "external_brain_api_contract_defined",
+                                      "contract_file":  "EXTERNAL_BRAIN_API.md",
+                                      "source_of_truth":  "supabase",
+                                      "loop":  "READ -\u003e EXECUTE -\u003e WRITE -\u003e UPDATE -\u003e LOOP",
+                                      "web_scope":  "separate_window"
+                                  },
+                       "result":  "success",
+                       "timestamp":  "2026-06-29T02:40:00+08:00"
                    }
                ],
     "append_only":  true

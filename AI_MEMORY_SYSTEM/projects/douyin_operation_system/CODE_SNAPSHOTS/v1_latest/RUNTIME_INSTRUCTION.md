@@ -159,3 +159,21 @@ AUTO_WRITE_BACK_ENGINE()
 - 有下一步动作时写入 `TASK_QUEUE.json`。
 - 所有 AI 输出必须写入 `EVENT_STREAM.json`。
 - 无真实客户信息时不得伪造客户，只能记录跳过原因。
+
+## 八、外脑（B）API 服务模式
+
+外脑（B）可被 Web（A）或其他调用方作为 API 服务调用。
+
+必须支持的 API 合约见：
+
+- `EXTERNAL_BRAIN_API.md`
+
+API 服务必须遵守：
+
+1. 所有状态来自 Supabase。
+2. 所有任务必须可追踪。
+3. 所有执行必须写入 EVENT。
+4. 执行闭环为 READ -> EXECUTE -> WRITE -> UPDATE -> LOOP。
+5. 当前 mode 仍为 account_ops，禁止跨模块进入分析、建档、内容生成或复盘。
+
+Web 线上实现与部署不属于本外脑任务范围。

@@ -78,3 +78,23 @@
 - 外部大脑 runtime 记忆层。
 - 不影响采集工具代码。
 - 不新增业务模块或运营功能。
+
+### [2026-06-29]
+
+#### 修改内容
+- 新增 `EXTERNAL_BRAIN_API.md`，定义外脑（B）API 服务合约。
+- 更新 `PROJECT_STATE.json`，记录外脑 API 合约状态、Supabase 数据源和 Web 边界。
+- 更新 `MODE_CONTROLLER.json`，增加 API 执行闸门要求：Supabase 状态源、事件写入、READ -> EXECUTE -> WRITE -> UPDATE -> LOOP。
+- 更新 `TASK_QUEUE.json` 与 `EVENT_STREAM.json`，记录本次外脑 API 合约任务和事件。
+- 更新 `COGNITIVE_ENTRY.md` 与 `RUNTIME_INSTRUCTION.md`，要求新 AI 读取外脑 API 合约并遵守 Web/外脑边界。
+
+#### 修改原因
+- 用户明确当前窗口只负责外脑部分，Web 线上部分交给其他窗口处理。
+- 需要将外脑（B）定义为可被 Web 调用的 AI 决策执行 API 服务，而不是继续在本窗口实现 Web 部署。
+
+#### 影响范围
+- 外部大脑 runtime 记忆层。
+- 外脑 API 合约与状态记录。
+- 不修改 Web 端代码。
+- 不修改采集工具代码。
+- 不启动分析、建档、内容生成或复盘模块。

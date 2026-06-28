@@ -320,3 +320,12 @@ The following entries were migrated from `AI_MEMORY_SYSTEM/projects/project_brai
 - 未修改采集工具代码。
 - 未新增业务模块。
 - 未做账号分析、商家建档、内容生成、发布或复盘。
+
+## 2026-06-29 外脑（B）API 合约定义
+
+- actor: Codex
+- action: Added `EXTERNAL_BRAIN_API.md` and synchronized runtime memory files for the external brain B API contract.
+- result: External brain B is now defined as an AI decision execution API service with required endpoints for client state, task queue, task execution, state write-back and event recording.
+- source_of_truth: Supabase.
+- runtime_loop: READ -> EXECUTE -> WRITE -> UPDATE -> LOOP.
+- notes: Web online deployment and frontend implementation are explicitly out of scope for this external brain task. No collection tool code was modified. No business module was started.
