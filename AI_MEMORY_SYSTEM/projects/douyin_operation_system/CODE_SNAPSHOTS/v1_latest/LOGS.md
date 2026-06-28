@@ -202,3 +202,16 @@ The following entries were migrated from `AI_MEMORY_SYSTEM/projects/project_brai
 - 未修改 `douyin_auto_tool.ps1`。
 - 未修改实际 `CODE_EVOLUTION.md`。
 - 未提交采集包 ZIP。
+
+### 2026-06-28 - 新增 SEMANTIC_LAYERS 语义分层协议
+
+- 新增 `SEMANTIC_LAYERS.md`，明确 `MASTER_CONTROL`、`PROJECT_FRAMEWORK`、`STATE.json`、`TASKS.json` 的语义职责。
+- 更新 `ENTRY_PROTOCOL.md`、`START_HERE_FOR_NEW_AI.md`、`BOOT.md`，把语义分层协议加入启动读取链路。
+- 收敛 `MASTER_CONTROL.md` 为执行权限层，只回答能不能做。
+- 收敛 `PROJECT_FRAMEWORK.md` 为系统设计层，只回答模块组成。
+- 收敛 `STATE.json` 为当前真实状态层。
+- 收敛 `TASKS.json` 为下一步动作层。
+- 未修改采集工具代码。
+- 未修改 `douyin_auto_tool.ps1`。
+- 未修改实际 `CODE_EVOLUTION.md`。
+- 未提交采集包 ZIP。

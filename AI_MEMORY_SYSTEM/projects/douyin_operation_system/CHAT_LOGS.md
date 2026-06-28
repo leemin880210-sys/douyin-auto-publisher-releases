@@ -178,3 +178,11 @@ Codex：
 
 Codex：
 新增 `STATE_CONSISTENCY_LOCK.md`，同步更新启动协议、新 AI 入口、BOOT、STATE、TASKS、状态收敛规则、MASTER_CONTROL、LOGS 和 CHAT_LOGS；未修改采集工具代码，未修改实际 `CODE_EVOLUTION.md`，未提交采集包 ZIP。
+
+## [2026-06-28]
+
+用户：
+提供 `SEMANTIC_LAYERS（语义分层协议）`，要求区分 MASTER_CONTROL、PROJECT_FRAMEWORK、STATE.json、TASKS.json 的语义职责：MASTER_CONTROL 只管执行权限，PROJECT_FRAMEWORK 只管系统设计，STATE.json 只管当前真实状态，TASKS.json 只管下一步动作，并禁止混用不同语义。
+
+Codex：
+新增 `SEMANTIC_LAYERS.md`，同步更新启动协议、新 AI 入口、BOOT、MASTER_CONTROL、PROJECT_FRAMEWORK、STATE、TASKS、MODULE_ROUTES、CORE、状态规则、LOGS 和 CHAT_LOGS；未修改采集工具代码，未修改实际 `CODE_EVOLUTION.md`，未提交采集包 ZIP。

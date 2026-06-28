@@ -1,74 +1,46 @@
 # MASTER_CONTROL（系统总控制器）
 
-## 一、系统唯一目标
+## 语义层职责
 
-本系统的目标是：
+`MASTER_CONTROL.md` 只负责【执行权限】。
 
-> 抖音代运营 AI 系统（采集 → 分析 → 商家大脑 → 内容 → 复盘）
+只回答：
 
-但当前执行阶段必须受限。
+- 能不能做
 
----
+不回答：
 
-## 二、当前执行权限（非常重要）
+- 当前阶段
+- 未来规划
+- 系统结构细节
 
-当前执行权限只允许：
+## 当前执行权限
 
-### ✔ account_ops（账号采集模块）
+允许执行：
 
-其他模块全部禁止执行。
+- `account_ops`
 
----
+允许动作：
 
-## 三、模块执行顺序（不可跳过）
+- 读取采集包
+- 生成采集包
+- 检查采集包
 
-1. account_ops（采集）
-2. shop_account_analysis（分析）
-3. merchant_brain_factory（建档）
-4. merchants（商家大脑）
-5. content_pipeline（内容生成）
-6. data_review（复盘）
+禁止执行：
 
----
+- `shop_account_analysis`
+- `merchant_brain_factory`
+- `merchants` 真实商家大脑创建
+- `content_pipeline`
+- `data_review`
+- 自动运营方案
+- 视频脚本生成
+- 自动发布
+- 跨模块执行
 
-## 四、强制执行规则
+## 权限判断规则
 
-- AI 不得跳过阶段
-- AI 不得跨模块执行
-- AI 不得直接进入 merchant_brain
-- AI 不得自动做运营方案
-- AI 不得自动生成内容策略
-
----
-
-## 五、当前唯一合法动作
-
-👉 读取采集包 / 生成采集包 / 检查采集包
-
-除此之外全部禁止
-
----
-
-## 六、进入系统必须优先读取
-
-1. STATE.json
-2. STATE_CONSISTENCY_LOCK.md
-3. ENTRY_PROTOCOL.md
-4. STATE_CONSOLIDATION_RULES.md
-5. MASTER_CONTROL.md（本文件）
-6. PROJECT_FRAMEWORK.md
-7. MODULE_ROUTES.md
-8. TASKS.json
-
-## 七、系统启动协议
-
-进入本系统必须先读取 `STATE.json`、`STATE_CONSISTENCY_LOCK.md` 和 `ENTRY_PROTOCOL.md`。启动协议要求：
-
-1. `STATE.json` 是唯一真实状态源。
-2. 按固定顺序读取 `STATE_CONSOLIDATION_RULES.md`、`MASTER_CONTROL.md`、`PROJECT_FRAMEWORK.md`、`MODULE_ROUTES.md`、`TASKS.json`。
-3. 输出当前系统目标、当前运行模块、当前阶段、下一步任务、是否允许跨模块、当前禁止模块。
-4. 没有用户明确指令前，只允许读取，不允许执行。
-
-## 八、状态边界
-
-`MASTER_CONTROL.md` 只负责执行权限，不负责状态判断。系统状态只允许来自 `STATE.json`。
+- 能不能做，以本文件为准。
+- 状态是什么，以 `STATE.json` 为准。
+- 下一步做什么，以 `TASKS.json` 为准。
+- 系统有哪些模块，以 `PROJECT_FRAMEWORK.md` 为准。

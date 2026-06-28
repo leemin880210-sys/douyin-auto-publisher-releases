@@ -225,3 +225,10 @@ zip 命名规则：
 4. `CORE.md`、`PROJECT_FRAMEWORK.md`、`MODULE_ROUTES.md`、`README.md` 不描述当前状态。
 5. 如果不同文件冲突，优先级为：`STATE.json` > `TASKS.json` > `LOGS.md` > 其他文件。
 6. `MASTER_CONTROL.md` 只用于约束执行权限，不用于描述状态。
+## SEMANTIC_LAYERS 语义分层原则
+
+1. `MASTER_CONTROL.md` 负责执行权限。
+2. `PROJECT_FRAMEWORK.md` 负责系统设计。
+3. `STATE.json` 负责当前真实状态。
+4. `TASKS.json` 负责下一步动作。
+5. AI 必须先判断文件所属语义层，不得混用不同语义。

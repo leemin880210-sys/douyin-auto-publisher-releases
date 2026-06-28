@@ -53,3 +53,13 @@ STATE.json
 - 状态只允许来自 `STATE.json`。
 - 不允许从 `CORE.md`、`PROJECT_FRAMEWORK.md`、`MODULE_ROUTES.md` 推断状态。
 - 不允许从 `TASKS.json` 推断当前进度。
+---
+
+## 七、语义分层协议
+
+`SEMANTIC_LAYERS.md` 定义各文件语义职责：
+
+- `MASTER_CONTROL.md` 负责执行权限。
+- `PROJECT_FRAMEWORK.md` 负责系统设计。
+- `STATE.json` 负责当前真实状态。
+- `TASKS.json` 负责下一步动作。

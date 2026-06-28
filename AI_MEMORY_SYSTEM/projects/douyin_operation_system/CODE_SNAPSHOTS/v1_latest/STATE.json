@@ -1,57 +1,8 @@
 {
     "project_name":  "douyin_operation_system",
-    "current_stage":  "account_ops 账号采集模块多账号样本验证阶段；STATE_CONSISTENCY_LOCK 已建立，系统状态只允许来自 STATE.json。",
-    "current_task":  "维护状态一致性锁：新 AI 必须先从 STATE.json 回答当前状态，再判断执行权限和禁止模块；继续遵守 account_ops 阶段限制。",
-    "progress":  "STATE_CONSISTENCY_LOCK.md 已加入启动链路；禁止从 CORE、FRAMEWORK、ROUTES 或 TASKS 推断状态。",
-    "blockers":  "暂无关键阻塞。若状态信息冲突，以 STATE.json 为唯一真实状态源；MASTER_CONTROL 只负责执行权限。",
-    "last_update":  "2026-06-28",
-    "container_version":  "v2.0",
-    "required_memory_files":  [
-                                  "STATE.json",
-                                  "STATE_CONSISTENCY_LOCK.md",
-                                  "STATE_CONSOLIDATION_RULES.md",
-                                  "ENTRY_PROTOCOL.md",
-                                  "MASTER_CONTROL.md",
-                                  "CHAT_LOGS.md",
-                                  "PROJECT_FRAMEWORK.md",
-                                  "MODULE_ROUTES.md",
-                                  "CODE_SNAPSHOTS/v1_latest",
-                                  "BOOT.md",
-                                  "TASKS.json",
-                                  "CORE.md",
-                                  "LOGS.md",
-                                  "CODE_EVOLUTION.md"
-                              ],
-    "modules":  {
-                    "account_ops":  {
-                                        "path":  "AI_MEMORY_SYSTEM/projects/douyin_operation_system/modules/account_ops",
-                                        "status":  "active",
-                                        "note":  "当前正式运行模块"
-                                    },
-                    "shop_account_analysis":  {
-                                                  "path":  "AI_MEMORY_SYSTEM/projects/douyin_operation_system/modules/shop_account_analysis",
-                                                  "status":  "planned_not_started",
-                                                  "note":  "下一阶段模块，未授权前不执行真实店铺分析"
-                                              },
-                    "merchant_brain_factory":  {
-                                                   "path":  "AI_MEMORY_SYSTEM/projects/douyin_operation_system/modules/merchant_brain_factory",
-                                                   "status":  "planning_not_started",
-                                                   "note":  "后续模块，未授权不得创建真实商家大脑"
-                                               },
-                    "merchants":  {
-                                      "path":  "AI_MEMORY_SYSTEM/projects/douyin_operation_system/merchants",
-                                      "status":  "template_only",
-                                      "note":  "只存在模板，不存在真实商家大脑"
-                                  },
-                    "content_pipeline":  {
-                                             "path":  "AI_MEMORY_SYSTEM/projects/douyin_operation_system/modules/content_pipeline",
-                                             "status":  "reserved",
-                                             "note":  "未授权不得启动"
-                                         },
-                    "data_review":  {
-                                        "path":  "AI_MEMORY_SYSTEM/projects/douyin_operation_system/modules/data_review",
-                                        "status":  "reserved",
-                                        "note":  "未授权不得启动"
-                                    }
-                }
+    "current_stage":  "account_ops 账号采集模块多账号样本验证阶段",
+    "current_task":  "读取采集包 / 生成采集包 / 检查采集包；继续使用 5-10 条样本包验证采集质量。",
+    "progress":  "5 条 / 10 条样本包已多账号通过，继续观察评论、OCR、partial 类型。",
+    "blockers":  "禁止跨模块执行；shop_account_analysis、merchant_brain_factory、merchants、content_pipeline、data_review 未授权不得启动。",
+    "last_update":  "2026-06-28"
 }
