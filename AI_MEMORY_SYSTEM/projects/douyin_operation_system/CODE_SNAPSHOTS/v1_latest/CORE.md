@@ -76,7 +76,7 @@ AI_MEMORY_SYSTEM/projects/douyin_operation_system
 
 ## 本项目业务范围
 
-本项目是面向微小商家的抖音代运营、账号采集、内容生成与 AI 工作流系统。当前重点包括：
+本项目是面向微小商家的抖音代运营、账号采集、内容生成与 AI 工作流系统。业务范围包括：
 
 - 抖音账号公开内容采集与分析包生成
 - 商家建档
@@ -135,15 +135,15 @@ zip 命名规则：
 人工触发 + AI生成 + 结构化输出模式
 ```
 
-本项目默认不是自动执行系统。是否允许执行具体模块，以 `STATE.json` 和 `MASTER_CONTROL.md` 为准。
+本项目默认不是自动执行系统。模块执行许可，以 `STATE.json` 和 `MASTER_CONTROL.md` 为准。
 
 ## 阶段状态读取规则
 
 `CORE.md` 不描述当前状态。
 
-- 当前阶段以 `STATE.json` 为准。
-- 当前任务以 `TASKS.json` 为准。
-- 已发生事实以 `LOGS.md` 为准。
+- 阶段判断以 `STATE.json` 为准。
+- 任务判断以 `TASKS.json` 为准。
+- 事实记录以 `LOGS.md` 为准.
 - 执行权限以 `MASTER_CONTROL.md` 为准。
 - 模块路由以 `MODULE_ROUTES.md` 为准。
 
@@ -202,7 +202,7 @@ zip 命名规则：
 
 1. `ENTRY_PROTOCOL.md` 是系统启动协议。
 2. `MASTER_CONTROL.md` 是当前项目最高优先级控制器。
-3. 新 AI 必须先读取 `ENTRY_PROTOCOL.md`，再按固定顺序读取 `MASTER_CONTROL.md`、`PROJECT_FRAMEWORK.md`、`MODULE_ROUTES.md`、`STATE.json` 和 `TASKS.json`。
+3. 新 AI 必须先读取 `STATE.json`，再按 `ENTRY_PROTOCOL.md` 的固定顺序读取控制链路。
 3. 当前唯一允许执行模块是 `account_ops`。
 4. 当前唯一合法动作是读取采集包 / 生成采集包 / 检查采集包。
 5. 未经用户后续明确授权，不得启动账号深度分析、商家建档、商家大脑、内容生成、自动发布或数据复盘。

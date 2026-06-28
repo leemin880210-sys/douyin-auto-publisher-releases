@@ -40,11 +40,11 @@ AI_MEMORY_SYSTEM/projects/douyin_operation_system/
 12. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/LOGS.md`
 13. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_EVOLUTION.md`
 
-`STATE.json` 是当前阶段和当前状态的唯一事实源。  
+`STATE.json` 是阶段和状态的唯一事实源。  
 `STATE_CONSOLIDATION_RULES.md` 是状态收敛规则。  
 `ENTRY_PROTOCOL.md` 是系统启动协议。  
 `MASTER_CONTROL.md` 只约束执行权限，不描述当前状态。  
-新 AI 必须先用这些文件判断当前状态、任务、权限和模块边界，再继续读取项目框架和历史。
+新 AI 必须先用这些文件判断状态、任务、权限和模块边界，再继续读取项目框架和历史。
 
 ## 4. 新 AI 接手判断规则
 

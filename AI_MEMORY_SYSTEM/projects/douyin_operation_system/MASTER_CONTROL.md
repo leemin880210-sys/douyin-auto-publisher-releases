@@ -51,21 +51,23 @@
 
 ## 六、进入系统必须优先读取
 
-1. MASTER_CONTROL.md（本文件）
-2. PROJECT_FRAMEWORK.md
-3. MODULE_ROUTES.md
-4. STATE.json
-5. TASKS.json
+1. STATE.json
+2. ENTRY_PROTOCOL.md
+3. STATE_CONSOLIDATION_RULES.md
+4. MASTER_CONTROL.md（本文件）
+5. PROJECT_FRAMEWORK.md
+6. MODULE_ROUTES.md
+7. TASKS.json
 
 ## 七、系统启动协议
 
 进入本系统必须先读取 `STATE.json` 和 `ENTRY_PROTOCOL.md`。启动协议要求：
 
-1. `STATE.json` 是当前阶段和当前状态的唯一事实源。
+1. `STATE.json` 是阶段和状态的唯一事实源。
 2. 按固定顺序读取 `STATE_CONSOLIDATION_RULES.md`、`MASTER_CONTROL.md`、`PROJECT_FRAMEWORK.md`、`MODULE_ROUTES.md`、`TASKS.json`。
 3. 输出当前系统目标、当前运行模块、当前阶段、下一步任务、是否允许跨模块、当前禁止模块。
 4. 没有用户明确指令前，只允许读取，不允许执行。
 
 ## 八、状态边界
 
-`MASTER_CONTROL.md` 只用于约束执行权限，不用于描述当前状态。当前阶段、当前任务、进度和阻塞全部以 `STATE.json` 为准。
+`MASTER_CONTROL.md` 只用于约束执行权限，不用于描述状态。阶段、任务、进度和阻塞全部以 `STATE.json` 为准。

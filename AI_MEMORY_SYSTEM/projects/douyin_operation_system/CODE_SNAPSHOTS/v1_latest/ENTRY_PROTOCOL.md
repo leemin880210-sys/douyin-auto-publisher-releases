@@ -8,7 +8,7 @@
 
 1. STATE.json
 
-`STATE.json` 是当前阶段和当前状态的唯一事实源。
+`STATE.json` 是阶段和状态的唯一事实源。
 
 ---
 
@@ -54,8 +54,8 @@
 
 ## Step 6：状态收敛规则
 
-- 当前阶段以 `STATE.json` 为准。
-- 当前任务以 `TASKS.json` 为准。
+- 阶段判断以 `STATE.json` 为准。
+- 任务判断以 `TASKS.json` 为准.
 - 已发生事实以 `LOGS.md` 为准。
-- `MASTER_CONTROL.md` 只约束执行权限，不描述当前状态。
+- `MASTER_CONTROL.md` 只约束执行权限，不描述状态。
 - `PROJECT_FRAMEWORK.md`、`MODULE_ROUTES.md`、`CORE.md`、`README.md` 不作为状态源。
