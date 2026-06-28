@@ -194,3 +194,11 @@ Codex：
 
 Codex：
 新增 `SYSTEM_CONSTITUTION.md`，同步更新启动协议、新 AI 入口、BOOT、语义分层、状态一致性锁、状态收敛规则、LOGS 和 CHAT_LOGS；为遵守语义分层，本次未修改 `STATE.json` 和 `TASKS.json`，未修改采集工具代码，未修改实际 `CODE_EVOLUTION.md`，未提交采集包 ZIP。
+
+## [2026-06-28]
+
+用户：
+要求只升级外部大脑统一记忆系统，新增统一记忆入口 `UNIFIED_MEMORY_BRAIN.md`，让新 AI 不再从 0 理解系统，而是通过统一记忆入口直接接管当前所有工作状态；不得修改采集工具代码，不新增业务功能，不做分析、商家建档或内容生成。
+
+Codex：
+新增 `UNIFIED_MEMORY_BRAIN.md`，同步更新新 AI 入口、MASTER_CONTROL、STATE、TASKS、LOGS 和 CHAT_LOGS；该入口汇总项目目标、当前阶段、已完成能力、系统结构、运行限制和下一步模块。未修改采集工具代码，未新增业务模块，未修改实际 `CODE_EVOLUTION.md`，未提交采集包 ZIP。

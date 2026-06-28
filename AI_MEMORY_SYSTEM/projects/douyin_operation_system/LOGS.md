@@ -227,3 +227,15 @@ The following entries were migrated from `AI_MEMORY_SYSTEM/projects/project_brai
 - 未修改 `douyin_auto_tool.ps1`。
 - 未修改实际 `CODE_EVOLUTION.md`。
 - 未提交采集包 ZIP。
+
+### 2026-06-28 - 新增 UNIFIED_MEMORY_BRAIN 统一记忆入口
+
+- 新增 `UNIFIED_MEMORY_BRAIN.md` 作为统一记忆入口，让新 AI 通过一个文件恢复项目目标、当前阶段、已完成能力、运行限制和下一步模块。
+- 系统从“分布式记忆”升级为“统一记忆入口系统”。
+- 更新 `START_HERE_FOR_NEW_AI.md`，把 `UNIFIED_MEMORY_BRAIN.md` 放到 `STATE.json` 之后优先读取。
+- 更新 `MASTER_CONTROL.md`，明确本文件必须配合 `UNIFIED_MEMORY_BRAIN.md` 使用。
+- 更新 `STATE.json`，增加 `memory_brain_status = unified_memory_enabled`。
+- 更新 `TASKS.json`，增加统一记忆入口相关任务。
+- 不修改采集工具代码。
+- 不新增业务模块。
+- 不做账号分析、不做商家建档、不做内容生成。

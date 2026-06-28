@@ -1,5 +1,7 @@
 # MASTER_CONTROL（系统总控制器）
 
+本文件必须配合 UNIFIED_MEMORY_BRAIN.md 使用。
+
 ## 语义层职责
 
 `MASTER_CONTROL.md` 只负责【执行权限】。
