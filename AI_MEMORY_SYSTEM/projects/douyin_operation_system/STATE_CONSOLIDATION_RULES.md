@@ -39,12 +39,13 @@ MASTER_CONTROL 只用于约束执行权限，不用于描述状态。
 
 ## 五、新 AI 必须遵守
 
-任何 AI 必须先读取：
+任何 AI 进入系统时，必须先遵守 `SYSTEM_CONSTITUTION.md` 的读取顺序。
+
+进行状态判断时，必须读取：
 
 STATE.json
 
 作为唯一事实源。
----
 
 ## 六、状态一致性锁
 
@@ -63,3 +64,8 @@ STATE.json
 - `PROJECT_FRAMEWORK.md` 负责系统设计。
 - `STATE.json` 负责当前真实状态。
 - `TASKS.json` 负责下一步动作。
+---
+
+## 八、系统宪法优先
+
+`SYSTEM_CONSTITUTION.md` 是最高约束文件。状态收敛规则不得改变系统宪法规定的读取顺序、执行顺序和状态源唯一性。

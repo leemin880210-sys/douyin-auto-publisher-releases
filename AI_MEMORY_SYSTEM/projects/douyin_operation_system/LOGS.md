@@ -215,3 +215,15 @@ The following entries were migrated from `AI_MEMORY_SYSTEM/projects/project_brai
 - 未修改 `douyin_auto_tool.ps1`。
 - 未修改实际 `CODE_EVOLUTION.md`。
 - 未提交采集包 ZIP。
+
+### 2026-06-28 - 新增 SYSTEM_CONSTITUTION 系统宪法
+
+- 新增 `SYSTEM_CONSTITUTION.md`，确立本系统是抖音代运营 AI 操作系统，是流程系统，不是单一工具。
+- 更新 `ENTRY_PROTOCOL.md`、`START_HERE_FOR_NEW_AI.md`、`BOOT.md`，要求新 AI 先按系统宪法读取 `MASTER_CONTROL`、`STATE`、`TASKS`、`PROJECT_FRAMEWORK`、`MODULE_ROUTES`。
+- 更新 `SEMANTIC_LAYERS.md`、`STATE_CONSISTENCY_LOCK.md`、`STATE_CONSOLIDATION_RULES.md`，明确系统宪法优先，不允许混用语义、不允许合并状态源。
+- 未修改 `STATE.json`。
+- 未修改 `TASKS.json`。
+- 未修改采集工具代码。
+- 未修改 `douyin_auto_tool.ps1`。
+- 未修改实际 `CODE_EVOLUTION.md`。
+- 未提交采集包 ZIP。

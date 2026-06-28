@@ -79,3 +79,14 @@ AI必须判断：
 
 👉 当前文件属于哪个语义层
 👉 不能混用不同语义
+---
+
+## 五、系统宪法优先
+
+`SYSTEM_CONSTITUTION.md` 是最高约束文件。语义分层必须服从系统宪法：
+
+1. `MASTER_CONTROL.md` 负责执行权。
+2. `STATE.json` 负责当前状态。
+3. `TASKS.json` 负责下一步。
+4. `PROJECT_FRAMEWORK.md` 负责系统结构。
+5. `MODULE_ROUTES.md` 负责如何路由。

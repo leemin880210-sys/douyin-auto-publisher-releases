@@ -186,3 +186,11 @@ Codex：
 
 Codex：
 新增 `SEMANTIC_LAYERS.md`，同步更新启动协议、新 AI 入口、BOOT、MASTER_CONTROL、PROJECT_FRAMEWORK、STATE、TASKS、MODULE_ROUTES、CORE、状态规则、LOGS 和 CHAT_LOGS；未修改采集工具代码，未修改实际 `CODE_EVOLUTION.md`，未提交采集包 ZIP。
+
+## [2026-06-28]
+
+用户：
+提供 `SYSTEM_CONSTITUTION（系统宪法）`，要求确立系统最高原则：本系统是抖音代运营 AI 操作系统，是流程系统不是单一工具；状态只能来自 `STATE.json`；MASTER_CONTROL、STATE、TASKS、PROJECT_FRAMEWORK、MODULE_ROUTES 分层不可混用；禁止跨模块、跳阶段、自动生成运营方案或内容策略；当前唯一执行模块为 account_ops。
+
+Codex：
+新增 `SYSTEM_CONSTITUTION.md`，同步更新启动协议、新 AI 入口、BOOT、语义分层、状态一致性锁、状态收敛规则、LOGS 和 CHAT_LOGS；为遵守语义分层，本次未修改 `STATE.json` 和 `TASKS.json`，未修改采集工具代码，未修改实际 `CODE_EVOLUTION.md`，未提交采集包 ZIP。
