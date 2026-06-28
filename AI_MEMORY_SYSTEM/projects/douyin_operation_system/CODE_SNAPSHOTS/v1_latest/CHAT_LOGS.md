@@ -202,3 +202,11 @@ Codex：
 
 Codex：
 新增 `UNIFIED_MEMORY_BRAIN.md`，同步更新新 AI 入口、MASTER_CONTROL、STATE、TASKS、LOGS 和 CHAT_LOGS；该入口汇总项目目标、当前阶段、已完成能力、系统结构、运行限制和下一步模块。未修改采集工具代码，未新增业务模块，未修改实际 `CODE_EVOLUTION.md`，未提交采集包 ZIP。
+
+## [2026-06-28]
+
+用户：
+提供 `COGNITIVE_ENTRY（认知统一入口）`，要求将其作为整个外部大脑系统的唯一第一认知入口，让新 AI 先读取该文件即可理解这是可跨 AI 接管的抖音代运营操作系统，并明确当前处于 account_ops 账号采集阶段，禁止跨模块、跳过采集直接分析、自动建商家系统、自动生成运营方案或修改系统结构。
+
+Codex：
+新增 `COGNITIVE_ENTRY.md`，同步更新新 AI 入口、启动协议、统一记忆入口、MASTER_CONTROL、系统宪法、LOGS 和 CHAT_LOGS；未修改 `STATE.json` 和 `TASKS.json`，未修改采集工具代码，未新增业务功能，未修改实际 `CODE_EVOLUTION.md`，未提交采集包 ZIP。

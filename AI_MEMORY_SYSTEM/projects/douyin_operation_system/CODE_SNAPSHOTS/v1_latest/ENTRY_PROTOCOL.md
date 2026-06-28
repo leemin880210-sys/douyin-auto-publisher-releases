@@ -2,23 +2,23 @@
 
 任何 AI / Codex / GPT 进入本系统必须执行：
 
-## Step 0：读取系统宪法
+## Step 0：读取认知统一入口
 
 先读取：
 
-1. SYSTEM_CONSTITUTION.md
+1. COGNITIVE_ENTRY.md
 
-`SYSTEM_CONSTITUTION.md` 是系统最高约束文件。它确认本系统是“流程系统”，不是单一工具。
+`COGNITIVE_ENTRY.md` 是整个外部大脑系统的唯一认知入口。新 AI 必须先读取本文件，才能理解系统。
 
 ---
 
-## Step 1：按宪法固定读取
+## Step 1：按认知入口固定读取
 
 读取系统宪法后，必须按以下顺序读取：
 
-1. MASTER_CONTROL.md
-2. STATE.json
-3. TASKS.json
+1. STATE.json
+2. TASKS.json
+3. MASTER_CONTROL.md
 4. PROJECT_FRAMEWORK.md
 5. MODULE_ROUTES.md
 

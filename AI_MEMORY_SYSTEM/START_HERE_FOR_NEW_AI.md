@@ -20,38 +20,41 @@ AI_MEMORY_SYSTEM/projects/douyin_operation_system/
 
 ## 3. 新 AI 必须读取的顺序
 
-任何新的 GPT / Codex / AI 进入后，必须先读取系统宪法，再按宪法固定顺序读取；统一记忆入口必须放在 `STATE.json` 之后优先读取：
+任何新的 GPT / Codex / AI 进入后，必须先读取认知统一入口：
 
-0. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/SYSTEM_CONSTITUTION.md`
-1. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/MASTER_CONTROL.md`
-2. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/STATE.json`
-3. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/UNIFIED_MEMORY_BRAIN.md`
-4. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/TASKS.json`
-5. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/PROJECT_FRAMEWORK.md`
-6. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/MODULE_ROUTES.md`
+0. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/COGNITIVE_ENTRY.md`
 
-完成统一记忆入口读取后，再读取一致性保护文件：
+随后按认知入口固定顺序读取：
 
-7. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/STATE_CONSISTENCY_LOCK.md`
-8. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/SEMANTIC_LAYERS.md`
-9. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/STATE_CONSOLIDATION_RULES.md`
-10. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/ENTRY_PROTOCOL.md`
+1. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/STATE.json`
+2. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/TASKS.json`
+3. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/MASTER_CONTROL.md`
+4. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/PROJECT_FRAMEWORK.md`
+5. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/MODULE_ROUTES.md`
+6. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/UNIFIED_MEMORY_BRAIN.md`
+
+继续读取一致性和宪法文件：
+
+7. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/SYSTEM_CONSTITUTION.md`
+8. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/STATE_CONSISTENCY_LOCK.md`
+9. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/SEMANTIC_LAYERS.md`
+10. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/STATE_CONSOLIDATION_RULES.md`
+11. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/ENTRY_PROTOCOL.md`
 
 最后继续读取恢复辅助文件：
 
-11. `AI_MEMORY_SYSTEM/README.md`
-12. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/CHAT_LOGS.md`
-13. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/v1_latest/`
-14. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/BOOT.md`
-15. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/CORE.md`
-16. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/LOGS.md`
-17. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_EVOLUTION.md`
+12. `AI_MEMORY_SYSTEM/README.md`
+13. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/CHAT_LOGS.md`
+14. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/v1_latest/`
+15. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/BOOT.md`
+16. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/CORE.md`
+17. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/LOGS.md`
+18. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_EVOLUTION.md`
 
-`SYSTEM_CONSTITUTION.md` 是最高约束。  
+`COGNITIVE_ENTRY.md` 是第一认知入口。  
+`STATE.json` 是运行状态唯一来源。  
+`TASKS.json` 是任务唯一来源。  
 `MASTER_CONTROL.md` 只回答能不能做。  
-`STATE.json` 是唯一真实状态源。  
-`UNIFIED_MEMORY_BRAIN.md` 是统一认知入口汇总层。  
-`TASKS.json` 只回答下一步动作。  
 `PROJECT_FRAMEWORK.md` 只回答系统结构。  
 `MODULE_ROUTES.md` 只回答如何路由。
 

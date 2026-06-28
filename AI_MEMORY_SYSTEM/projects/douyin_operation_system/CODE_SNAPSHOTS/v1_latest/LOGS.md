@@ -239,3 +239,16 @@ The following entries were migrated from `AI_MEMORY_SYSTEM/projects/project_brai
 - 不修改采集工具代码。
 - 不新增业务模块。
 - 不做账号分析、不做商家建档、不做内容生成。
+
+### 2026-06-28 - 新增 COGNITIVE_ENTRY 认知统一入口
+
+- 新增 `COGNITIVE_ENTRY.md`，作为整个外部大脑系统的第一认知入口。
+- 更新 `START_HERE_FOR_NEW_AI.md`，要求新 AI 首先读取 `COGNITIVE_ENTRY.md`，再读取 `STATE.json`、`TASKS.json`、`MASTER_CONTROL.md`、`PROJECT_FRAMEWORK.md`、`MODULE_ROUTES.md`。
+- 更新 `ENTRY_PROTOCOL.md`、`UNIFIED_MEMORY_BRAIN.md`、`MASTER_CONTROL.md`、`SYSTEM_CONSTITUTION.md`，明确它们受 `COGNITIVE_ENTRY.md` 约束。
+- 未修改 `STATE.json`。
+- 未修改 `TASKS.json`。
+- 未修改采集工具代码。
+- 未新增业务功能。
+- 未启动分析、商家建档或内容生成。
+- 未修改实际 `CODE_EVOLUTION.md`。
+- 未提交采集包 ZIP。

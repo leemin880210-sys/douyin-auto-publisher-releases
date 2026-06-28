@@ -1,5 +1,7 @@
 # UNIFIED_MEMORY_BRAIN（统一记忆入口）
 
+本文件受 `COGNITIVE_ENTRY.md` 约束。`COGNITIVE_ENTRY.md` 是第一认知入口，本文件是统一记忆汇总层。
+
 本文件是 `douyin_operation_system` 的统一认知入口汇总层，用于让新的 GPT / Codex / AI 在读取外部大脑后快速接管上下文。
 
 本文件不是唯一状态源，不替代 `STATE.json`。新 AI 必须先读取 `STATE.json`，再读取本文件恢复完整上下文。
