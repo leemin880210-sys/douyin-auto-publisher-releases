@@ -1,13 +1,14 @@
 {
     "project_name":  "douyin_operation_system",
-    "current_stage":  "account_ops 账号采集模块多账号样本验证阶段；STATE_CONSOLIDATION_RULES 已建立，STATE.json 是唯一状态源。",
-    "current_task":  "按状态收敛规则维护外部大脑：状态只写 STATE.json，任务只写 TASKS.json，事实只写 LOGS.md；继续遵守 account_ops 阶段限制。",
-    "progress":  "状态收敛规则已加入启动链路；PROJECT_FRAMEWORK、MODULE_ROUTES、CORE、README 不再作为当前状态源。",
-    "blockers":  "暂无关键阻塞。若不同文件出现状态冲突，以 STATE.json \u003e TASKS.json \u003e LOGS.md \u003e 其他文件为准。",
+    "current_stage":  "account_ops 账号采集模块多账号样本验证阶段；STATE_CONSISTENCY_LOCK 已建立，系统状态只允许来自 STATE.json。",
+    "current_task":  "维护状态一致性锁：新 AI 必须先从 STATE.json 回答当前状态，再判断执行权限和禁止模块；继续遵守 account_ops 阶段限制。",
+    "progress":  "STATE_CONSISTENCY_LOCK.md 已加入启动链路；禁止从 CORE、FRAMEWORK、ROUTES 或 TASKS 推断状态。",
+    "blockers":  "暂无关键阻塞。若状态信息冲突，以 STATE.json 为唯一真实状态源；MASTER_CONTROL 只负责执行权限。",
     "last_update":  "2026-06-28",
     "container_version":  "v2.0",
     "required_memory_files":  [
                                   "STATE.json",
+                                  "STATE_CONSISTENCY_LOCK.md",
                                   "STATE_CONSOLIDATION_RULES.md",
                                   "ENTRY_PROTOCOL.md",
                                   "MASTER_CONTROL.md",

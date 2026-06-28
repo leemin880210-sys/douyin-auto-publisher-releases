@@ -44,3 +44,12 @@ MASTER_CONTROL 只用于约束执行权限，不用于描述状态。
 STATE.json
 
 作为唯一事实源。
+---
+
+## 六、状态一致性锁
+
+`STATE_CONSISTENCY_LOCK.md` 是状态判断的硬约束文件。
+
+- 状态只允许来自 `STATE.json`。
+- 不允许从 `CORE.md`、`PROJECT_FRAMEWORK.md`、`MODULE_ROUTES.md` 推断状态。
+- 不允许从 `TASKS.json` 推断当前进度。

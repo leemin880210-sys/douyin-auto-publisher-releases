@@ -2,6 +2,10 @@
     "project_id":  "douyin_operation_system",
     "container_version":  "v2.0",
     "task_rules":  [
+                       "新 AI 必须先回答：当前状态是什么（只能来自 STATE.json）、当前允许执行什么模块、当前禁止模块是什么。",
+                       "不得从 TASKS.json 推断当前进度。",
+                       "不得从 CORE.md、PROJECT_FRAMEWORK.md、MODULE_ROUTES.md 推断状态。",
+                       "STATE_CONSISTENCY_LOCK.md 是状态一致性锁。",
                        "状态冲突优先级：STATE.json \u003e TASKS.json \u003e LOGS.md \u003e 其他文件。",
                        "CORE.md、PROJECT_FRAMEWORK.md、MODULE_ROUTES.md、README.md 不得描述当前状态。",
                        "LOGS.md 是事实记录源。",
@@ -31,19 +35,19 @@
     "codex_tasks":  [
                         {
                             "priority":  1,
-                            "task":  "进入项目后先读取 STATE.json，作为当前状态唯一事实源。"
+                            "task":  "进入项目后先读取 STATE.json，并只从 STATE.json 判断当前状态。"
                         },
                         {
                             "priority":  2,
-                            "task":  "读取 STATE_CONSOLIDATION_RULES.md，确认状态、任务、事实的唯一写入位置。"
+                            "task":  "读取 STATE_CONSISTENCY_LOCK.md，确认不得从 CORE、FRAMEWORK、ROUTES、TASKS 推断状态。"
                         },
                         {
                             "priority":  3,
-                            "task":  "按 ENTRY_PROTOCOL 继续读取 MASTER_CONTROL.md、PROJECT_FRAMEWORK.md、MODULE_ROUTES.md、TASKS.json。"
+                            "task":  "新 AI 必须先回答：当前状态是什么、当前允许执行什么模块、当前禁止模块是什么。"
                         },
                         {
                             "priority":  4,
-                            "task":  "如果文件之间出现状态冲突，以 STATE.json \u003e TASKS.json \u003e LOGS.md \u003e 其他文件处理。"
+                            "task":  "继续按 ENTRY_PROTOCOL 读取 STATE_CONSOLIDATION_RULES、MASTER_CONTROL、PROJECT_FRAMEWORK、MODULE_ROUTES、TASKS。"
                         },
                         {
                             "priority":  5,
@@ -63,6 +67,9 @@
                           "data_review":  "发布后数据复盘、反馈分析、下一轮调整。当前预留，未授权不得启动。"
                       },
     "acceptance_criteria":  [
+                                "START_HERE_FOR_NEW_AI.md 和 BOOT.md 已纳入 STATE_CONSISTENCY_LOCK.md。",
+                                "ENTRY_PROTOCOL.md 已要求先读取 STATE_CONSISTENCY_LOCK.md。",
+                                "项目根目录存在 STATE_CONSISTENCY_LOCK.md。",
                                 "PROJECT_FRAMEWORK.md、MODULE_ROUTES.md、CORE.md、README.md 已声明不作为状态源。",
                                 "ENTRY_PROTOCOL.md 已要求先读取 STATE.json。",
                                 "项目根目录存在 STATE_CONSOLIDATION_RULES.md。",

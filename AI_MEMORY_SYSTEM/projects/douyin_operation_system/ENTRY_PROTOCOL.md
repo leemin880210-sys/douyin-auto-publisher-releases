@@ -7,14 +7,16 @@
 任何 AI 必须先读取：
 
 1. STATE.json
+2. STATE_CONSISTENCY_LOCK.md
 
-`STATE.json` 是阶段和状态的唯一事实源。
+`STATE.json` 是唯一真实状态源。  
+`STATE_CONSISTENCY_LOCK.md` 是状态一致性锁，禁止从其他文件推断状态。
 
 ---
 
 ## Step 2：读取顺序固定
 
-读取 `STATE.json` 后，继续按以下顺序读取：
+读取状态源与状态锁后，继续按以下顺序读取：
 
 1. STATE_CONSOLIDATION_RULES.md
 2. MASTER_CONTROL.md
@@ -26,9 +28,9 @@
 
 ## Step 3：必须输出 6 项信息
 
+- 当前状态是什么（只能来自 STATE.json）
 - 当前系统目标
 - 当前运行模块
-- 当前阶段
 - 下一步任务
 - 是否允许跨模块
 - 当前禁止模块
@@ -41,6 +43,7 @@
 - 禁止直接创建 merchant_brain
 - 禁止跳过 account_ops
 - 禁止跨模块执行
+- 禁止从 CORE.md / PROJECT_FRAMEWORK.md / MODULE_ROUTES.md / TASKS.json 推断状态
 
 ---
 
@@ -52,10 +55,11 @@
 
 ---
 
-## Step 6：状态收敛规则
+## Step 6：状态收敛与一致性锁
 
-- 阶段判断以 `STATE.json` 为准。
+- 状态只能来自 `STATE.json`。
 - 任务判断以 `TASKS.json` 为准.
-- 已发生事实以 `LOGS.md` 为准。
-- `MASTER_CONTROL.md` 只约束执行权限，不描述状态。
+- 事实记录以 `LOGS.md` 为准.
+- `MASTER_CONTROL.md` 只负责执行权限，不负责状态判断。
 - `PROJECT_FRAMEWORK.md`、`MODULE_ROUTES.md`、`CORE.md`、`README.md` 不作为状态源。
+- 不允许从 `TASKS.json` 推断当前进度。

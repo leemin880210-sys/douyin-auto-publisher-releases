@@ -170,3 +170,11 @@ Codex：
 
 Codex：
 新增 `STATE_CONSOLIDATION_RULES.md`，同步更新启动协议、入口、控制器、框架、路由、核心规则、README、STATE、TASKS、LOGS 和 CHAT_LOGS；未修改采集工具代码，未修改实际 `CODE_EVOLUTION.md`，未提交采集包 ZIP。
+
+## [2026-06-28]
+
+用户：
+提供 `STATE_CONSISTENCY_LOCK（状态一致性锁）`，要求系统状态只允许来自 `STATE.json`；禁止从 CORE、FRAMEWORK、ROUTES 或 TASKS 推断状态；冲突时仍按 `STATE.json > TASKS.json > LOGS.md > 其他文件`；MASTER_CONTROL 只负责执行权限，不负责状态判断；新 AI 必须先回答当前状态、当前允许执行模块和当前禁止模块。
+
+Codex：
+新增 `STATE_CONSISTENCY_LOCK.md`，同步更新启动协议、新 AI 入口、BOOT、STATE、TASKS、状态收敛规则、MASTER_CONTROL、LOGS 和 CHAT_LOGS；未修改采集工具代码，未修改实际 `CODE_EVOLUTION.md`，未提交采集包 ZIP。

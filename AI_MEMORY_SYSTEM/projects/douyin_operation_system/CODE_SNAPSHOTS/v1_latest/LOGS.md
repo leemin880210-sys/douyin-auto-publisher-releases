@@ -191,3 +191,14 @@ The following entries were migrated from `AI_MEMORY_SYSTEM/projects/project_brai
 - 未修改 `douyin_auto_tool.ps1`。
 - 未修改实际 `CODE_EVOLUTION.md`。
 - 未提交采集包 ZIP。
+
+### 2026-06-28 - 新增 STATE_CONSISTENCY_LOCK 状态一致性锁
+
+- 新增 `STATE_CONSISTENCY_LOCK.md`，明确系统状态只允许来自 `STATE.json`。
+- 更新 `ENTRY_PROTOCOL.md`、`START_HERE_FOR_NEW_AI.md`、`BOOT.md`，要求新 AI 先读取 `STATE.json` 与状态一致性锁。
+- 更新 `STATE.json` 和 `TASKS.json`，同步状态一致性锁的启动要求和验收标准。
+- 更新 `STATE_CONSOLIDATION_RULES.md` 与 `MASTER_CONTROL.md`，明确 `MASTER_CONTROL` 只负责执行权限，不负责状态判断。
+- 未修改采集工具代码。
+- 未修改 `douyin_auto_tool.ps1`。
+- 未修改实际 `CODE_EVOLUTION.md`。
+- 未提交采集包 ZIP。
