@@ -264,3 +264,15 @@ The following entries were migrated from `AI_MEMORY_SYSTEM/projects/project_brai
 - 未修改采集工具代码。
 - 未新增业务模块。
 - 未做分析、商家建档或内容生成。
+
+### 2026-06-28 - 强化 COGNITIVE_ENTRY 单入口认知系统
+
+- 更新 `COGNITIVE_ENTRY.md`，明确其为整个外部大脑系统唯一认知入口。
+- 更新 `START_HERE_FOR_NEW_AI.md`，要求新 AI 第一读取项必须是 `COGNITIVE_ENTRY.md`。
+- 明确 `STATE.json`、`PROJECT_FRAMEWORK.md`、`TASKS.json`、`MASTER_CONTROL.md`、`MODULE_ROUTES.md`、`CORE.md` 不得作为认知入口。
+- 强化版本分裂与 STATE 语义污染修复规则。
+- 未修改 `STATE.json`。
+- 未修改 `TASKS.json`。
+- 未修改采集工具代码。
+- 未新增业务模块。
+- 未做分析、商家建档或内容生成。

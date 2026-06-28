@@ -20,35 +20,36 @@ AI_MEMORY_SYSTEM/projects/douyin_operation_system/
 
 ## 3. 新 AI 必须读取的顺序
 
-任何新的 GPT / Codex / AI 进入后，必须先读取本文件，然后按以下顺序读取：
+任何新的 GPT / Codex / AI 进入后，必须首先读取：
 
-1. `AI_MEMORY_SYSTEM/START_HERE_FOR_NEW_AI.md`
+1. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/COGNITIVE_ENTRY.md`
+
+`COGNITIVE_ENTRY.md` 是整个系统唯一认知入口。
+
+随后按以下顺序读取：
+
 2. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/STATE.json`
-3. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/COGNITIVE_ENTRY.md`
-4. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/PROJECT_FRAMEWORK.md`
-5. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/MODULE_ROUTES.md`
-6. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/BOOT.md`
-7. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/TASKS.json`
+3. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/PROJECT_FRAMEWORK.md`
+4. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/MODULE_ROUTES.md`
+5. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/TASKS.json`
+6. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/MASTER_CONTROL.md`
+7. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/BOOT.md`
 8. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/CORE.md`
 9. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/LOGS.md`
 
-随后按需读取恢复辅助文件：
+恢复辅助文件按需读取：
 
-10. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/MASTER_CONTROL.md`
-11. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/UNIFIED_MEMORY_BRAIN.md`
-12. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/SYSTEM_CONSTITUTION.md`
-13. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/STATE_CONSISTENCY_LOCK.md`
-14. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/SEMANTIC_LAYERS.md`
-15. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/STATE_CONSOLIDATION_RULES.md`
-16. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/ENTRY_PROTOCOL.md`
-17. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/CHAT_LOGS.md`
-18. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/v1_latest/`
-19. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_EVOLUTION.md`
+10. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/UNIFIED_MEMORY_BRAIN.md`
+11. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/SYSTEM_CONSTITUTION.md`
+12. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/STATE_CONSISTENCY_LOCK.md`
+13. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/SEMANTIC_LAYERS.md`
+14. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/STATE_CONSOLIDATION_RULES.md`
+15. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/ENTRY_PROTOCOL.md`
+16. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/CHAT_LOGS.md`
+17. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_SNAPSHOTS/v1_latest/`
+18. `AI_MEMORY_SYSTEM/projects/douyin_operation_system/CODE_EVOLUTION.md`
 
-`STATE.json` 是唯一状态来源。  
-`COGNITIVE_ENTRY.md` 是单入口认知系统。  
-`PROJECT_FRAMEWORK.md` 只负责结构说明，不代表当前执行状态。  
-`TASKS.json` 只负责下一步动作。
+禁止把 `STATE.json`、`PROJECT_FRAMEWORK.md`、`TASKS.json`、`MASTER_CONTROL.md`、`MODULE_ROUTES.md` 或 `CORE.md` 当作认知入口。
 
 ## 4. 新 AI 接手判断规则
 

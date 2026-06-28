@@ -218,3 +218,11 @@ Codex：
 
 Codex：
 更新 `COGNITIVE_ENTRY.md`、`START_HERE_FOR_NEW_AI.md`、`STATE.json`、`TASKS.json`、`MASTER_CONTROL.md`、`LOGS.md` 和 `CHAT_LOGS.md`；将 `STATE.json` 收敛为当前状态源，加入 `current_stage_next = pending_user_instruction`，将 `TASKS.json` 收敛为当前可执行任务。未修改采集工具代码，未新增业务模块，未修改实际 `CODE_EVOLUTION.md`，未提交采集包 ZIP。
+
+## [2026-06-28]
+
+用户：
+要求必须创建并强化 `COGNITIVE_ENTRY.md`，作为整个系统唯一认知入口；新 AI 必须先读它，`STATE / FRAMEWORK / TASKS` 不得作为认知入口；该文件必须统一解释整个系统，解决版本分裂问题和 STATE 语义污染问题，并修改 `START_HERE_FOR_NEW_AI.md` 加入该入口。
+
+Codex：
+重写 `COGNITIVE_ENTRY.md` 为单入口认知系统，更新 `START_HERE_FOR_NEW_AI.md` 将其设为第一读取项，并同步记录到 LOGS/CHAT 与最新快照。未修改 `STATE.json`、`TASKS.json`、采集工具代码或业务模块。
