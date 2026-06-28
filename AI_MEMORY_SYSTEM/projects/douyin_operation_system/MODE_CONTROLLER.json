@@ -45,6 +45,17 @@
     "execution_gate":  {
                            "rule":  "IF action not in allowed_actions: DENY EXECUTION",
                            "require_task_queue":  true,
-                           "require_event_stream_write":  true
-                       }
+                           "require_event_stream_write":  true,
+                           "require_auto_write_back":  true
+                       },
+    "auto_write_back_engine":  {
+                                   "enabled":  true,
+                                   "version":  "v1.0",
+                                   "trigger":  "after_each_ai_output",
+                                   "required_outputs":  [
+                                                            "CLIENT_STATE.json when client data exists",
+                                                            "TASK_QUEUE.json when next actions exist",
+                                                            "EVENT_STREAM.json always"
+                                                        ]
+                               }
 }

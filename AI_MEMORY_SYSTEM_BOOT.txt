@@ -86,3 +86,16 @@ External brain v3.2 runtime must additionally read:
 7. AI_MEMORY_SYSTEM/projects/douyin_operation_system/STATE_TRANSITIONS.json
 
 Runtime execution must come from TASK_QUEUE.json and must write EVENT_STREAM.json.
+## 8. Auto Write-Back Engine
+
+External brain v3.2 runtime must read:
+
+AI_MEMORY_SYSTEM/projects/douyin_operation_system/AUTO_WRITE_BACK_ENGINE.md
+
+Every AI output must be converted into structured write-back:
+
+- CLIENT_STATE.json when real client data exists
+- TASK_QUEUE.json when next actions exist
+- EVENT_STREAM.json always
+
+No AI reply may remain only as text.

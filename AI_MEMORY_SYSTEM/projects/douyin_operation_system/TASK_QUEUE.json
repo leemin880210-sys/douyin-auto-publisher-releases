@@ -16,6 +16,30 @@
                       "created_at":  "2026-06-28T00:00:00+08:00",
                       "updated_at":  "2026-06-28T00:00:00+08:00",
                       "note":  "TASK_QUEUE was initialized from runtime instruction. No real client data was provided, so the collection task is blocked pending user input."
+                  },
+                  {
+                      "task_id":  "task_20260629_enable_auto_write_back_001",
+                      "client_id":  "",
+                      "action":  "enable_auto_write_back_engine",
+                      "task_type":  "system_runtime_task",
+                      "mode":  "account_ops",
+                      "status":  "completed",
+                      "input":  {
+                                    "user_instruction":  "AUTO WRITE-BACK ENGINE v1.0"
+                                },
+                      "output":  {
+                                     "enabled_files":  [
+                                                           "AUTO_WRITE_BACK_ENGINE.md",
+                                                           "PROJECT_STATE.json",
+                                                           "CLIENT_STATE.json",
+                                                           "TASK_QUEUE.json",
+                                                           "EVENT_STREAM.json",
+                                                           "MODE_CONTROLLER.json"
+                                                       ]
+                                 },
+                      "created_at":  "2026-06-29T00:00:00+08:00",
+                      "updated_at":  "2026-06-29T00:00:00+08:00",
+                      "note":  "System runtime task generated from user instruction. No client business task was created."
                   }
               ],
     "rules":  [
@@ -23,5 +47,5 @@
                   "Do not invent operation strategy tasks",
                   "If queue is empty, only data collection tasks are allowed"
               ],
-    "last_update":  "2026-06-28"
+    "last_update":  "2026-06-29"
 }

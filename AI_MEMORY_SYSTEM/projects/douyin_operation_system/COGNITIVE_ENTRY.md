@@ -185,3 +185,16 @@ STATE_SEMANTIC_POLLUTION_FIX: true
 所有执行必须来自 `TASK_QUEUE.json`，所有结果必须写入 `EVENT_STREAM.json`，所有状态必须写回结构化状态文件。
 
 如果没有客户信息，`collect_client_info` 任务必须保持 blocked，等待用户提供客户资料。
+---
+
+## AUTO_WRITE_BACK_ENGINE v1.0
+
+外部大脑已启用自动写回引擎。
+
+新 AI 必须理解：
+
+- 所有 AI 输出都要进入外部大脑结构化记录。
+- 对话中出现客户信息时，写入 `CLIENT_STATE.json`。
+- 对话中出现下一步动作时，写入 `TASK_QUEUE.json`。
+- 所有输出都必须写入 `EVENT_STREAM.json`。
+- 没有真实客户信息时，不允许伪造客户状态。

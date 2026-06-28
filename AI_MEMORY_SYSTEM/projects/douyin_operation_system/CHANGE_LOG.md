@@ -59,3 +59,22 @@
 - 外部大脑 runtime 记忆层。
 - 不影响采集工具代码。
 - 不新增业务模块或运营功能。
+### [2026-06-29]
+
+#### 修改内容
+- 新增 `AUTO_WRITE_BACK_ENGINE.md`。
+- 更新 `PROJECT_STATE.json`，启用 `auto_write_back_engine = enabled`。
+- 更新 `CLIENT_STATE.json`，记录无真实客户信息时不伪造客户状态。
+- 更新 `MODE_CONTROLLER.json`，要求每次 AI 输出后执行自动写回。
+- 更新 `TASK_QUEUE.json`，记录启用自动写回引擎的系统运行任务。
+- 更新 `EVENT_STREAM.json`，记录本次 `chat_to_state` 写回事件。
+
+#### 修改原因
+- 用户要求聊天输出自动进入外部大脑状态系统。
+- 防止 AI 只输出文本、不更新系统状态。
+- 将对话变成系统可演化数据源。
+
+#### 影响范围
+- 外部大脑 runtime 记忆层。
+- 不影响采集工具代码。
+- 不新增业务模块或运营功能。
