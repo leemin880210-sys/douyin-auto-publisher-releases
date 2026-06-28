@@ -125,3 +125,11 @@ account_ops。
 - 当前不能分析、建档、生成内容或复盘。
 - `STATE.json` 是唯一状态来源，但不是认知入口。
 - `PROJECT_FRAMEWORK.md`、`TASKS.json`、`MASTER_CONTROL.md` 都不得替代本文件。
+---
+
+## MACHINE_CHECK
+
+COGNITIVE_ENTRY_ENFORCED: true
+STATE_JSON_NOT_COGNITIVE_ENTRY: true
+VERSION_SPLIT_FIX: true
+STATE_SEMANTIC_POLLUTION_FIX: true

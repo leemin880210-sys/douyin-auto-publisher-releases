@@ -20,6 +20,8 @@ AI_MEMORY_SYSTEM/projects/douyin_operation_system/
 
 ## 3. 新 AI 必须读取的顺序
 
+FIRST_READ: AI_MEMORY_SYSTEM/projects/douyin_operation_system/COGNITIVE_ENTRY.md
+
 任何新的 GPT / Codex / AI 进入后，必须首先读取：
 
 第一读取文件：`AI_MEMORY_SYSTEM/projects/douyin_operation_system/COGNITIVE_ENTRY.md`
